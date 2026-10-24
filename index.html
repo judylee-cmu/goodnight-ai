@@ -28,6 +28,8 @@ body { background: var(--sky1); color: var(--ink); font-family: var(--f-story); 
 header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap }
 .brand { font-family: var(--f-title); font-size: clamp(26px, 4vw, 38px); margin: 0; }
 .brand span { color: var(--gold) }
+.brand { color: var(--ink); text-decoration: none }
+.brand:hover span { text-decoration: underline }
 .tag { font-size: 15px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase }
 .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px }
 .card { display: flex; gap: 14px; align-items: center; text-align: left; background: var(--panel); color: var(--ink);
@@ -249,7 +251,7 @@ details.grownups summary { cursor: pointer; color: var(--gold); font-weight: 700
 
 <div class="wrap">
   <header>
-    <p class="brand">Goodnight, <span>AI</span></p>
+    <a class="brand" href="pitch.html" title="About Goodnight, AI">Goodnight, <span>AI</span></a>
     <span class="tag">Tonight’s story shelf</span>
   </header>
 
