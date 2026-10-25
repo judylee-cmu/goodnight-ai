@@ -82,6 +82,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .jargon .family { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: clamp(180px, 26%, 300px) }
 .q { position: absolute; font-family: var(--f-display); font-weight: 600; background: var(--paper); border: 3px solid var(--ink); border-radius: 50%; width: clamp(44px, 5vw, 70px); aspect-ratio: 1; display: grid; place-items: center; font-size: clamp(26px, 3vw, 44px) }
 
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 28px }
+.stats div { background: var(--paper); border: 2px solid var(--line); border-radius: 22px; padding: 22px 26px }
+.stats b { display: block; font-family: var(--f-display); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); color: var(--amber); line-height: 1 }
+.stats span { display: block; margin-top: 8px; font-weight: 600 }
+@media (max-width: 640px) { .stats { grid-template-columns: 1fr } }
+
 /* who */
 .who { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: center; margin-top: 40px }
 .who svg.bed { width: 100%; height: auto }
@@ -92,6 +99,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .feat h3 { color: var(--gold) }
 .feat p { margin: 2px 0 0; color: var(--mist) }
 @media (max-width: 860px) { .who { grid-template-columns: 1fr } }
+.feat.row { flex-direction: row; margin-top: 40px }
+.feat.row > div { flex: 1 1 0; min-width: 0 }
+@media (max-width: 860px) { .feat.row { flex-direction: column } }
 
 /* how */
 .flow { display: flex; align-items: center; gap: 14px; margin-top: 40px; flex-wrap: wrap }
@@ -124,28 +134,16 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .steps li { background: var(--gold); color: var(--night); font-weight: 700; padding: 8px 16px; border-radius: 999px }
 @media (max-width: 860px) { .demo { grid-template-columns: 1fr } .phones { justify-content: center } }
 
-/* compare */
-.cmp { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: center; margin-top: 40px }
-.map { position: relative; aspect-ratio: 10 / 7; background: var(--paper); border: 2px solid var(--line); border-radius: 24px }
-.map .vl { position: absolute; left: 50%; top: 4%; bottom: 4%; width: 3px; background: var(--line) }
-.map .hl { position: absolute; top: 50%; left: 3%; right: 3%; height: 3px; background: var(--line) }
-.map .ax { position: absolute; font-size: clamp(12px, 1.4vw, 16px); font-weight: 700; color: #6A7179; white-space: nowrap }
-.map .dot { position: absolute; border-radius: 50%; transform: translate(-50%, -50%) }
-.map .lab { position: absolute; transform: translateX(-50%); font-size: clamp(12px, 1.4vw, 17px); color: var(--ink2); white-space: nowrap; text-align: center }
-.map .lab.me { font-weight: 700; color: var(--ink); font-size: clamp(14px, 1.7vw, 22px) }
-.take p { margin: 0 0 8px; font-family: var(--f-display); font-weight: 600; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.15 }
-.take p:last-child { color: var(--amber) }
-@media (max-width: 860px) { .cmp { grid-template-columns: 1fr } }
-
-/* market */
-.mkt { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; align-items: center; margin-top: 40px }
-.mkt svg { width: 100%; max-width: 480px; height: auto; justify-self: center }
-.road { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 24px }
-.road li { display: flex; gap: 18px; align-items: center }
+/* future */
+.future { margin-top: 40px }
+.road { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px }
+.road li { display: flex; flex-direction: column; gap: 14px }
 .road .ic { background: var(--night2); border: 3px solid var(--gold); width: 64px; height: 64px }
+.dark2 .road .ic { background: var(--night) }
 .road b { display: block; color: var(--gold); font-size: 16px }
-.road span { font-size: clamp(18px, 2vw, 24px); color: var(--cream) }
-@media (max-width: 860px) { .mkt { grid-template-columns: 1fr } }
+.road span { font-size: clamp(18px, 2vw, 22px); color: var(--cream) }
+@media (max-width: 860px) { .road { grid-template-columns: 1fr 1fr } }
+@media (max-width: 480px) { .road { grid-template-columns: 1fr } .road li { flex-direction: row; align-items: center } }
 
 /* close */
 .close { position: relative; overflow: hidden; background: radial-gradient(circle at 80% 30%, var(--night3) 0%, var(--night) 60%); color: var(--cream) }
@@ -173,9 +171,10 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
     <a class="brand" href="#top">Goodnight, <span>AI</span></a>
     <ul>
       <li><a href="#problem">Problem</a></li>
+      <li><a href="#product">Product</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#demo">Demo</a></li>
-      <li><a href="#market">Market</a></li>
+      <li><a href="#future">Next</a></li>
     </ul>
     <a class="btn" href="index.html" style="padding:10px 18px;font-size:15px;min-height:44px">Try the demo</a>
   </div>
@@ -198,28 +197,7 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
   </div>
 </section>
 
-<!-- 2. Hook -->
-<section class="dark2" id="hook">
-  <div class="wrap">
-    <p class="eyebrow">Today’s AI headline</p>
-    <h2>How would you explain today’s AI news to a 5 year old?</h2>
-    <div class="hook-row">
-      <div class="card-dark">
-        <p class="eyebrow" style="margin:0">The news</p>
-        <p class="headline">MAI-DxO, a diagnostic orchestrator, solved 83% of complex NEJM cases, compared with 36% for physicians working alone.</p>
-        <div class="pills"><span class="pill">orchestrator?</span><span class="pill">NEJM cases?</span><span class="pill">83% vs. 36%?</span></div>
-      </div>
-      <svg class="arrow" viewBox="0 0 64 36" style="color:var(--gold)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="card-page">
-        <svg role="img" aria-label="Pip the robot holding a magnifying glass next to a doctor’s clipboard" viewBox="0 0 480 300" style="width:100%;max-width:400px;height:auto"><rect x="30" y="110" width="90" height="120" rx="10" fill="#FFFCF5" stroke="#121A33" stroke-width="4"/><rect x="63" y="140" width="24" height="60" fill="#3DBE8B"/><rect x="45" y="158" width="60" height="24" fill="#3DBE8B"/><g transform="translate(140 40) scale(1.6)"><use href="#pipDark" width="120" height="140"/></g><line x1="352" y1="150" x2="306" y2="214" stroke="#7A4E2D" stroke-width="14" stroke-linecap="round"/><circle cx="384" cy="118" r="46" fill="#DCEBF5" stroke="#B7791F" stroke-width="10"/></svg>
-        <p>Pip the detective helps doctors find clues.</p>
-      </div>
-    </div>
-    <p class="src">Source: Science paper on Microsoft’s MAI-DxO, as reported October 23, 2026.</p>
-  </div>
-</section>
-
-<!-- 3. Problem -->
+<!-- 2. Problem -->
 <section class="cream" id="problem">
   <div class="wrap">
     <p class="eyebrow">The problem</p>
@@ -238,26 +216,43 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
       <span class="q" style="left:56%;top:52%">?</span>
       <svg class="family" viewBox="0 0 360 320" aria-hidden="true"><rect x="95" y="240" width="22" height="80" rx="9" fill="#2B3A67"/><rect x="125" y="240" width="22" height="80" rx="9" fill="#2B3A67"/><rect x="80" y="140" width="82" height="112" rx="26" fill="#2F8F8A"/><circle cx="121" cy="86" r="44" fill="#3B2A2A"/><circle cx="121" cy="92" r="38" fill="#E0A98A"/><circle cx="108" cy="90" r="5" fill="#121A33"/><circle cx="134" cy="90" r="5" fill="#121A33"/><path d="M108 112 q13 -8 26 0" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="232" y="270" width="18" height="50" rx="8" fill="#2B3A67"/><rect x="256" y="270" width="18" height="50" rx="8" fill="#2B3A67"/><rect x="220" y="200" width="66" height="80" rx="22" fill="#4F86C6"/><circle cx="222" cy="164" r="12" fill="#6B3A2A"/><circle cx="284" cy="164" r="12" fill="#6B3A2A"/><circle cx="253" cy="170" r="33" fill="#F1C7A5"/><circle cx="242" cy="168" r="4.5" fill="#121A33"/><circle cx="264" cy="168" r="4.5" fill="#121A33"/><path d="M243 186 q10 -6 20 0" stroke="#121A33" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
     </div>
+    <div class="stats">
+      <div><b>2 in 3</b><span>teens use AI regularly. Less than half of parents do.</span></div>
+      <div><b>58%</b><span>of parents want schools to teach responsible AI across classes.</span></div>
+    </div>
+    <p class="src">Sources: Common Sense Media survey, March 2026. Child Trends and NORC survey of 720 parents, August 2026.</p>
   </div>
 </section>
 
-<!-- 4. Who -->
-<section class="dark">
+<!-- 3. Product -->
+<section class="dark2" id="product">
   <div class="wrap">
-    <p class="eyebrow">Who it’s for</p>
-    <h2>Parents and kids 5 to 10, together at bedtime</h2>
-    <div class="who">
-      <svg class="bed" role="img" aria-label="A parent and child in bed reading a tablet with Pip on the screen, a moon in the window" viewBox="0 0 960 560"><rect x="0" y="0" width="960" height="560" rx="32" fill="#1C2647"/><rect x="700" y="50" width="200" height="150" rx="14" fill="#24305A" stroke="#F7F1E3" stroke-width="8"/><circle cx="800" cy="125" r="38" fill="#F2C94C"/><circle cx="816" cy="112" r="34" fill="#24305A"/><circle cx="120" cy="80" r="4" fill="#F7F1E3"/><circle cx="300" cy="50" r="3" fill="#F7F1E3"/><circle cx="560" cy="90" r="4" fill="#F2C94C"/><rect x="80" y="200" width="800" height="230" rx="30" fill="#3B4A7A"/><rect x="60" y="390" width="840" height="130" rx="24" fill="#E6DCC4"/><rect x="270" y="270" width="124" height="160" rx="30" fill="#2F8F8A"/><circle cx="332" cy="226" r="56" fill="#3B2A2A"/><circle cx="332" cy="234" r="48" fill="#E0A98A"/><circle cx="316" cy="232" r="6" fill="#121A33"/><circle cx="348" cy="232" r="6" fill="#121A33"/><path d="M318 256 Q332 266 346 256" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="560" y="310" width="96" height="120" rx="26" fill="#4F86C6"/><circle cx="572" cy="270" r="15" fill="#6B3A2A"/><circle cx="644" cy="270" r="15" fill="#6B3A2A"/><circle cx="608" cy="276" r="40" fill="#F1C7A5"/><circle cx="595" cy="274" r="5" fill="#121A33"/><circle cx="621" cy="274" r="5" fill="#121A33"/><path d="M596 292 Q608 301 620 292" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="410" y="320" width="140" height="104" rx="12" fill="#2B2F3A"/><rect x="418" y="328" width="124" height="88" rx="6" fill="#121A33"/><use href="#pip" x="447" y="332" width="66" height="77"/><rect x="60" y="420" width="840" height="100" rx="24" fill="#8FB8DE"/></svg>
-      <div class="feat">
-        <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 L19 12 L8 19 Z" fill="#121A33"/></svg></span><span><h3>For kids</h3><p>Pictures and a friendly voice. No reading needed.</p></span></div>
-        <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 L10 17 L19 7" fill="none" stroke="#121A33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>For parents</h3><p>Real facts, with sources, ready in 5 minutes.</p></span></div>
-        <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#121A33" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><h3>Together</h3><p>A small daily habit of talking about AI.</p></span></div>
+    <p class="eyebrow">What’s our product</p>
+    <h2>Real AI news, turned into a bedtime story</h2>
+    <p class="lead">For parents and kids 5 to 10, together at bedtime.</p>
+    <div class="hook-row">
+      <div class="card-dark">
+        <p class="eyebrow" style="margin:0">Today’s AI news</p>
+        <p class="headline">MAI-DxO, a diagnostic orchestrator, solved 83% of complex NEJM cases, compared with 36% for physicians working alone.</p>
+        <div class="pills"><span class="pill">orchestrator?</span><span class="pill">NEJM cases?</span><span class="pill">83% vs. 36%?</span></div>
+      </div>
+      <svg class="arrow" viewBox="0 0 64 36" style="color:var(--gold)" aria-hidden="true"><use href="#arrowR"/></svg>
+      <div class="card-page">
+        <svg role="img" aria-label="Pip the robot holding a magnifying glass next to a doctor’s clipboard" viewBox="0 0 480 300" style="width:100%;max-width:400px;height:auto"><rect x="30" y="110" width="90" height="120" rx="10" fill="#FFFCF5" stroke="#121A33" stroke-width="4"/><rect x="63" y="140" width="24" height="60" fill="#3DBE8B"/><rect x="45" y="158" width="60" height="24" fill="#3DBE8B"/><g transform="translate(140 40) scale(1.6)"><use href="#pipDark" width="120" height="140"/></g><line x1="352" y1="150" x2="306" y2="214" stroke="#7A4E2D" stroke-width="14" stroke-linecap="round"/><circle cx="384" cy="118" r="46" fill="#DCEBF5" stroke="#B7791F" stroke-width="10"/></svg>
+        <p>Pip the detective helps doctors find clues.</p>
       </div>
     </div>
+    <div class="feat row">
+      <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 L19 12 L8 19 Z" fill="#121A33"/></svg></span><span><h3>For kids</h3><p>Pictures and a friendly voice. No reading needed.</p></span></div>
+      <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 L10 17 L19 7" fill="none" stroke="#121A33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>For parents</h3><p>Real facts, with sources, ready in 5 minutes.</p></span></div>
+      <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#121A33" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><h3>Together</h3><p>A small daily habit of talking about AI.</p></span></div>
+    </div>
+    <div class="banner only"><p>Only we combine <span>real AI news</span> with <span>a parent in charge.</span></p></div>
+    <p class="src">News source: Science paper on Microsoft’s MAI-DxO, as reported October 23, 2026.</p>
   </div>
 </section>
 
-<!-- 5. How -->
+<!-- 4. How -->
 <section class="cream" id="how">
   <div class="wrap">
     <p class="eyebrow">How it works</p>
@@ -277,7 +272,7 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
   </div>
 </section>
 
-<!-- 6. Demo -->
+<!-- 5. Demo -->
 <section class="dark" id="demo">
   <div class="wrap demo">
     <div class="phones">
@@ -294,35 +289,12 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
   </div>
 </section>
 
-<!-- 7. Compare -->
-<section class="cream" id="different">
+<!-- 6. Future work -->
+<section class="dark2" id="future">
   <div class="wrap">
-    <p class="eyebrow">Why we’re different</p>
-    <h2>Real AI news, with a parent in charge</h2>
-    <div class="cmp">
-      <div class="map" role="img" aria-label="Positioning map. Goodnight, AI is in the real news and parent decides corner. Kids news sites and ChatGPT are real news but not parent led. The Goodnight AI app is made up stories.">
-        <div class="vl"></div><div class="hl"></div>
-        <span class="ax" style="left:52%;top:5%">↑ Parent decides</span>
-        <span class="ax" style="left:3%;bottom:5%">↓ App or AI decides</span>
-        <span class="ax" style="left:3%;top:52%">← Made up stories</span>
-        <span class="ax" style="right:3%;top:52%">Real news →</span>
-        <span class="dot" style="left:22%;top:30%;width:5%;aspect-ratio:1;background:var(--coral)"></span><span class="lab" style="left:22%;top:35%">Goodnight AI app</span>
-        <span class="dot" style="left:60%;top:60%;width:5%;aspect-ratio:1;background:var(--sky)"></span><span class="lab" style="left:60%;top:65%">ChatGPT “explain like I’m 5”</span>
-        <span class="dot" style="left:80%;top:72%;width:5%;aspect-ratio:1;background:#B9C2DC"></span><span class="lab" style="left:80%;top:77%">Kids news sites</span>
-        <span class="dot" style="left:82%;top:20%;width:8%;aspect-ratio:1;background:var(--gold);border:4px solid var(--ink)"></span><span class="lab me" style="left:82%;top:28%">Goodnight, AI</span>
-      </div>
-      <div class="take"><p>Real AI news.</p><p>A parent in charge.</p><p>Only we do both.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 8. Market -->
-<section class="dark2" id="market">
-  <div class="wrap">
-    <p class="eyebrow">Market and what’s next</p>
-    <h2>A big market, and what comes next</h2>
-    <div class="mkt">
-      <svg role="img" aria-label="Nested circles: TAM 1.05 billion dollars, SAM 320 million dollars, SOM 6.3 million dollars" viewBox="0 0 640 600"><circle cx="320" cy="300" r="296" fill="#24305A"/><circle cx="320" cy="400" r="196" fill="#2F4C80"/><circle cx="320" cy="502" r="96" fill="#F2C94C"/><g text-anchor="middle" font-family="Fredoka, Arial, sans-serif"><text x="320" y="62" font-size="24" fill="#F2C94C" font-weight="600" letter-spacing="3">TAM</text><text x="320" y="122" font-size="56" fill="#F7F1E3" font-weight="600">$1.05B</text><text x="320" y="262" font-size="24" fill="#F2C94C" font-weight="600" letter-spacing="3">SAM</text><text x="320" y="322" font-size="56" fill="#F7F1E3" font-weight="600">$320M</text><text x="320" y="468" font-size="24" fill="#121A33" font-weight="600" letter-spacing="3">SOM</text><text x="320" y="526" font-size="52" fill="#121A33" font-weight="600">$6.3M</text></g></svg>
+    <p class="eyebrow">Future work</p>
+    <h2>What comes next</h2>
+    <div class="future">
       <ol class="road">
         <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 L5 14 H11 L10 22 L19 9 H13 Z" fill="#F2C94C"/></svg></span><span><b>2027</b><span>Live daily stories</span></span></li>
         <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#F2C94C" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><b>2028</b><span>Kids ask Pip questions</span></span></li>
@@ -330,16 +302,15 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
         <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#F2C94C" stroke-width="2.2"/><path d="M3 12 h18 M12 3 q-5 9 0 18 M12 3 q5 9 0 18" fill="none" stroke="#F2C94C" stroke-width="2"/></svg></span><span><b>2030</b><span>More languages and classroom mode</span></span></li>
       </ol>
     </div>
-    <p class="src">Estimates: 17.5M US families with kids 5 to 10 at $60 a year. SAM assumes 30% already pay for kids learning apps. SOM is 2% of SAM in 3 to 5 years. Child population from childstats.gov (2022).</p>
   </div>
 </section>
 
-<!-- 9. Close -->
+<!-- 7. Ending -->
 <section class="close">
   <svg class="stars" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="1040" cy="120" r="80" fill="#F2C94C"/><circle cx="1072" cy="98" r="72" fill="#1E2851"/><g fill="#F7F1E3"><circle cx="140" cy="90" r="3"/><circle cx="480" cy="50" r="2"/><circle cx="700" cy="140" r="3"/><circle cx="90" cy="520" r="2"/><circle cx="620" cy="560" r="3"/></g></svg>
   <div class="wrap" style="position:relative">
     <div>
-      <h2>Every family understands the AI shaping their future, <span>starting at bedtime.</span></h2>
+      <h2>“Every family understands the AI shaping their future, <span>starting at bedtime.</span>”</h2>
       <p class="lead" style="font-family:var(--f-display)">Goodnight, AI · by Judy Lee</p>
     </div>
     <div class="qr"><img src="assets/qr-code.png" alt="QR code linking to the Goodnight, AI demo"><p>Scan to try the demo</p></div>
