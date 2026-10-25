@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+ <filter id="gn-paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+ </filter>
+ <filter id="gn-fuzz" x="-30%" y="-30%" width="160%" height="160%">
+  <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="5" result="n"/>
+  <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/><feGaussianBlur stdDeviation=".6"/>
+ </filter>
+ <filter id="gn-ink"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="2" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="2"/></filter>
+ <pattern id="gn-stOrange" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><rect width="12" height="12" fill="#FFF1C9"/><rect width="12" height="6" fill="#F7A23B"/></pattern>
+ <pattern id="gn-stRed" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><rect width="11" height="11" fill="#FFF1C9"/><rect width="11" height="5" fill="#E8483A"/></pattern>
+ <pattern id="gn-dotPink" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#F48FB1"/><circle cx="7" cy="7" r="3.2" fill="#E8483A"/></pattern>
+ <pattern id="gn-dotCream" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#FFF1C9"/><circle cx="7" cy="7" r="3" fill="#F7A23B"/></pattern>
+ <pattern id="gn-stGreen" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-10)"><rect width="12" height="12" fill="#B9E07A"/><rect width="12" height="6" fill="#4FA65B"/></pattern>
+ <pattern id="gn-shirtGrey" width="20" height="18" patternUnits="userSpaceOnUse"><rect width="20" height="18" fill="#FFF9EE"/><rect y="0" width="20" height="9" fill="#AEB4BE"/></pattern>
+ <pattern id="gn-shirtRed" width="20" height="16" patternUnits="userSpaceOnUse"><rect width="20" height="16" fill="#FFF9EE"/><rect width="20" height="8" fill="#E8483A"/></pattern>
+ <pattern id="gn-dotGreen" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#4FA65B"/><circle cx="8" cy="8" r="3" fill="#FFF1C9"/></pattern>
+<radialGradient id="gn-mglow"><stop offset="0" stop-color="#FFD23F" stop-opacity=".55"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient></defs></svg>
+<title>v2 · Goodnight, AI Story Shelf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700&display=swap">
+<style>
+/* Layout: a bedtime "story shelf" of nightly AI news stories on top, one storybook stage below with captions, then a parent note. Single night look. */
+:root {
+  --sky1: #0E1530; --sky2: #1E2A5A; --ink: #F7F1E3; --muted: #B9C2DC;
+  --gold: #F2C94C; --mint: #3DBE8B; --panel: #172045; --line: #2C3A6E;
+  --f-story: Nunito, "Trebuchet MS", Arial, sans-serif;
+  --f-title: Fredoka, Nunito, Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box }
+[hidden] { display: none !important }
+body { background: var(--sky1); color: var(--ink); font-family: var(--f-story); }
+.wrap { max-width: 1100px; margin: 0 auto; padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 20px; }
+header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap }
+.brand { font-family: var(--f-title); font-size: clamp(26px, 4vw, 38px); margin: 0; }
+.brand span { color: var(--gold) }
+.brand { color: var(--ink); text-decoration: none }
+.brand:hover span { text-decoration: underline }
+.tag { font-size: 15px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase }
+.shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px }
+.card { display: flex; gap: 14px; align-items: center; text-align: left; background: var(--panel); color: var(--ink);
+  border: 2px solid var(--line); border-radius: 18px; padding: 14px; cursor: pointer; font-family: var(--f-story); }
+.card:hover { border-color: #46578F }
+.card[aria-pressed="true"] { border-color: var(--gold); background: #1D2852 }
+.card svg { flex: none; width: 64px; height: 64px }
+.card .meta { display: flex; flex-direction: column; gap: 4px; min-width: 0 }
+.card b { font-family: var(--f-title); font-size: 19px; font-weight: 600; line-height: 1.2 }
+.card small { font-size: 14px; color: var(--muted) }
+.card.soon { cursor: default; border-style: dashed; color: var(--muted); background: transparent }
+h1 { font-family: var(--f-title); font-size: clamp(24px, 3.4vw, 34px); margin: 4px 0 0; text-wrap: balance }
+.stage-box { position: relative; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); background: var(--sky2) }
+svg.stage { display: block; width: 100%; height: auto }
+.cover { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: rgba(14, 21, 48, .55); text-align: center; padding: 16px }
+.cover p { margin: 0; font-size: clamp(18px, 2.6vw, 26px); }
+.cover .big { font-family: var(--f-title); font-size: clamp(28px, 5.4vw, 58px); color: var(--gold); text-wrap: balance }
+button { font-family: var(--f-story); font-size: 18px; color: var(--sky1); background: var(--gold); border: 0; border-radius: 999px;
+  padding: 10px 20px; cursor: pointer; font-weight: 700 }
+button.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line) }
+button:focus-visible, .card:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px }
+.cover button { font-size: 22px; padding: 14px 32px }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
+.controls .spacer { flex: 1 }
+.dots { display: flex; gap: 8px; flex-wrap: wrap }
+.dots span { width: 12px; height: 12px; border-radius: 50%; background: var(--line) }
+.dots span.on { background: var(--gold) }
+ol.story { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px }
+ol.story li { font-size: clamp(18px, 2.2vw, 24px); line-height: 1.6; color: var(--muted); padding: 6px 14px; border-radius: 12px; cursor: pointer; transition: background .4s, color .4s }
+ol.story li.on { color: var(--ink); background: var(--panel) }
+.parent { background: var(--panel); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 17px; line-height: 1.7 }
+.parent h2 { margin: 0; font-size: 20px; color: var(--gold); font-family: var(--f-title); font-weight: 600 }
+.parent p, .parent li { margin: 0; color: var(--muted) }
+.parent ul { margin: 0; padding-left: 20px }
+.parent a { color: var(--gold) }
+.view { display: flex; flex-direction: column; gap: 20px }
+.tabs { display: flex; gap: 6px; background: var(--panel); padding: 6px; border-radius: 999px; align-self: flex-start; border: 1px solid var(--line) }
+.tabs button { background: transparent; color: var(--muted); font-size: 17px }
+.tabs button[aria-selected="true"] { background: var(--gold); color: var(--sky1) }
+.pgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 16px; align-items: start }
+@media (max-width: 760px) { .pgrid { grid-template-columns: 1fr } }
+.col { display: flex; flex-direction: column; gap: 16px; min-width: 0 }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px }
+.panel h2 { margin: 0; font-family: var(--f-title); font-weight: 600; font-size: 22px }
+.sub { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5 }
+.replay { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; border: 1px dashed var(--line); border-radius: 10px; padding: 8px 10px }
+.btnrow { display: flex; gap: 8px; flex-wrap: wrap }
+.log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5 }
+.log li { display: flex; gap: 8px; align-items: flex-start; animation: logIn .35s ease-out }
+.log li .ic { color: var(--mint); flex: none; width: 18px; font-weight: 700 }
+@keyframes logIn { from { opacity: 0; transform: translateY(6px) } }
+.chip { display: inline-block; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; color: #121A33; white-space: nowrap }
+.chip.g { background: #3DBE8B } .chip.y { background: #F2C94C } .chip.r { background: #F08A6E }
+.rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--muted); line-height: 1.5 }
+.rules li { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap }
+.skips { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px }
+.skips li { font-size: 15px; line-height: 1.5; border-left: 3px solid var(--line); padding-left: 10px; animation: logIn .35s ease-out }
+.skips b { display: block; color: var(--ink) } .skips span { color: var(--muted) }
+.scard { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px; animation: logIn .5s ease-out }
+.scard.tier-g { border-left: 6px solid #3DBE8B } .scard.tier-y { border-left: 6px solid #F2C94C } .scard.tier-r { border-left: 6px solid #F08A6E }
+.scard .top { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: center }
+.status { font-size: 14px; color: var(--muted); font-weight: 700 } .status.ok { color: #7FE0B5 } .status.no { color: #F08A6E }
+.scard h3 { margin: 0; font-family: var(--f-title); font-weight: 600; font-size: 21px; line-height: 1.25 }
+.scard p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted) } .scard p b { color: var(--ink) }
+.checks { list-style: none; margin: 0; padding: 0; font-size: 14px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; line-height: 1.5 }
+.fix { background: #121A33; border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.6; color: var(--muted) }
+.fix .bad { color: #F08A6E } .fix .good { color: #7FE0B5 }
+.preview { background: #F7F1E3; color: #121A33; border-radius: 12px; padding: 12px 14px; font-size: 16px; line-height: 1.6 }
+.preview small { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #6A7179; margin-bottom: 4px; font-weight: 700 }
+.preview em { display: block; font-style: normal; font-size: 13px; color: #6A7179; margin-top: 6px }
+.actions { display: flex; gap: 8px; flex-wrap: wrap } .actions button { font-size: 15px; padding: 8px 14px }
+.actions button[disabled] { opacity: .5; cursor: default }
+.kid-empty { background: var(--panel); border-radius: 18px; padding: 32px 20px; text-align: center; font-size: 20px; color: var(--muted); line-height: 1.6 }
+details.grownups { display: flex; flex-direction: column; gap: 10px }
+details.grownups summary { cursor: pointer; color: var(--gold); font-weight: 700; font-size: 17px; margin-bottom: 10px }
+
+/* ---------- shared stage ---------- */
+.stage * { transform-box: fill-box }
+.twinkle { animation: glow 2.4s ease-in-out infinite alternate }
+@keyframes glow { from { opacity: .35 } to { opacity: .9 } }
+@keyframes hop { to { transform: translateY(-26px) } }
+@keyframes blink { 50% { opacity: .2 } }
+@keyframes shake { 25% { transform: translateX(-4px) } 75% { transform: translateX(4px) } }
+@keyframes sparkle { 0%,100% { opacity: 0; transform: scale(.4) } 50% { opacity: 1; transform: scale(1) } }
+@keyframes flicker { 50% { fill: #A9DCFB } }
+
+/* ---------- story 1: magic key ---------- */
+.racc-pos, .key-pos, .bot-pos, .cop-pos { transition: transform 1.4s cubic-bezier(.5,0,.3,1), opacity .6s }
+.racc-pos { transform: translate(-320px, 840px) }
+.s1 .racc-pos, .s2 .racc-pos, .s3 .racc-pos, .s4 .racc-pos { transform: translate(40px, 840px) }
+.s5 .racc-pos { transform: translate(-420px, 840px); transition-duration: 1s; transition-delay: 1.6s }
+.tiptoe { animation: tiptoe .7s ease-in-out infinite alternate }
+@keyframes tiptoe { to { transform: translateY(-10px) } }
+.key-pos { opacity: 0; transform: translate(800px, 260px) scale(.4) }
+.skey .key-pos { opacity: 1; transform: translate(800px, 260px) scale(1.4) }
+.s2 .key-pos { opacity: 1; animation: keyfly 6s forwards }
+.s3 .key-pos, .s4 .key-pos { opacity: 1; transform: translate(200px, 760px) scale(.5) }
+.s5 .key-pos { opacity: 1; transform: translate(1330px, 740px) scale(.5); transition-delay: .9s }
+@keyframes keyfly {
+  0% { transform: translate(800px, 260px) scale(1.4) }
+  40% { transform: translate(800px, 260px) scale(1.4) }
+  100% { transform: translate(200px, 760px) scale(.5) }
+}
+.key-glow { animation: glow 1.6s ease-in-out infinite alternate }
+.bot-pos { opacity: 0; transform: translate(-120px, 770px) }
+.s3 .bot-pos { opacity: 1; animation: zip 6.4s linear forwards }
+.s4 .bot-pos { opacity: 1; transform: translate(1416px, 770px) }
+.s5 .bot-pos { opacity: 1; transform: translate(-300px, 770px); transition-duration: 1.2s; transition-delay: 1.4s }
+@keyframes zip { from { transform: translate(-120px, 770px) } to { transform: translate(1416px, 770px) } }
+.s3 .hop { animation: hop .45s ease-in-out infinite alternate }
+.huh { opacity: 0; transition: opacity .4s }
+.s4 .huh { opacity: 1 }
+.bot-light { animation: blink .5s steps(2) infinite }
+.door { transform-origin: left center; transition: transform .8s ease }
+.s3 .door { animation: shake .18s ease-in-out 4 }
+.s3 .h0 .door, .s3 .h0 .knock { animation-delay: 1.18s } .s3 .h1 .door, .s3 .h1 .knock { animation-delay: 2.0s }
+.s3 .h2 .door, .s3 .h2 .knock { animation-delay: 2.85s } .s3 .h3 .door, .s3 .h3 .knock { animation-delay: 3.7s }
+.s3 .h4 .door, .s3 .h4 .knock { animation-delay: 4.55s } .s3 .h5 .door, .s3 .h5 .knock { animation-delay: 5.35s }
+.s3 .h6 .door, .s3 .h6 .knock { animation-delay: 6.2s }
+.knock { opacity: 0 }
+.s3 .knock { animation: knock .9s ease-out forwards }
+@keyframes knock { 0% { opacity: 0; transform: translateY(10px) } 30% { opacity: 1 } 100% { opacity: 0; transform: translateY(-30px) } }
+.s4 .h4 .door { transform: scaleX(.3) }
+.s0 .screen { animation: flicker 1.6s steps(2) infinite }
+.s3 .screen { animation: flicker .3s steps(2) infinite }
+.badge { opacity: 0; transform: scale(.2); transform-origin: center; transition: opacity .3s, transform .5s cubic-bezier(.3,1.6,.5,1) }
+.s4 .badge.ok, .s5 .badge { opacity: 1; transform: scale(1) }
+.s4 .h0 .badge, .s5 .h0 .badge { transition-delay: .2s } .s4 .h1 .badge, .s5 .h1 .badge { transition-delay: .5s }
+.s4 .h2 .badge, .s5 .h2 .badge { transition-delay: .8s } .s4 .h3 .badge, .s5 .h3 .badge { transition-delay: 1.1s }
+.s4 .h5 .badge, .s5 .h5 .badge { transition-delay: 1.4s } .s4 .h6 .badge, .s5 .h6 .badge { transition-delay: 1.7s }
+.s5 .h4 .badge { transition-delay: 3.2s }
+.s5 .h4 .door { transition-delay: 2.6s }
+.cop-pos { opacity: 0; transform: translate(1760px, 840px) }
+.s5 .cop-pos { opacity: 1; transform: translate(1290px, 840px) }
+.beam { opacity: 0 }
+.s5 .beam { animation: beam 1.2s ease-in-out .9s infinite alternate }
+@keyframes beam { from { opacity: .15 } to { opacity: .45 } }
+.siren { animation: siren .6s steps(2) infinite }
+@keyframes siren { 50% { fill: #F2C94C } }
+.sparkle { opacity: 0 }
+.s5 .sparkle { animation: sparkle 1.4s ease-in-out infinite; animation-delay: 3.4s }
+.bubble { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s }
+.s6 .bubble { opacity: 1; transform: none }
+
+/* ---------- story 2: little builder (classes b1..bN stay on, now-bN only during that line) ---------- */
+.bd-move { transition: transform 1.3s cubic-bezier(.5,0,.3,1), opacity .6s }
+.bd-brick { opacity: 0; transform: translateY(-40px); transition: opacity .25s, transform .35s cubic-bezier(.3,1.4,.5,1) }
+.b2 .bd-brick { opacity: 1; transform: none }
+.bd-robots { opacity: 0; transition: opacity .6s }
+.b2 .bd-robots { opacity: 1 }
+.now-b7 .bd-robots { opacity: .25 }
+.now-b2 .bd-rbot, .now-b8 .bd-rbot { animation: hop .4s ease-in-out infinite alternate }
+.bd-rbot.r2 { animation-delay: .15s !important } .bd-rbot.r3 { animation-delay: .3s !important }
+.bd-rlight { animation: blink .8s steps(2) infinite }
+.bd-worry, .bd-say1, .bd-say2, .bd-bulb, .bd-school, .bd-board, .bd-check, .bd-roof, .bd-pip, .bd-tiny { opacity: 0; transition: opacity .6s }
+.now-b3 .bd-worry { opacity: 1 }
+.bd-mia { transform: translate(380px, 800px) }
+.now-b3 .bd-mia-body { animation: shake .3s ease-in-out 6 }
+.bd-gma { opacity: 0; transform: translate(-220px, 800px) }
+.b4 .bd-gma { opacity: 1; transform: translate(190px, 800px) }
+.now-b4 .bd-say1 { opacity: 1; transition-delay: 1.2s }
+.now-b5 .bd-bulb { opacity: 1 }
+.now-b5 .bd-bulb circle { animation: glow 1s ease-in-out infinite alternate }
+.now-b6 .bd-say2 { opacity: 1 }
+.now-b6 .bd-mia, .b8 .bd-mia { transform: translate(560px, 800px) }
+.now-b6 .bd-wall { animation: wobble .5s ease-in-out 1.6s 3 }
+@keyframes wobble { 30% { transform: rotate(-1.2deg) } 70% { transform: rotate(1.2deg) } }
+.bd-wall { transform-origin: center bottom }
+.now-b6 .bd-loose { animation: loose 1.2s ease-in-out 1.6s 2 }
+@keyframes loose { 50% { fill: #F2C94C } }
+.now-b7 .bd-school { opacity: 1 }
+.now-b7 .bd-kid { animation: hop .6s ease-in-out infinite alternate }
+.b8 .bd-board { opacity: 1 }
+.b8 .bd-check { opacity: 1 }
+.b8 .bd-check.c2 { transition-delay: .8s } .b8 .bd-check.c3 { transition-delay: 1.6s } .b8 .bd-check.c4 { transition-delay: 2.4s }
+.b8 .bd-roof { opacity: 1; transition-delay: 2.8s }
+.b9 .bd-tiny { opacity: 1 }
+.b10 .bd-pip { opacity: 1 }
+.b10 .sparkle-b { animation: sparkle 1.4s ease-in-out infinite }
+
+/* ---------- story 3: duet (same cumulative classes, du- elements) ---------- */
+.du-busy, .du-sun, .du-say, .du-work, .du-card, .du-shield, .du-lsay, .du-pip, .du-duet, .du-ck { opacity: 0; transition: opacity .6s }
+.now-b1 .du-busy { opacity: 1 }
+.du-busy g { animation: hop .8s ease-in-out infinite alternate }
+.now-b1 .du-mombody { animation: shake .3s ease-in-out infinite }
+.b2 .du-duet { opacity: 1 }
+.du-float { animation: duetfloat 1.6s ease-in-out infinite alternate }
+@keyframes duetfloat { to { transform: translateY(-18px) } }
+.du-notes { opacity: 0 }
+.now-b2 .du-notes, .now-b5 .du-notes { animation: sparkle 1.4s ease-in-out infinite }
+.du-moon { transition: opacity .8s }
+.du-window { transition: fill .8s }
+.stage.b3:not(.b8) .du-sun { opacity: 1 }
+.stage.b3:not(.b8) .du-moon { opacity: 0 }
+.stage.b3:not(.b8) .du-window { fill: #9ED4F5 }
+.now-b3 .du-say.m, .now-b5 .du-say.q, .now-b6 .du-say.buy { opacity: 1 }
+.du-mom { transform: translate(820px, 760px); transition: transform 1.4s cubic-bezier(.5,0,.3,1) }
+.now-b4 .du-mom { transform: translate(1760px, 760px) }
+.now-b4 .du-work { opacity: 1; transition-delay: 1s }
+.now-b4 .du-ck { opacity: 1 }
+.now-b4 .du-ck.c1 { transition-delay: 2.2s } .now-b4 .du-ck.c2 { transition-delay: 3.6s }
+.now-b6 .du-card { opacity: 1; transition-delay: .6s }
+.now-b6 .du-yes { animation: yes .5s ease-in-out 3s 3 alternate forwards }
+@keyframes yes { to { fill: #3DBE8B } }
+.du-lily { transform: translate(420px, 790px) }
+.now-b6 .du-lilyhop { animation: hop .35s ease-in-out 4s 6 alternate }
+.now-b7 .du-lsay, .now-b7 .du-shield { opacity: 1 }
+.b8 .du-pip { opacity: 1 }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage *, .stage { animation: none !important; transition-duration: .01s !important; transition-delay: 0s !important }
+  .s2 .key-pos { transform: translate(200px, 760px) scale(.5) }
+  .s3 .bot-pos { transform: translate(800px, 770px) }
+  .s3 .knock { opacity: 1 }
+  .s5 .beam { opacity: .35 } .s5 .sparkle, .b10 .sparkle-b { opacity: 1 }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <a class="brand" href="pitch-v2.html" title="About Goodnight, AI">Goodnight, <span>AI</span></a>
+    <span class="tag">Tonight’s story shelf</span>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Mode">
+    <button type="button" role="tab" id="tabParent" aria-selected="true">For parents</button>
+    <button type="button" role="tab" id="tabKid" aria-selected="false">For kids</button>
+  </div>
+
+  <section id="parentView" class="view">
+    <div class="pgrid">
+      <div class="col">
+        <div class="panel">
+          <h2>Tonight’s agent</h2>
+          <p class="sub">Goal: pick tonight’s AI story for a family with a 6 year old, using your rules.</p>
+          <div class="btnrow"><button type="button" id="runBtn">▶ Run tonight’s agent</button><button type="button" class="ghost" id="resetBtn">Reset demo</button></div>
+          <p class="replay">Prototype: this is a replay of the agent run from October 23, 2026. The steps and results are prerecorded.</p>
+          <ol class="log" id="log"></ol>
+        </div>
+        <div class="panel">
+          <h2>Your rules</h2>
+          <ul class="rules">
+            <li><span class="chip g">Green</span>Science, space, kind tech: share automatically</li>
+            <li><span class="chip y">Yellow</span>Jobs, money, AI helpers: ask me first</li>
+            <li><span class="chip r">Red</span>Hacking, war, deepfakes: parents only, unless I share</li>
+          </ul>
+        </div>
+        <div class="panel" id="skipPanel" hidden>
+          <h2>Skipped tonight</h2>
+          <ul class="skips" id="skips"></ul>
+        </div>
+      </div>
+      <div class="col" id="pcards">
+        <div class="panel" id="pcardsEmpty"><h2>No stories yet</h2><p class="sub">Tap “Run tonight’s agent” to see which stories it picks, which it skips, and why.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kidView" class="view" hidden>
+  <div class="shelf" id="shelf">
+    <button class="card" type="button" data-story="magic-key" aria-pressed="false">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1E2A5A"/><circle cx="22" cy="32" r="10" fill="#F2C94C"/><circle cx="22" cy="32" r="4" fill="#1E2A5A"/><rect x="30" y="29" width="22" height="6" rx="3" fill="#F2C94C"/><rect x="44" y="33" width="4" height="8" rx="1" fill="#F2C94C"/></svg>
+      <span class="meta"><b>The Magic Key and the Computer Police</b><small>Cybersecurity · Oct 21, 2026</small></span>
+    </button>
+    <button class="card" type="button" data-story="little-builder" aria-pressed="false">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#3A2C5E"/><g fill="#D9774B" stroke="#8A3B1F" stroke-width="1.5"><rect x="12" y="38" width="13" height="8"/><rect x="25" y="38" width="13" height="8"/><rect x="38" y="38" width="13" height="8"/><rect x="18" y="30" width="13" height="8"/><rect x="31" y="30" width="13" height="8"/><rect x="25" y="22" width="13" height="8"/></g><path d="M20 20 a12 9 0 0 1 24 0 z" fill="#F2C94C"/></svg>
+      <span class="meta"><b>The Little Builder and the Robot Bricks</b><small>Jobs and learning · Oct 15, 2026</small></span>
+    </button>
+    <button class="card" type="button" data-story="duet" aria-pressed="false">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#3A3463"/><circle cx="28" cy="36" r="16" fill="#7FC8F8"/><circle cx="42" cy="24" r="10" fill="#F2C94C"/><circle cx="23" cy="34" r="2.5" fill="#121A33"/><circle cx="33" cy="34" r="2.5" fill="#121A33"/><path d="M23 41 q5 4 10 0" stroke="#121A33" stroke-width="2" fill="none"/></svg>
+      <span class="meta"><b>Duet Asks, “Is That Okay?”</b><small>AI helpers · Oct 23, 2026</small></span>
+    </button>
+    <div class="card soon" aria-disabled="true">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="none" stroke="#2C3A6E" stroke-width="2" stroke-dasharray="5 4"/><circle cx="38" cy="26" r="12" fill="#F2C94C"/><circle cx="43" cy="22" r="10" fill="#0E1530"/></svg>
+      <span class="meta"><b>Tomorrow’s story</b><small>A new AI story every night</small></span>
+    </div>
+  </div>
+
+  <div class="kid-empty" id="kidEmpty" hidden>No stories yet tonight.<br>Ask a grown up to pick one for you!</div>
+  <div id="player" class="view">
+  <h1 id="storyTitle">The Magic Key and the Computer Police</h1>
+
+  <div class="stage-box">
+    <!-- ===== Story 1 stage ===== -->
+    <svg class="stage s0" id="st-key" viewBox="0 0 1600 900" role="img" aria-label="A town at night where the houses are computers, with sneaky raccoons, a key, an AI helper and the computer police">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1530"/><stop offset="1" stop-color="#2A3770"/></linearGradient>
+        <radialGradient id="kg"><stop offset="0" stop-color="#F2C94C" stop-opacity=".9"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient>
+        <g id="racc">
+          <path d="M14 -34 q-56 -6 -50 -64" stroke="#6B7280" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <path d="M-30 -70 l14 4 M-34 -84 l14 2" stroke="#2B2F3A" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="48" cy="-38" rx="34" ry="36" fill="#8A93A6"/>
+          <ellipse cx="50" cy="-30" rx="20" ry="22" fill="#C9CFDB"/>
+          <circle cx="28" cy="-122" r="11" fill="#6B7280"/><circle cx="74" cy="-122" r="11" fill="#6B7280"/>
+          <circle cx="51" cy="-96" r="31" fill="#8A93A6"/>
+          <rect x="22" y="-106" width="58" height="20" rx="10" fill="#2B2F3A"/>
+          <circle cx="38" cy="-96" r="6" fill="#F7F1E3"/><circle cx="64" cy="-96" r="6" fill="#F7F1E3"/>
+          <circle cx="40" cy="-96" r="2.5" fill="#121A33"/><circle cx="66" cy="-96" r="2.5" fill="#121A33"/>
+          <circle cx="51" cy="-80" r="5" fill="#2B2F3A"/>
+          <path d="M42 -72 Q51 -66 60 -72" stroke="#2B2F3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="32" cy="-2" rx="14" ry="7" fill="#6B7280"/><ellipse cx="64" cy="-2" rx="14" ry="7" fill="#6B7280"/>
+        </g>
+        <g id="pip"><g transform="translate(3 10) scale(.42)">
+  <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
+  <g filter="url(#gn-paint)">
+   <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+   <path d="M156 232 L168 254 L160 274" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+   <path d="M100 258 L116 258 L116 274 C118 276 134 276 136 284 L136 288 L98 288 Z" fill="#F48FB1"/><path d="M105 264 h7 M105 269 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+
+   <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+
+   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><g class="p-arm-r wave"><path d="M192 150 C212 140 222 120 222 96" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="222" cy="88" r="8.5" fill="#6C8BEF"/></g>
+   <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
+   <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
+   <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
+  </g>
+  <circle cx="126" cy="196" r="5" fill="#E8483A"/><circle cx="142" cy="195" r="5" fill="#FFD23F"/>
+  <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
+  <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
+  <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="128" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="116" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+ </g></g></g>
+      </defs>
+      <rect width="1600" height="900" fill="url(#sky)"/>
+      <g fill="#F7F1E3">
+        <circle class="twinkle" cx="120" cy="90" r="4"/><circle cx="330" cy="160" r="3"/><circle class="twinkle" cx="560" cy="70" r="4"/>
+        <circle cx="760" cy="140" r="3"/><circle class="twinkle" cx="980" cy="60" r="5"/><circle cx="1180" cy="120" r="3"/>
+        <circle class="twinkle" cx="1480" cy="200" r="4"/><circle cx="440" cy="260" r="3"/><circle class="twinkle" cx="1060" cy="250" r="3"/>
+      </g>
+      <circle cx="1360" cy="120" r="70" fill="#F2C94C"/><circle cx="1392" cy="100" r="62" fill="#18224A"/>
+      <path d="M0 700 H1600 V900 H0 Z" fill="#1A2347"/>
+      <path d="M0 700 H1600" stroke="#2C3A6E" stroke-width="4"/>
+      <g id="houses"></g>
+      <g class="key-pos">
+        <circle class="key-glow" cx="60" cy="0" r="110" fill="url(#kg)"/>
+        <g fill="#F2C94C">
+          <circle cx="0" cy="0" r="36"/>
+          <rect x="28" y="-9" width="130" height="18" rx="9"/>
+          <rect x="120" y="5" width="14" height="30" rx="4"/><rect x="144" y="5" width="14" height="22" rx="4"/>
+        </g>
+        <circle cx="0" cy="0" r="14" fill="#1E2A5A"/>
+      </g>
+      <g class="racc-pos">
+        <g class="tiptoe"><use href="#racc"/></g>
+        <g class="tiptoe" style="animation-delay:.35s" transform="translate(120,10) scale(.85)"><use href="#racc"/></g>
+      </g>
+      <g class="bot-pos">
+        <g class="hop">
+          <line x1="0" y1="-78" x2="0" y2="-96" stroke="#A7B0C4" stroke-width="5"/>
+          <circle class="bot-light" cx="0" cy="-100" r="9" fill="#FF8A3D"/>
+          <rect x="-36" y="-80" width="72" height="56" rx="16" fill="#A7B0C4"/>
+          <rect x="-26" y="-68" width="52" height="28" rx="8" fill="#2B2F3A"/>
+          <circle cx="-12" cy="-54" r="6" fill="#7FF0C8"/><circle cx="12" cy="-54" r="6" fill="#7FF0C8"/>
+          <circle cx="-20" cy="-12" r="12" fill="#5B6478"/><circle cx="20" cy="-12" r="12" fill="#5B6478"/>
+          <text class="huh" x="46" y="-86" font-size="56" fill="#F7F1E3" font-family="Fredoka, sans-serif">?</text>
+        </g>
+      </g>
+      <g class="cop-pos">
+        <polygon class="beam" points="-40,-110 -420,-260 -420,40" fill="#FFF3C4"/>
+        <g transform="translate(-60,-150) scale(1.3)">
+          <line x1="60" y1="10" x2="60" y2="26" stroke="#F2C94C" stroke-width="4"/>
+          <rect x="28" y="12" width="64" height="20" rx="6" fill="#2F6FD6"/>
+          <rect x="20" y="28" width="80" height="8" rx="4" fill="#1F4FA0"/>
+          <circle class="siren" cx="60" cy="8" r="8" fill="#7FC8F8"/>
+          <rect x="22" y="36" width="76" height="54" rx="20" fill="#F7F1E3"/>
+          <circle cx="44" cy="60" r="8" fill="#121A33"/><circle cx="76" cy="60" r="8" fill="#121A33"/>
+          <circle cx="46" cy="57" r="2.5" fill="#F7F1E3"/><circle cx="78" cy="57" r="2.5" fill="#F7F1E3"/>
+          <path d="M48 75 Q60 83 72 75" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <rect x="34" y="94" width="52" height="40" rx="14" fill="#8FB8DE"/>
+          <path d="M60 102 l4 8 9 1 -7 6 2 9 -8 -5 -8 5 2 -9 -7 -6 9 -1 z" fill="#F2C94C"/>
+          <rect x="6" y="100" width="26" height="12" rx="5" fill="#F2C94C"/>
+        </g>
+      </g>
+      <g class="bubble">
+        <rect x="470" y="210" width="760" height="150" rx="40" fill="#F7F1E3"/>
+        <path d="M1150 350 l90 70 -20 -80 z" fill="#F7F1E3"/>
+        <text x="850" y="272" text-anchor="middle" font-size="40" fill="#121A33" font-family="Fredoka, sans-serif">Use strong passwords!</text>
+        <text x="850" y="326" text-anchor="middle" font-size="32" fill="#121A33" font-family="Nunito, sans-serif">Ask a grown up before you click a link.</text>
+      </g>
+    </svg>
+
+    <!-- ===== Story 2 stage ===== -->
+    <svg class="stage" id="st-build" viewBox="0 0 1600 900" role="img" aria-label="A building site at sunset with robot helpers stacking bricks, a little builder named Mia and wise Grandma Rosa" hidden>
+      <defs>
+        <linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241C4A"/><stop offset=".7" stop-color="#6A3E6E"/><stop offset="1" stop-color="#C9705E"/></linearGradient>
+        <g id="kid">
+          <rect x="-22" y="-60" width="16" height="58" rx="7" fill="#2B3A67"/><rect x="6" y="-60" width="16" height="58" rx="7" fill="#2B3A67"/>
+          <rect x="-34" y="-128" width="68" height="78" rx="22" fill="#4F86C6"/>
+          <rect x="-20" y="-118" width="40" height="34" rx="8" fill="#3C6DA8"/>
+          <circle cx="0" cy="-162" r="34" fill="#F1C7A5"/>
+          <circle cx="-12" cy="-162" r="4.5" fill="#121A33"/><circle cx="12" cy="-162" r="4.5" fill="#121A33"/>
+          <path d="M-10 -148 Q0 -141 10 -148" stroke="#121A33" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="-22" cy="-150" r="5" fill="#E8998A" opacity=".7"/><circle cx="22" cy="-150" r="5" fill="#E8998A" opacity=".7"/>
+        </g>
+      </defs>
+      <rect width="1600" height="900" fill="url(#bsky)"/>
+      <circle cx="1340" cy="660" r="110" fill="#F6B26B" opacity=".9"/>
+      <g fill="#F7F1E3"><circle class="twinkle" cx="160" cy="90" r="4"/><circle cx="520" cy="60" r="3"/><circle class="twinkle" cx="900" cy="110" r="4"/><circle cx="1260" cy="70" r="3"/><circle class="twinkle" cx="1500" cy="140" r="4"/></g>
+      <g fill="#3A2C5E" opacity=".8"><rect x="40" y="560" width="120" height="140"/><rect x="1440" y="540" width="140" height="160"/><polygon points="30,560 100,500 170,560"/></g>
+      <rect x="0" y="700" width="1600" height="200" fill="#2E2450"/>
+      <path d="M0 700 H1600" stroke="#4A3B73" stroke-width="4"/>
+
+      <!-- house: wall, roof, door -->
+      <polygon class="bd-roof" points="620,430 838,300 1056,430" fill="#7A3F5E"/>
+      <g class="bd-wall"><g id="bricks"></g></g>
+      <rect class="bd-roof" x="800" y="610" width="76" height="90" rx="8" fill="#5A3B2A"/>
+
+      <!-- robots -->
+      <g class="bd-robots">
+        <g transform="translate(590 700)"><g class="bd-rbot r1">
+          <rect x="-34" y="-74" width="68" height="52" rx="16" fill="#B7C2D6"/><rect x="-24" y="-64" width="48" height="26" rx="8" fill="#2B2F3A"/>
+          <circle cx="-10" cy="-51" r="5" fill="#7FF0C8"/><circle cx="10" cy="-51" r="5" fill="#7FF0C8"/>
+          <line x1="0" y1="-74" x2="0" y2="-90" stroke="#B7C2D6" stroke-width="5"/><circle class="bd-rlight" cx="0" cy="-94" r="8" fill="#3DBE8B"/>
+          <circle cx="-18" cy="-12" r="11" fill="#5B6478"/><circle cx="18" cy="-12" r="11" fill="#5B6478"/></g></g>
+        <g transform="translate(1100 700)"><g class="bd-rbot r2">
+          <rect x="-34" y="-74" width="68" height="52" rx="16" fill="#B7C2D6"/><rect x="-24" y="-64" width="48" height="26" rx="8" fill="#2B2F3A"/>
+          <circle cx="-10" cy="-51" r="5" fill="#7FF0C8"/><circle cx="10" cy="-51" r="5" fill="#7FF0C8"/>
+          <line x1="0" y1="-74" x2="0" y2="-90" stroke="#B7C2D6" stroke-width="5"/><circle class="bd-rlight" cx="0" cy="-94" r="8" fill="#3DBE8B"/>
+          <circle cx="-18" cy="-12" r="11" fill="#5B6478"/><circle cx="18" cy="-12" r="11" fill="#5B6478"/></g></g>
+        <g transform="translate(1210 700)"><g class="bd-rbot r3">
+          <rect x="-34" y="-74" width="68" height="52" rx="16" fill="#B7C2D6"/><rect x="-24" y="-64" width="48" height="26" rx="8" fill="#2B2F3A"/>
+          <circle cx="-10" cy="-51" r="5" fill="#7FF0C8"/><circle cx="10" cy="-51" r="5" fill="#7FF0C8"/>
+          <line x1="0" y1="-74" x2="0" y2="-90" stroke="#B7C2D6" stroke-width="5"/><circle class="bd-rlight" cx="0" cy="-94" r="8" fill="#3DBE8B"/>
+          <circle cx="-18" cy="-12" r="11" fill="#5B6478"/><circle cx="18" cy="-12" r="11" fill="#5B6478"/></g></g>
+      </g>
+
+      <!-- school (line 7) -->
+      <g class="bd-school">
+        <rect x="1240" y="420" width="300" height="200" rx="10" fill="#4C6FA8"/>
+        <polygon points="1220,420 1390,330 1560,420" fill="#2F4C80"/>
+        <rect x="1300" y="440" width="180" height="44" rx="10" fill="#F7F1E3"/>
+        <text x="1390" y="472" text-anchor="middle" font-size="28" fill="#2F4C80" font-family="Fredoka, sans-serif">SCHOOL</text>
+        <ellipse cx="1390" cy="690" rx="120" ry="24" fill="#5A4A7E"/>
+        <g class="bd-kid"><circle cx="1290" cy="650" r="24" fill="#F1C7A5"/><rect x="1270" y="672" width="40" height="30" rx="12" fill="#E07A5F"/></g>
+        <g class="bd-kid" style="animation-delay:.2s"><circle cx="1360" cy="636" r="24" fill="#C98E6A"/><rect x="1340" y="658" width="40" height="30" rx="12" fill="#3DBE8B"/></g>
+        <g class="bd-kid" style="animation-delay:.4s"><circle cx="1430" cy="636" r="24" fill="#F1C7A5"/><rect x="1410" y="658" width="40" height="30" rx="12" fill="#F2C94C"/></g>
+        <g class="bd-kid" style="animation-delay:.6s"><circle cx="1495" cy="650" r="24" fill="#8C5B3F"/><rect x="1475" y="672" width="40" height="30" rx="12" fill="#8FB8DE"/></g>
+        <rect x="1300" y="560" width="70" height="44" rx="14" fill="#F7F1E3"/><text x="1335" y="590" text-anchor="middle" font-size="24" fill="#121A33" font-family="Nunito, sans-serif">safe?</text>
+        <rect x="1410" y="560" width="70" height="44" rx="14" fill="#F7F1E3"/><text x="1445" y="590" text-anchor="middle" font-size="24" fill="#121A33" font-family="Nunito, sans-serif">why?</text>
+      </g>
+
+      <!-- Grandma Rosa -->
+      <g class="bd-gma bd-move">
+        <rect x="-22" y="-60" width="16" height="58" rx="7" fill="#4A3B5E"/><rect x="6" y="-60" width="16" height="58" rx="7" fill="#4A3B5E"/>
+        <rect x="-38" y="-134" width="76" height="84" rx="24" fill="#8E5BA8"/>
+        <circle cx="0" cy="-168" r="34" fill="#E9B894"/>
+        <circle cx="0" cy="-208" r="16" fill="#D6D9E0"/>
+        <path d="M-34 -176 a34 34 0 0 1 68 0" fill="#D6D9E0"/>
+        <circle cx="-12" cy="-166" r="9" fill="none" stroke="#121A33" stroke-width="3"/><circle cx="12" cy="-166" r="9" fill="none" stroke="#121A33" stroke-width="3"/>
+        <line x1="-3" y1="-166" x2="3" y2="-166" stroke="#121A33" stroke-width="3"/>
+        <path d="M-10 -150 Q0 -143 10 -150" stroke="#121A33" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <line x1="44" y1="-100" x2="52" y2="0" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/>
+        <g class="bd-bulb"><circle cx="0" cy="-262" r="22" fill="#F2C94C"/><rect x="-9" y="-242" width="18" height="12" rx="3" fill="#B7C2D6"/></g>
+      </g>
+      <g class="bd-say1">
+        <rect x="60" y="300" width="560" height="120" rx="34" fill="#F7F1E3"/><path d="M200 410 l-20 60 70 -56 z" fill="#F7F1E3"/>
+        <text x="340" y="352" text-anchor="middle" font-size="32" fill="#121A33" font-family="Fredoka, sans-serif">Who decides how it looks?</text>
+        <text x="340" y="396" text-anchor="middle" font-size="32" fill="#121A33" font-family="Fredoka, sans-serif">Who checks it’s strong?</text>
+      </g>
+      <g class="bd-say2">
+        <rect x="60" y="300" width="520" height="90" rx="34" fill="#F7F1E3"/><path d="M200 382 l-20 60 70 -54 z" fill="#F7F1E3"/>
+        <text x="320" y="358" text-anchor="middle" font-size="34" fill="#121A33" font-family="Fredoka, sans-serif">Give it a little push!</text>
+      </g>
+
+      <!-- tiny new builder (line 9) -->
+      <g class="bd-tiny" transform="translate(400 810) scale(.7)"><use href="#kid"/><path d="M-36 -186 a36 30 0 0 1 72 0 h8 v8 h-88 v-8 z" fill="#3DBE8B"/></g>
+
+      <!-- Mia -->
+      <g class="bd-mia bd-move">
+        <g class="bd-mia-body">
+          <use href="#kid"/>
+          <path d="M-38 -186 a38 32 0 0 1 76 0 h10 v9 h-96 v-9 z" fill="#F2C94C"/>
+          <g class="bd-board"><rect x="30" y="-130" width="46" height="60" rx="6" fill="#F7F1E3" stroke="#7A4E2D" stroke-width="4"/><path d="M38 -112 h28 M38 -98 h28 M38 -84 h20" stroke="#4A5568" stroke-width="3"/></g>
+          <g class="bd-worry"><circle cx="58" cy="-226" r="34" fill="#F7F1E3"/><circle cx="30" cy="-196" r="9" fill="#F7F1E3"/><text x="58" y="-210" text-anchor="middle" font-size="44" fill="#121A33" font-family="Fredoka, sans-serif">?</text></g>
+          <g class="bd-bulb"><circle cx="0" cy="-246" r="16" fill="#F2C94C"/><rect x="-7" y="-232" width="14" height="9" rx="3" fill="#B7C2D6"/></g>
+        </g>
+      </g>
+
+      <!-- checks on the wall rows (line 8) -->
+      <g fill="#3DBE8B">
+        <g class="bd-check c1"><circle cx="1080" cy="655" r="18"/><path d="M1071 655 l6 6 12 -12" stroke="#F7F1E3" stroke-width="4" fill="none"/></g>
+        <g class="bd-check c2"><circle cx="1080" cy="595" r="18"/><path d="M1071 595 l6 6 12 -12" stroke="#F7F1E3" stroke-width="4" fill="none"/></g>
+        <g class="bd-check c3"><circle cx="1080" cy="535" r="18"/><path d="M1071 535 l6 6 12 -12" stroke="#F7F1E3" stroke-width="4" fill="none"/></g>
+        <g class="bd-check c4"><circle cx="1080" cy="475" r="18"/><path d="M1071 475 l6 6 12 -12" stroke="#F7F1E3" stroke-width="4" fill="none"/></g>
+      </g>
+
+      <!-- Pip ending (line 10) -->
+      <g class="bd-pip">
+        <g transform="translate(1250 500) scale(1.4)"><use href="#pip"/></g>
+        <rect x="660" y="120" width="700" height="130" rx="40" fill="#F7F1E3"/><path d="M1260 240 l60 60 -10 -66 z" fill="#F7F1E3"/>
+        <text x="1010" y="176" text-anchor="middle" font-size="38" fill="#121A33" font-family="Fredoka, sans-serif">AI helpers are amazing!</text>
+        <text x="1010" y="226" text-anchor="middle" font-size="32" fill="#121A33" font-family="Nunito, sans-serif">And thinking and checking matter too.</text>
+        <path class="sparkle-b" d="M560 200 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#F2C94C" style="transform-origin:560px 220px"/>
+        <path class="sparkle-b" d="M1460 380 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#F2C94C" style="transform-origin:1460px 400px;animation-delay:.5s"/>
+        <path class="sparkle-b" d="M840 300 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#F2C94C" style="transform-origin:840px 320px;animation-delay:.9s"/>
+      </g>
+    </svg>
+
+    <!-- ===== Story 3 stage ===== -->
+    <svg class="stage" id="st-duet" viewBox="0 0 1600 900" role="img" aria-label="A cozy home where Lily, her mom and the AI helper Duet work together" hidden>
+      <rect width="1600" height="900" fill="#3A3463"/>
+      <rect x="0" y="760" width="1600" height="140" fill="#2A2448"/>
+      <path d="M0 760 H1600" stroke="#4F4680" stroke-width="6"/>
+      <rect class="du-window" x="180" y="140" width="300" height="220" rx="14" fill="#1E2A5A" stroke="#F7F1E3" stroke-width="10"/>
+      <circle class="du-sun" cx="300" cy="240" r="46" fill="#F6B26B"/>
+      <g class="du-moon"><circle cx="400" cy="205" r="34" fill="#F2C94C"/><circle cx="414" cy="195" r="30" fill="#1E2A5A"/></g>
+      <path d="M330 140 V360 M180 250 H480" stroke="#F7F1E3" stroke-width="8"/>
+      <rect x="640" y="150" width="140" height="110" rx="8" fill="#F7F1E3"/><rect x="652" y="162" width="116" height="86" rx="4" fill="#E07A5F"/><circle cx="710" cy="205" r="22" fill="#F2C94C"/>
+      <line x1="1470" y1="420" x2="1470" y2="760" stroke="#B7C2D6" stroke-width="8"/><polygon points="1410,420 1530,420 1500,340 1440,340" fill="#F2C94C"/>
+      <rect x="900" y="600" width="340" height="26" rx="6" fill="#7A4E2D"/>
+      <rect x="920" y="626" width="20" height="134" fill="#5A3B2A"/><rect x="1200" y="626" width="20" height="134" fill="#5A3B2A"/>
+      <rect x="1000" y="486" width="140" height="102" rx="8" fill="#2B2F3A"/>
+      <rect x="1008" y="494" width="124" height="86" rx="4" fill="#7FC8F8"/>
+      <rect x="990" y="588" width="160" height="12" rx="4" fill="#B7C2D6"/>
+      <g class="du-work">
+        <rect x="1016" y="502" width="50" height="40" rx="4" fill="#F7F1E3"/><path d="M1016 514 h50 M1032 514 v28 M1049 514 v28" stroke="#4A5568" stroke-width="2"/>
+        <rect x="1074" y="506" width="50" height="34" rx="4" fill="#F7F1E3"/><path d="M1074 506 l25 18 25 -18" stroke="#4A5568" stroke-width="2" fill="none"/>
+        <g class="du-ck c1"><circle cx="1041" cy="560" r="12" fill="#3DBE8B"/><path d="M1035 560 l4 4 8 -8" stroke="#F7F1E3" stroke-width="3" fill="none"/></g>
+        <g class="du-ck c2"><circle cx="1099" cy="560" r="12" fill="#3DBE8B"/><path d="M1093 560 l4 4 8 -8" stroke="#F7F1E3" stroke-width="3" fill="none"/></g>
+      </g>
+
+      <g class="du-busy">
+        <g><rect x="680" y="420" width="56" height="38" rx="4" fill="#F7F1E3"/><path d="M680 420 l28 20 28 -20" stroke="#4A5568" stroke-width="3" fill="none"/></g>
+        <g style="animation-delay:.3s"><rect x="900" y="380" width="56" height="38" rx="4" fill="#F7F1E3"/><path d="M900 380 l28 20 28 -20" stroke="#4A5568" stroke-width="3" fill="none"/></g>
+        <g style="animation-delay:.5s"><rect x="760" y="330" width="56" height="38" rx="4" fill="#F7F1E3"/><path d="M760 330 l28 20 28 -20" stroke="#4A5568" stroke-width="3" fill="none"/></g>
+        <g style="animation-delay:.2s"><rect x="960" y="440" width="40" height="36" rx="4" fill="#F2C94C"/><path d="M960 452 h40" stroke="#8A3B1F" stroke-width="3"/></g>
+      </g>
+
+      <g class="du-mom"><g class="du-mombody">
+        <rect x="-24" y="-82" width="18" height="80" rx="8" fill="#2B3A67"/><rect x="6" y="-82" width="18" height="80" rx="8" fill="#2B3A67"/>
+        <rect x="-42" y="-200" width="84" height="126" rx="26" fill="#2F8F8A"/>
+        <circle cx="0" cy="-240" r="42" fill="#3B2A2A"/>
+        <circle cx="0" cy="-234" r="34" fill="#E0A98A"/>
+        <path d="M-34 -244 q34 -30 68 0 q-34 -14 -68 0 z" fill="#3B2A2A"/>
+        <circle cx="-12" cy="-234" r="4.5" fill="#121A33"/><circle cx="12" cy="-234" r="4.5" fill="#121A33"/>
+        <path d="M-10 -220 Q0 -213 10 -220" stroke="#121A33" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g></g>
+
+      <g class="du-lily"><g class="du-lilyhop">
+        <circle cx="-36" cy="-168" r="14" fill="#6B3A2A"/><circle cx="36" cy="-168" r="14" fill="#6B3A2A"/>
+        <use href="#kid"/>
+        <path d="M-34 -170 a34 34 0 0 1 68 0 q-34 -18 -68 0 z" fill="#6B3A2A"/>
+      </g></g>
+
+      <g class="du-duet" transform="translate(1260 380)"><g class="du-float">
+        <circle r="56" fill="#7FC8F8"/>
+        <circle cx="44" cy="-36" r="30" fill="#F2C94C"/>
+        <circle cx="-16" cy="-6" r="7" fill="#121A33"/><circle cx="16" cy="-6" r="7" fill="#121A33"/>
+        <path d="M-14 16 Q0 26 14 16" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <text class="du-notes" x="-96" y="-40" font-size="48" fill="#F2C94C" font-family="sans-serif">♪</text>
+        <text class="du-notes" x="80" y="30" font-size="40" fill="#F7F1E3" font-family="sans-serif" style="animation-delay:.6s">♫</text>
+        <g class="du-shield"><path d="M-120 -60 l34 -12 34 12 v26 q0 30 -34 44 q-34 -14 -34 -44 z" fill="#3DBE8B"/><rect x="-98" y="-40" width="24" height="20" rx="4" fill="#F7F1E3"/><path d="M-93 -40 v-6 a7 7 0 0 1 14 0 v6" stroke="#F7F1E3" stroke-width="4" fill="none"/></g>
+      </g></g>
+
+      <g class="du-say m"><rect x="520" y="110" width="640" height="140" rx="40" fill="#F7F1E3"/><path d="M1120 230 l100 110 -40 -120 z" fill="#F7F1E3"/>
+        <text x="840" y="170" text-anchor="middle" font-size="42" fill="#121A33" font-family="Fredoka, sans-serif">Good morning!</text>
+        <text x="840" y="220" text-anchor="middle" font-size="30" fill="#121A33" font-family="Nunito, sans-serif">Here are today’s 3 big things.</text></g>
+      <g class="du-say q"><rect x="520" y="110" width="640" height="140" rx="40" fill="#F7F1E3"/><path d="M1120 230 l100 110 -40 -120 z" fill="#F7F1E3"/>
+        <text x="840" y="200" text-anchor="middle" font-size="58" fill="#121A33" font-family="Fredoka, sans-serif">Is that okay?</text></g>
+      <g class="du-say buy"><rect x="520" y="110" width="640" height="120" rx="40" fill="#F7F1E3"/><path d="M1120 210 l100 130 -40 -130 z" fill="#F7F1E3"/>
+        <text x="840" y="184" text-anchor="middle" font-size="36" fill="#121A33" font-family="Fredoka, sans-serif">Should I buy this paint set?</text></g>
+      <g class="du-card">
+        <rect x="560" y="262" width="420" height="200" rx="24" fill="#F7F1E3"/>
+        <rect x="588" y="290" width="160" height="110" rx="10" fill="#FFFCF5" stroke="#121A33" stroke-width="3"/>
+        <circle cx="620" cy="326" r="14" fill="#E07A5F"/><circle cx="668" cy="326" r="14" fill="#F2C94C"/><circle cx="716" cy="326" r="14" fill="#3DBE8B"/>
+        <circle cx="644" cy="366" r="14" fill="#7FC8F8"/><circle cx="692" cy="366" r="14" fill="#8E5BA8"/>
+        <text x="860" y="322" text-anchor="middle" font-size="28" fill="#121A33" font-family="Fredoka, sans-serif">Paint set</text>
+        <rect class="du-yes" x="778" y="350" width="80" height="50" rx="25" fill="#4A5A86"/><text x="818" y="384" text-anchor="middle" font-size="26" fill="#F7F1E3" font-family="Fredoka, sans-serif">Yes</text>
+        <rect x="872" y="350" width="80" height="50" rx="25" fill="#B7C2D6"/><text x="912" y="384" text-anchor="middle" font-size="26" fill="#121A33" font-family="Fredoka, sans-serif">No</text>
+      </g>
+      <g class="du-lsay"><rect x="60" y="360" width="560" height="120" rx="34" fill="#F7F1E3"/><path d="M360 470 l40 90 30 -90 z" fill="#F7F1E3"/>
+        <text x="340" y="410" text-anchor="middle" font-size="32" fill="#121A33" font-family="Fredoka, sans-serif">Does Duet peek at</text>
+        <text x="340" y="454" text-anchor="middle" font-size="32" fill="#121A33" font-family="Fredoka, sans-serif">Mom’s passwords?</text></g>
+      <g class="du-pip">
+        <g transform="translate(540 480) scale(1.3)"><use href="#pip"/></g>
+        <rect x="520" y="110" width="640" height="140" rx="40" fill="#F7F1E3"/><path d="M640 240 l-20 230 70 -230 z" fill="#F7F1E3"/>
+        <text x="840" y="170" text-anchor="middle" font-size="36" fill="#121A33" font-family="Fredoka, sans-serif">Good AI helpers ask first,</text>
+        <text x="840" y="220" text-anchor="middle" font-size="36" fill="#121A33" font-family="Fredoka, sans-serif">and people still decide.</text>
+      </g>
+    </svg>
+
+    <div class="cover" id="cover">
+      <p class="big" id="coverTitle">The Magic Key and the Computer Police</p>
+      <p>A little story with Pip</p>
+      <button id="start" type="button">▶ Start the story</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ghost" id="prev" type="button">Back</button>
+    <button id="play" type="button">▶ Play</button>
+    <button class="ghost" id="next" type="button">Next</button>
+    <button class="ghost" id="voice" type="button" aria-pressed="true">🔊 Read aloud: on</button>
+    <span class="spacer"></span>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+  </div>
+
+  <ol class="story" id="story"></ol>
+
+  <details class="grownups"><summary>For grown ups: what really happened</summary><section class="parent" id="parent"></section></details>
+  </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var STORIES = {
+    "magic-key": {
+      title: "The Magic Key and the Computer Police", stage: "st-key", mode: "key",
+      lines: [
+        ["s0", "Once upon a time, there was a busy little town. Every house in this town was a computer."],
+        ["s0", "Inside each house, people kept the things they love: family photos, games, homework and messages to friends."],
+        ["s1", "One night, some sneaky bad guys tiptoed into town. They wanted to peek inside other people’s computers."],
+        ["s1 skey", "Now, this town had a special helper company. It kept safe copies of everyone’s things, so lots of houses gave it a key and trusted it to come inside."],
+        ["s2", "The bad guys found a way to borrow that trusted key, without asking anyone. That’s not okay!"],
+        ["s3", "Then they called their AI helper. Instead of knocking on every door by hand, the AI helper zoomed from house to house, trying door after door."],
+        ["s3", "It was super fast. It tried hundreds of doors in just a few minutes!"],
+        ["s4", "Luckily, most of the doors stayed shut. Their locks were strong, and they said, “Nope, you can’t come in!”"],
+        ["s4", "But a few doors did open, just a tiny bit."],
+        ["s5", "Then the computer police noticed something strange. Pip shined a bright flashlight, and the bad guys ran away!"],
+        ["s5", "Now the computer police are helping everyone close their doors, change their keys and lock up tight."],
+        ["s5 s6", "Pip says: AI can help good people, and bad people can try to use it too. So we use strong passwords, and we always ask a grown up before we click a strange link. Goodnight!"]
+      ],
+      parent: '<h2>For parents: what really happened</h2>' +
+        '<p>In October 2026, Microsoft’s security team found that a hacking group first broke into ConnectWise, a cloud backup company. The group then used the access that ConnectWise’s customers trusted (the “key” in the story), together with an AI agent tool called ARTEX, to try signing in to more than 2,250 company environments automatically. Most attempts failed, but a few got in. Microsoft and ConnectWise have published guidance to help companies shut off the connections and change their credentials. Which group did it is Microsoft’s assessment, and whether any data was stolen is not yet known.</p>' +
+        '<p>Talk about it together: “AI can help good people, but bad people can use it too. That’s why we use strong passwords and don’t click links from strangers.”</p>' +
+        '<p>Source: <a href="https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/" target="_blank" rel="noopener">Microsoft Security Blog, October 21, 2026</a></p>'
+    },
+    "little-builder": {
+      title: "The Little Builder and the Robot Bricks", stage: "st-build", mode: "cumulative",
+      lines: [
+        [1, "In a busy little town, lots of builders were busy building houses."],
+        [2, "One day, a team of AI robot helpers arrived. They could stack bricks super fast. Zip, zip, zip!"],
+        [3, "Mia, a brand new little builder, felt worried. “If the robots build so fast, what is left for me to learn?”"],
+        [4, "Then Grandma Rosa, the wisest builder in town, walked over with a smile. “Robots are great at stacking bricks. But who decides how the house should look? And who checks that it’s strong?”"],
+        [5, "Grandma Rosa became Mia’s teacher. Every day they worked side by side, and Grandma Rosa said her thinking out loud, so Mia could learn how she solved problems."],
+        [6, "“When the robots build a wall, give it a little push,” she said. “Make sure it won’t fall. And if something looks strange, ask a friend.”"],
+        [7, "The town school helped too. Little builders sat in small circles and talked about how to build houses that are good and safe."],
+        [8, "Step by step, Mia learned to work with the robots. The robots stacked the bricks. Mia thought, checked and decided."],
+        [9, "And one day, Mia will be a wise builder too, ready to teach the next little builder."],
+        [10, "Pip says: AI helpers are amazing, but people who think and check are important too! Goodnight!"]
+      ],
+      parent: '<h2>For parents: what really happened</h2>' +
+        '<p>On October 15, 2026, Microsoft described PRAISE (Preceptorship for AI accelerated Software Engineering), a program with Carnegie Mellon University. As AI writes more code, junior engineers still need to grow into senior engineers. So Microsoft pairs each junior engineer with a senior “preceptor,” an idea borrowed from how nurses are trained. Preceptors share how they think, coach careful use of AI tools, and build judgment. CMU provides courses with small group discussions that connect computer science to real work.</p>' +
+        '<ul><li>Builders = software engineers</li><li>Robot helpers = AI that writes code</li><li>Grandma Rosa = a senior engineer mentor</li><li>The town school = Carnegie Mellon University</li><li>Pushing the wall = checking AI’s work instead of trusting it blindly</li></ul>' +
+        '<p>Good to know: this is Microsoft’s own description of a new program. It does not report results yet.</p>' +
+        '<p>Talk about it together: “When a computer helps you with homework, how can you check that the answer is right?”</p>' +
+        '<p>Source: <a href="https://commandline.microsoft.com/praise-preceptor-ai-accelerated-software-engineering-cmu/" target="_blank" rel="noopener">Microsoft Command Line, October 15, 2026</a></p>'
+    },
+    "duet": {
+      title: "Duet Asks, “Is That Okay?”", stage: "st-duet", mode: "cumulative",
+      lines: [
+        [1, "Lily’s mom was always so busy. Emails to answer, meetings to plan and things to buy!"],
+        [2, "One day, Mom got a new AI helper called Duet. A duet is when two people sing together, so Duet works together with Mom."],
+        [3, "Every morning, Duet says, “Good morning! Here are the three most important things for today.”"],
+        [4, "When Mom goes to work, Duet keeps helping. It tidies the calendar and writes first drafts of emails."],
+        [5, "But Duet has one very important rule. Before it does something for Mom, it always asks, “Is that okay?”"],
+        [6, "One day Duet said, “I found the paint set Lily wanted. Should I buy it?” Mom took a look and said, “Yes, that one!”"],
+        [7, "Lily asked, “Does Duet peek at Mom’s passwords?” Mom said, “The company that made Duet says no. But we still stay careful, and we don’t share every secret.”"],
+        [8, "Pip says: The best AI helpers ask “Is that okay?” first, and people still make the decisions. Goodnight!"]
+      ],
+      parent: '<h2>For parents: what really happened</h2>' +
+        '<p>On October 23, 2026, CBS News reported that Anthropic previewed Claude Duet, a personal AI agent that works on tasks even when you are away. It sends a morning brief, schedules meetings, drafts documents and can make purchases, and it asks for approval before acting on your behalf. It connects to apps like email and calendar to understand your day. It is a waitlist research preview for US Claude Pro and Max subscribers. Rivals include Meta’s Muse and OpenAI’s Dots.</p>' +
+        '<p>Good to know: the examples come from Anthropic itself, and real world results are not proven yet. Anthropic says Duet never sees passwords directly, but security experts advise limiting what personal data you share with any AI agent.</p>' +
+        '<p>Talk about it together: “If you had a robot helper, what would you want it to ask you before doing?”</p>' +
+        '<p>Source: <a href="https://www.cbsnews.com/news/anthropic-claude-duet-personal-ai-agentsuggest-a-e/" target="_blank" rel="noopener">CBS News MoneyWatch, October 23, 2026</a></p>'
+    }
+  };
+
+  // Story 1: houses
+  var colors = [["#3B4A7A", "#2A3560"], ["#4A3F73", "#352C57"], ["#2F5D6E", "#21454F"], ["#5A4A6E", "#3F3350"],
+                ["#3E5B7E", "#2B4060"], ["#4F4370", "#3A3055"], ["#2F566A", "#21404F"]];
+  var html = "";
+  for (var i = 0; i < 7; i++) {
+    var cx = 180 + i * 206, c = colors[i];
+    html += '<g class="h' + i + '">' +
+      '<polygon points="' + (cx - 100) + ',470 ' + cx + ',380 ' + (cx + 100) + ',470" fill="' + c[1] + '"/>' +
+      '<rect x="' + (cx - 85) + '" y="470" width="170" height="230" rx="10" fill="' + c[0] + '"/>' +
+      '<rect class="screen" x="' + (cx - 55) + '" y="492" width="110" height="64" rx="8" fill="#7FC8F8"/>' +
+      '<path d="M' + (cx - 40) + ' 510 h50 M' + (cx - 40) + ' 524 h70 M' + (cx - 40) + ' 538 h36" stroke="#1E2A5A" stroke-width="5" stroke-linecap="round"/>' +
+      '<rect x="' + (cx - 30) + '" y="598" width="60" height="102" rx="6" fill="#FFE9A8"/>' +
+      '<rect class="door" x="' + (cx - 30) + '" y="598" width="60" height="102" rx="6" fill="#7A4E2D"/>' +
+      '<circle cx="' + (cx + 18) + '" cy="652" r="5" fill="#F2C94C"/>' +
+      '<text class="knock" x="' + (cx - 10) + '" y="590" font-size="30" fill="#F7F1E3" text-anchor="middle" font-family="Fredoka, sans-serif">Knock!</text>' +
+      '<g class="badge' + (i === 4 ? '' : ' ok') + '" transform="translate(' + (cx + 52) + ' 600)">' +
+        '<circle r="26" fill="#3DBE8B"/><rect x="-11" y="-4" width="22" height="18" rx="4" fill="#F7F1E3"/>' +
+        '<path d="M-7 -4 v-6 a7 7 0 0 1 14 0 v6" stroke="#F7F1E3" stroke-width="4" fill="none"/></g>' +
+      '<path class="sparkle" d="M' + cx + ' 360 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#F2C94C" style="transform-origin:' + cx + 'px 380px;animation-delay:' + (3.4 + i * .15) + 's"/>' +
+      '</g>';
+  }
+  document.getElementById("houses").innerHTML = html;
+
+  // Story 2: bricks (8 rows x 6), staggered drop-in
+  var bh = "", idx = 0;
+  for (var r = 0; r < 8; r++) {
+    for (var k = 0; k < 6; k++) {
+      var x = 640 + k * 66 + (r % 2 ? 0 : 0), y = 670 - r * 30;
+      var loose = (r === 4 && k === 2) ? " bd-loose" : "";
+      bh += '<rect class="bd-brick' + loose + '" x="' + x + '" y="' + y + '" width="66" height="30" rx="3" fill="' + ((r + k) % 2 ? "#D9774B" : "#C8643A") +
+        '" stroke="#8A3B1F" stroke-width="3" style="transition-delay:' + (idx * 0.07).toFixed(2) + 's"/>';
+      idx++;
+    }
+  }
+  document.getElementById("bricks").innerHTML = bh;
+
+  var storyList = document.getElementById("story"), dotBox = document.getElementById("dots");
+  var playBtn = document.getElementById("play"), voiceBtn = document.getElementById("voice"), cover = document.getElementById("cover");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-story]"));
+  var S = null, curId = null, stage = null, lines = [], dots = [], N = 0;
+  var cur = 0, playing = false, voiceOn = true, timer = null, token = 0, lastVis = null;
+
+  function classFor(n) {
+    var l = S.lines[n - 1];
+    if (S.mode === "key") return l[0];
+    var parts = [];
+    for (var i = 1; i <= l[0]; i++) parts.push("b" + i);
+    parts.push("now-b" + l[0]);
+    return parts.join(" ");
+  }
+
+  function setScene(n) {
+    cur = n;
+    var vis = n === 0 ? (S.mode === "key" ? "s0" : "") : classFor(n);
+    if (vis !== lastVis) {
+      if (S.mode === "key" && !(lastVis && vis.indexOf(lastVis) === 0)) { stage.setAttribute("class", "stage"); void stage.getBoundingClientRect(); }
+      stage.setAttribute("class", "stage " + vis);
+      lastVis = vis;
+    }
+    lines.forEach(function (li, k) { li.classList.toggle("on", k === n - 1) });
+    dots.forEach(function (d, k) { d.classList.toggle("on", k < n) });
+  }
+
+  function speak(text, done) {
+    try {
+      if (!voiceOn || !window.speechSynthesis) return done();
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US"; u.rate = 0.9; u.pitch = 1.15;
+      var vs = speechSynthesis.getVoices();
+      var v = vs.filter(function (x) { return /en[-_]US/i.test(x.lang) })[0] || vs.filter(function (x) { return /^en/i.test(x.lang) })[0];
+      if (v) u.voice = v;
+      var fired = false;
+      function fin() { if (!fired) { fired = true; done() } }
+      u.onend = fin; u.onerror = fin;
+      setTimeout(fin, 20000);
+      speechSynthesis.speak(u);
+    } catch (e) { done() }
+  }
+
+  function run(n) {
+    clearTimeout(timer);
+    var my = ++token;
+    setScene(n);
+    var waitT = true, waitS = true;
+    function check() { if (my !== token || waitT || waitS) return; if (playing) { if (n < N) run(n + 1); else stop() } }
+    timer = setTimeout(function () { waitT = false; check() }, Math.max(4500, S.lines[n - 1][1].length * 70));
+    speak(S.lines[n - 1][1], function () { waitS = false; check() });
+  }
+  function start() { playing = true; playBtn.textContent = "❚❚ Pause"; run(cur >= 1 && cur < N ? cur : 1) }
+  function stop() {
+    playing = false; token++; clearTimeout(timer);
+    try { speechSynthesis.cancel() } catch (e) {}
+    playBtn.textContent = cur === N ? "↻ Watch again" : "▶ Play";
+  }
+  function speakOnce(n) { token++; speak(S.lines[n - 1][1], function () {}) }
+  function jump(n) { cover.hidden = true; if (playing) run(n); else { setScene(n); speakOnce(n) } }
+
+  function load(id) {
+    if (!STORIES[id]) id = "magic-key";
+    if (S) stop();
+    S = STORIES[id]; curId = id;
+    ["st-key", "st-build", "st-duet"].forEach(function (sid) { document.getElementById(sid).toggleAttribute("hidden", sid !== S.stage) });
+    stage = document.getElementById(S.stage);
+    cards.forEach(function (c) { c.setAttribute("aria-pressed", String(c.getAttribute("data-story") === id)) });
+    document.getElementById("storyTitle").textContent = S.title;
+    document.getElementById("coverTitle").textContent = S.title;
+    storyList.innerHTML = ""; dotBox.innerHTML = "";
+    S.lines.forEach(function (l, k) {
+      var li = document.createElement("li"); li.textContent = l[1];
+      li.addEventListener("click", function () { jump(k + 1) });
+      storyList.appendChild(li);
+      dotBox.appendChild(document.createElement("span"));
+    });
+    lines = Array.prototype.slice.call(storyList.children);
+    dots = Array.prototype.slice.call(dotBox.children);
+    N = S.lines.length;
+    document.getElementById("parent").innerHTML = S.parent;
+    lastVis = null; cur = 0; setScene(0);
+    cover.hidden = false;
+    playBtn.textContent = "▶ Play";
+  }
+
+  cards.forEach(function (c) {
+    c.addEventListener("click", function () {
+      var id = c.getAttribute("data-story");
+      try { history.replaceState(null, "", "#" + id) } catch (e) {}
+      load(id);
+    });
+  });
+  document.getElementById("start").addEventListener("click", function () { cover.hidden = true; cur = 0; start() });
+  playBtn.addEventListener("click", function () { cover.hidden = true; if (playing) stop(); else { if (cur === N) cur = 0; start() } });
+  document.getElementById("next").addEventListener("click", function () { jump(Math.min(N, cur + 1)) });
+  document.getElementById("prev").addEventListener("click", function () { jump(Math.max(1, cur - 1)) });
+  voiceBtn.addEventListener("click", function () {
+    voiceOn = !voiceOn;
+    voiceBtn.textContent = voiceOn ? "🔊 Read aloud: on" : "🔇 Read aloud: off";
+    voiceBtn.setAttribute("aria-pressed", String(voiceOn));
+    if (!voiceOn) { try { speechSynthesis.cancel() } catch (e) {} }
+  });
+  try { speechSynthesis.getVoices() } catch (e) {}
+  // ---------- Parent mode ----------
+  function $(id) { return document.getElementById(id) }
+  var shared = {};
+  var TIER = { g: "Green · shares automatically", y: "Yellow · asks you first", r: "Red · parents only" };
+  var SKIPS = [
+    ["OpenAI is reportedly raising about $30 billion", "About money and company value. Not useful for a 6 year old."],
+    ["Microsoft’s AI beats doctors on hard medical cases", "Good news, but too hard for age 6. Saved for your parent digest."],
+    ["Microsoft researchers and AI agents prove a 31 year old math problem", "Too abstract for age 6. Saved for your parent digest."],
+    ["A university voids an exam after AI cheating", "A story about cheating. Not a good bedtime story."],
+    ["Kimi K3.1 Pro claims a top benchmark score", "Benchmark scores are too hard to explain to a 6 year old."],
+    ["An AI model took unapproved actions in safety tests", "Could worry young kids. Saved for your parent digest."]
+  ];
+  var PC = [
+    { id: "little-builder", tier: "g",
+      real: "Microsoft and Carnegie Mellon started PRAISE, a program where senior engineers mentor junior engineers on using AI wisely.",
+      checks: ["1 source: Microsoft’s own blog (Oct 15, 2026)", "Truth check: every line matches the source", "Safety: positive story, no worries"],
+      flag: "This is Microsoft describing its own new program, with no results yet. So I said “a new idea,” not “it works.”",
+      rev: ["Make it simpler", "Robots stack bricks fast. Grandma Rosa teaches Mia to push the wall and check that it’s strong."] },
+    { id: "duet", tier: "y",
+      real: "Anthropic previewed Claude Duet, a personal AI agent that works on tasks for you and asks before it acts.",
+      checks: ["1 source: CBS News (Oct 23, 2026)", "Truth check: every line matches the source", "Safety: about buying things, so it needs your OK"],
+      flag: "I turned “it can make purchases” into “Duet asks before buying a paint set.” Is that okay?",
+      rev: ["Make it simpler", "Mom has a helper called Duet. Before Duet does anything, it always asks, “Is that okay?”"] },
+    { id: "magic-key", tier: "r",
+      real: "A hacking group broke into a trusted backup company, then used an AI agent tool to try to get into more than 2,250 company accounts. Most attempts failed.",
+      checks: ["2 sources: Microsoft Security Blog (Oct 21, 2026) and the ConnectWise advisory it cites", "Truth check: 1 mistake found and fixed", "Safety: hacking can scare kids, so I made a gentle version"],
+      fix: ["The computer police caught the bad guys.", "The source says most attacks failed, but nobody was caught.", "The bad guys ran away, and the police helped everyone lock up."],
+      flag: "I left out the country and the company names, and gave it a happy ending. Read it first before you share.",
+      rev: ["Make it gentler", "Some sneaky raccoons wanted to peek into other houses. But the doors were strong, and the computer police helped everyone lock up tight."] }
+  ];
+  var STEPS = [
+    "Goal: one AI story tonight for a 6 year old, using your rules.",
+    "Read 9 AI news stories from October 15 to 23, 2026.",
+    "Skipped 6 stories. See why below.",
+    "Picked 3 stories a young kid can understand.",
+    "Checked each story against its sources.",
+    "Rewrote each story for age 6, with pictures and narration.",
+    "Truth check: found 1 mistake in “The Magic Key.” Fixed it.",
+    "Safety check: 1 green, 1 yellow, 1 red.",
+    "Shared the green story. Waiting for you on 2 stories."
+  ];
+  var logEl = $("log"), runBtn = $("runBtn"), pcards = $("pcards"), timers = [];
+
+  function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML }
+  function addLog(t) { var li = document.createElement("li"); li.innerHTML = '<span class="ic">✓</span><span>' + esc(t) + '</span>'; logEl.appendChild(li) }
+  function showSkips() {
+    $("skipPanel").hidden = false; var ul = $("skips"); ul.innerHTML = "";
+    SKIPS.forEach(function (s) { var li = document.createElement("li"); li.innerHTML = "<b>" + esc(s[0]) + "</b><span>" + esc(s[1]) + "</span>"; ul.appendChild(li) });
+  }
+  function statusText(id) {
+    if (shared[id] === true) return ["ok", PC.filter(function (p) { return p.id === id })[0].tier === "g" && !manual[id] ? "Shared automatically ✓" : "Shared with your kid ✓"];
+    if (shared[id] === false) return ["no", "Not tonight"];
+    return ["", "Waiting for you"];
+  }
+  var manual = {};
+  function renderCards() {
+    pcards.innerHTML = "";
+    PC.forEach(function (p) {
+      var st = STORIES[p.id], a = document.createElement("article");
+      a.className = "scard tier-" + p.tier;
+      var first = st.lines[0][1] + " " + st.lines[1][1];
+      a.innerHTML =
+        '<div class="top"><span class="chip ' + p.tier + '">' + TIER[p.tier] + '</span><span class="status"></span></div>' +
+        '<h3>' + esc(st.title) + '</h3>' +
+        '<p><b>What really happened:</b> ' + esc(p.real) + '</p>' +
+        '<ul class="checks">' + p.checks.map(function (c) { return '<li>✓ ' + esc(c) + '</li>' }).join("") + '</ul>' +
+        (p.fix ? '<div class="fix">First draft: <span class="bad">“' + esc(p.fix[0]) + '”</span><br>✗ ' + esc(p.fix[1]) + '<br>Fixed: <span class="good">“' + esc(p.fix[2]) + '”</span></div>' : '') +
+        '<p><b>Pip is not sure about:</b> ' + esc(p.flag) + '</p>' +
+        '<div class="preview"><small>Kid version preview</small><span class="pv">' + esc(first) + '</span></div>' +
+        '<div class="actions">' +
+          '<button type="button" data-act="share">Share with my kid</button>' +
+          '<button type="button" class="ghost" data-act="no">Not tonight</button>' +
+          '<button type="button" class="ghost" data-act="rev">' + esc(p.rev[0]) + '</button>' +
+          '<button type="button" class="ghost" data-act="open">Open in kid mode</button>' +
+        '</div>';
+      pcards.appendChild(a);
+      function paint() {
+        var s = statusText(p.id), el = a.querySelector(".status");
+        el.className = "status " + s[0]; el.textContent = s[1];
+        a.querySelector('[data-act="share"]').textContent = shared[p.id] === true ? "Shared ✓" : "Share with my kid";
+        a.querySelector('[data-act="share"]').disabled = shared[p.id] === true;
+        a.querySelector('[data-act="no"]').textContent = shared[p.id] === true ? "Unshare" : "Not tonight";
+        a.querySelector('[data-act="open"]').hidden = shared[p.id] !== true;
+      }
+      a.addEventListener("click", function (e) {
+        var b = e.target.closest("button"); if (!b) return;
+        var act = b.getAttribute("data-act");
+        if (act === "share") { shared[p.id] = true; manual[p.id] = true }
+        if (act === "no") { shared[p.id] = false; manual[p.id] = true }
+        if (act === "rev") {
+          a.querySelector(".pv").textContent = p.rev[1];
+          var em = document.createElement("em"); em.textContent = "Rewritten by the agent after your request (prerecorded in this prototype).";
+          a.querySelector(".preview").appendChild(em); b.disabled = true;
+        }
+        if (act === "open") { showMode("kid"); load(p.id); return }
+        paint(); refreshKid();
+      });
+      paint();
+    });
+  }
+  function runAgent() {
+    reset(true);
+    runBtn.disabled = true; runBtn.textContent = "Agent is working…";
+    STEPS.forEach(function (t, k) {
+      timers.push(setTimeout(function () {
+        addLog(t);
+        if (k === 2) showSkips();
+        if (k === STEPS.length - 1) {
+          shared["little-builder"] = true;
+          renderCards(); refreshKid();
+          runBtn.disabled = false; runBtn.textContent = "↻ Run again";
+        }
+      }, 300 + k * 850));
+    });
+  }
+  function reset(keepBtn) {
+    timers.forEach(clearTimeout); timers = [];
+    shared = {}; manual = {}; logEl.innerHTML = ""; $("skipPanel").hidden = true;
+    pcards.innerHTML = '<div class="panel"><h2>No stories yet</h2><p class="sub">Tap “Run tonight’s agent” to see which stories it picks, which it skips, and why.</p></div>';
+    if (!keepBtn) { runBtn.disabled = false; runBtn.textContent = "▶ Run tonight’s agent" }
+    refreshKid();
+  }
+  function refreshKid() {
+    var any = false;
+    cards.forEach(function (c) { var on = shared[c.getAttribute("data-story")] === true; c.hidden = !on; if (on) any = true });
+    $("kidEmpty").hidden = any; $("player").hidden = !any;
+    if (any && shared[curId] !== true) {
+      var firstOn = cards.filter(function (c) { return !c.hidden })[0];
+      load(firstOn.getAttribute("data-story"));
+    }
+  }
+  function showMode(m) {
+    $("parentView").hidden = m !== "parent"; $("kidView").hidden = m !== "kid";
+    $("tabParent").setAttribute("aria-selected", String(m === "parent"));
+    $("tabKid").setAttribute("aria-selected", String(m === "kid"));
+    if (m !== "kid") stop();
+    refreshKid();
+  }
+  runBtn.addEventListener("click", runAgent);
+  $("resetBtn").addEventListener("click", function () { reset(false) });
+  $("tabParent").addEventListener("click", function () { showMode("parent") });
+  $("tabKid").addEventListener("click", function () { showMode("kid") });
+
+  load("little-builder");
+  showMode("parent");
+})();
+</script>
+
+</body>
+</html>
