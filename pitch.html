@@ -156,13 +156,97 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 footer { background: var(--night); color: var(--mist2); font-size: 14px; padding-block: 28px 40px; border-top: 1px solid var(--night3) }
 footer a { color: var(--mist) }
 footer ul { margin: 8px 0 0; padding-left: 18px }
+
+/* ---------- refined characters and motion ---------- */
+.reveal { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s) }
+.js .reveal:not(.in) { opacity: 0; transform: translateY(28px) }
+.p-bob { animation: bob 4.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center }
+.p-shadow { animation: shadow 4.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center }
+.p-eyes { animation: blink 5.5s infinite; transform-box: fill-box; transform-origin: center }
+.p-glow { animation: glow 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center }
+.p-ring { animation: ring 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center }
+.p-arm-r.wave { animation: wave 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 30% 8% }
+.sleepy { animation-duration: 6s }
+@keyframes bob { 50% { transform: translateY(-5px) } }
+@keyframes shadow { 50% { transform: scaleX(.82); opacity: .1 } }
+@keyframes blink { 0%, 93%, 100% { transform: scaleY(1) } 96% { transform: scaleY(.1) } }
+@keyframes glow { 50% { transform: scale(1.35); opacity: .55 } }
+@keyframes ring { 0% { transform: scale(.7); opacity: .7 } 100% { transform: scale(1.5); opacity: 0 } }
+@keyframes wave { 0%, 55%, 100% { transform: rotate(0) } 65% { transform: rotate(-38deg) } 75% { transform: rotate(-18deg) } 85% { transform: rotate(-38deg) } }
+.tw circle { animation: twinkle 3s ease-in-out infinite }
+.tw circle:nth-child(2n) { animation-delay: 1s } .tw circle:nth-child(3n) { animation-delay: 2s }
+@keyframes twinkle { 50% { opacity: .25 } }
+.moonglow { animation: mg 5s ease-in-out infinite; transform-box: fill-box; transform-origin: center }
+@keyframes mg { 50% { transform: scale(1.1); opacity: .6 } }
+svg.pip, svg.mini-pip, svg.sleep-pip { overflow: visible }
+
+/* problem: live headline feed */
+.feed-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center }
+.jw { font-style: normal; font-weight: 700; color: var(--ink); text-decoration: underline wavy var(--coral); text-underline-offset: 5px }
+.feed { background: var(--night); color: var(--cream); border-radius: 26px; padding: 18px 18px 0; box-shadow: 0 24px 50px -24px rgba(18,26,51,.55) }
+.feed-top { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); padding: 0 4px 14px }
+.live { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); animation: live 1.4s ease-in-out infinite }
+@keyframes live { 50% { box-shadow: 0 0 0 7px rgba(240,138,110,0) ; opacity: .5 } 0%, 100% { box-shadow: 0 0 0 0 rgba(240,138,110,.6) } }
+.feed-win { height: 340px; overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent); mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent) }
+.feed ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; animation: feed 34s linear infinite }
+.feed:hover ul { animation-play-state: paused }
+@keyframes feed { to { transform: translateY(calc(-50% - 6px)) } }
+.feed li { background: var(--night2); border-radius: 16px; padding: 14px 16px }
+.feed .tag { font-size: 13px; font-weight: 700; color: var(--mist2) }
+.feed li p { margin: 4px 0 0; font-weight: 700; font-size: 17px; line-height: 1.35 }
+.feed li i { font-style: normal; color: var(--gold); text-decoration: underline wavy var(--coral); text-underline-offset: 4px }
+.lit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px; align-items: center; margin-top: clamp(64px, 8vw, 96px) }
+.lit .stats { margin-top: 0 }
+h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
+.ask { margin-top: clamp(64px, 8vw, 96px) }
+.faces { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 32px }
+.faces figure { margin: 0; text-align: center }
+.face { position: relative; width: min(100%, 200px); margin: 0 auto }
+.face svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 12px 18px rgba(18,26,51,.14)); transition: transform .3s ease }
+.faces figure:hover .face svg { transform: translateY(-6px) rotate(-2deg) }
+.bubble { position: absolute; top: -4%; right: -2%; width: 30%; aspect-ratio: 1; border-radius: 50%; background: var(--paper); border: 3px solid var(--ink); display: grid; place-items: center; font-family: var(--f-display); font-weight: 600; font-size: clamp(20px, 2.6vw, 32px); animation: q 2.6s ease-in-out infinite; animation-delay: var(--b) }
+@keyframes q { 0%, 100% { transform: translateY(0) rotate(-6deg) } 50% { transform: translateY(-8px) rotate(8deg) } }
+.faces figcaption { margin-top: 14px; font-family: var(--f-display); font-weight: 600; font-size: clamp(18px, 2vw, 24px) }
+@media (max-width: 860px) { .feed-row, .lit { grid-template-columns: 1fr } .faces { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+
+/* product: detective */
+.glass { animation: swing 3.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 10% 90% }
+@keyframes swing { 50% { transform: rotate(-8deg) translate(-4px, -4px) } }
+.spark { animation: spark 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center }
+.spark.s2 { animation-delay: .7s } .spark.s3 { animation-delay: 1.4s }
+@keyframes spark { 0%, 100% { transform: scale(.4); opacity: .2 } 50% { transform: scale(1); opacity: 1 } }
+.arrow, .flow .to { animation: nudge 1.6s ease-in-out infinite }
+@keyframes nudge { 50% { translate: 6px 0 } }
+@media (max-width: 860px) { @keyframes nudge { 50% { translate: 0 6px } } }
+
+/* how: tiles light up in turn */
+.tiles.all i { animation: scan 3s ease-in-out infinite }
+.tiles.all i:nth-child(1){animation-delay:0s}.tiles.all i:nth-child(2){animation-delay:.15s}.tiles.all i:nth-child(3){animation-delay:.3s}.tiles.all i:nth-child(4){animation-delay:.45s}.tiles.all i:nth-child(5){animation-delay:.6s}.tiles.all i:nth-child(6){animation-delay:.75s}.tiles.all i:nth-child(7){animation-delay:.9s}.tiles.all i:nth-child(8){animation-delay:1.05s}.tiles.all i:nth-child(9){animation-delay:1.2s}
+@keyframes scan { 0%, 30%, 100% { background: #B9C2DC } 15% { background: var(--sky) } }
+.tiles.pick i.on { animation: pop 3s ease-in-out infinite }
+@keyframes pop { 0%, 100% { transform: scale(1) } 50% { transform: scale(1.14); box-shadow: 0 0 0 4px rgba(242,201,76,.3) } }
+.lanes p { transition: transform .25s ease } .lanes p:hover { transform: translateX(6px) }
+
+/* demo + future + close */
+.phone .frame { animation: float 5s ease-in-out infinite; box-shadow: 0 30px 60px -30px rgba(0,0,0,.7) }
+.phone:nth-child(2) .frame { animation-delay: -2.5s }
+@keyframes float { 50% { transform: translateY(-10px) } }
+.future.in .road li { animation: rise .6s cubic-bezier(.2,.7,.2,1) both }
+.future.in .road li:nth-child(2) { animation-delay: .15s } .future.in .road li:nth-child(3) { animation-delay: .3s } .future.in .road li:nth-child(4) { animation-delay: .45s }
+@keyframes rise { from { opacity: 0; transform: translateY(24px) } }
+.road .ic { transition: transform .3s } .road li:hover .ic { transform: rotate(-10deg) scale(1.08) }
+.sleeper { position: relative; width: 120px; margin-bottom: 18px }
+.sleeper svg { width: 100%; height: auto }
+.z { position: absolute; font-family: var(--f-display); font-weight: 600; color: var(--gold); opacity: 0; animation: zz 3.6s ease-in infinite }
+.z1 { left: 92%; top: 6%; font-size: 20px } .z2 { left: 104%; top: -8%; font-size: 26px; animation-delay: 1.2s } .z3 { left: 118%; top: -24%; font-size: 32px; animation-delay: 2.4s }
+@keyframes zz { 0% { opacity: 0; transform: translate(0, 10px) } 30% { opacity: 1 } 100% { opacity: 0; transform: translate(14px, -22px) } }
+.btn { transition: transform .2s ease, box-shadow .2s ease } .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(242,201,76,.8) }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } .js .reveal:not(.in) { opacity: 1; transform: none } }
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="pip" viewBox="0 0 120 140"><line x1="60" y1="10" x2="60" y2="28" stroke="#F2C94C" stroke-width="4"/><circle cx="60" cy="9" r="7" fill="#F2C94C"/><rect x="22" y="28" width="76" height="58" rx="20" fill="#F7F1E3"/><circle cx="44" cy="56" r="8" fill="#121A33"/><circle cx="76" cy="56" r="8" fill="#121A33"/><circle cx="46" cy="53" r="2.5" fill="#F7F1E3"/><circle cx="78" cy="53" r="2.5" fill="#F7F1E3"/><path d="M48 72 Q60 80 72 72" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="34" y="92" width="52" height="40" rx="14" fill="#8FB8DE"/><circle cx="60" cy="112" r="7" fill="#F2C94C"/></symbol>
-  <symbol id="pipDark" viewBox="0 0 120 140"><line x1="60" y1="10" x2="60" y2="28" stroke="#B7791F" stroke-width="4"/><circle cx="60" cy="9" r="7" fill="#F2C94C"/><rect x="22" y="28" width="76" height="58" rx="20" fill="#121A33"/><circle cx="44" cy="56" r="8" fill="#F7F1E3"/><circle cx="76" cy="56" r="8" fill="#F7F1E3"/><path d="M48 72 Q60 80 72 72" stroke="#F7F1E3" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="34" y="92" width="52" height="40" rx="14" fill="#8FB8DE"/><circle cx="60" cy="112" r="7" fill="#F2C94C"/></symbol>
   <symbol id="arrowR" viewBox="0 0 64 36"><path d="M0 12 H40 V0 L64 18 L40 36 V24 H0 Z" fill="currentColor"/></symbol>
 </svg>
 
@@ -182,7 +266,7 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
 
 <!-- 1. Hero -->
 <section class="hero" id="top">
-  <svg class="stars" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="1000" cy="150" r="90" fill="#F2C94C"/><circle cx="1036" cy="126" r="82" fill="#1E2851"/><g fill="#F7F1E3"><circle cx="120" cy="80" r="3"/><circle cx="420" cy="60" r="2"/><circle cx="660" cy="120" r="3"/><circle cx="820" cy="40" r="2"/><circle cx="1140" cy="320" r="3"/><circle cx="90" cy="600" r="2"/><circle cx="560" cy="640" r="3"/></g><circle cx="760" cy="360" r="3" fill="#F2C94C"/></svg>
+  <svg class="stars" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="mgr"><stop offset=".55" stop-color="#F2C94C" stop-opacity=".22"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs><circle class="moonglow" cx="1000" cy="150" r="170" fill="url(#mgr)"/><circle cx="1000" cy="150" r="90" fill="#F2C94C"/><circle cx="1036" cy="126" r="82" fill="#1E2851"/><g fill="#F7F1E3" class="tw"><circle cx="120" cy="80" r="3"/><circle cx="420" cy="60" r="2"/><circle cx="660" cy="120" r="3"/><circle cx="820" cy="40" r="2"/><circle cx="1140" cy="320" r="3"/><circle cx="90" cy="600" r="2"/><circle cx="560" cy="640" r="3"/></g><circle cx="760" cy="360" r="3" fill="#F2C94C"/></svg>
   <div class="wrap" style="position:relative">
     <div>
       <p class="eyebrow">SEM Week 1 · Agentic AI News</p>
@@ -193,34 +277,58 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
     </div>
-    <svg class="pip" role="img" aria-label="Pip, a small friendly robot narrator" viewBox="0 0 120 140"><use href="#pip"/></svg>
+    <svg class="pip" role="img" aria-label="Pip, a small friendly robot narrator, waving" viewBox="0 0 120 140"><defs><linearGradient id="phu1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFDF8"/><stop offset="1" stop-color="#EADFC6"/></linearGradient><linearGradient id="pbu1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AFCFEC"/><stop offset="1" stop-color="#7BA7D3"/></linearGradient><radialGradient id="pgu1"><stop offset="0" stop-color="#F2C94C" stop-opacity=".75"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="p-shadow" cx="60" cy="136" rx="28" ry="3.6" fill="#000" opacity=".16"/>
+<g class="p-bob">
+<circle class="p-glow" cx="60" cy="10" r="15" fill="url(#pgu1)"/>
+<path d="M60 15 V29" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="10" r="6.2" fill="#F2C94C"/><circle cx="58" cy="8" r="2" fill="#FFF6D6"/>
+<rect x="14.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/><rect x="95.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/>
+<rect x="22" y="28" width="76" height="58" rx="23" fill="url(#phu1)"/>
+<path d="M35 37 q9 -5 21 -4.5" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" fill="none" opacity="0.95"/>
+<g class="p-eyes"><ellipse cx="44" cy="56" rx="7.6" ry="8.6" fill="#121A33"/><ellipse cx="76" cy="56" rx="7.6" ry="8.6" fill="#121A33"/><circle cx="46.8" cy="52.4" r="2.7" fill="#FFFFFF"/><circle cx="78.8" cy="52.4" r="2.7" fill="#FFFFFF"/><circle cx="41.6" cy="59.4" r="1.2" fill="#FFFFFF" opacity=".8"/><circle cx="73.6" cy="59.4" r="1.2" fill="#FFFFFF" opacity=".8"/></g>
+<ellipse cx="34.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/><ellipse cx="85.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/>
+<path d="M51 70 Q60 77.5 69 70" stroke="#121A33" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+<rect x="51" y="85" width="18" height="8" rx="3" fill="#D8CBAE"/>
+<g class="p-arm-l"><rect x="23" y="94" width="11" height="26" rx="5.5" fill="url(#pbu1)" transform="rotate(14 29 96)"/><circle cx="23" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<g class="p-arm-r wave"><rect x="86" y="94" width="11" height="26" rx="5.5" fill="url(#pbu1)" transform="rotate(-14 91 96)"/><circle cx="97" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<rect x="34" y="91" width="52" height="40" rx="16" fill="url(#pbu1)"/>
+<path d="M41 98 q6 -3.5 13 -3.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>
+<circle class="p-ring" cx="60" cy="111" r="11" fill="none" stroke="#F2C94C" stroke-width="2" opacity=".45"/>
+<path d="M60 116.5 C 51 110, 53 103.5, 57.2 104.5 C 59 105, 60 106.6, 60 106.6 C 60 106.6, 61 105, 62.8 104.5 C 67 103.5, 69 110, 60 116.5 Z" fill="#F2C94C"/>
+</g></svg>
   </div>
 </section>
 
 <!-- 2. Problem -->
 <section class="cream" id="problem">
   <div class="wrap">
-    <p class="eyebrow">The problem</p>
-    <h2>AI news is written for tech people</h2>
-    <p class="lead">AI is shaping our kids’ future. Parents want to talk about it at home, but don’t know how to explain it.</p>
-    <div class="jargon" role="img" aria-label="AI jargon words falling around a confused parent and child">
-      <span class="word" style="left:6%;top:6%;background:var(--ink);color:var(--cream);transform:rotate(-8deg)">LLM</span>
-      <span class="word" style="left:24%;top:0;background:var(--gold);transform:rotate(6deg)">Agentic</span>
-      <span class="word" style="left:44%;top:14%;background:#4F86C6;color:var(--cream);transform:rotate(-4deg)">Multimodal</span>
-      <span class="word" style="left:66%;top:2%;background:var(--ink);color:var(--cream);transform:rotate(-5deg)">Benchmark</span>
-      <span class="word" style="right:2%;top:18%;background:var(--coral);transform:rotate(5deg)">Tokens</span>
-      <span class="word" style="left:2%;top:46%;background:var(--sky);transform:rotate(10deg)">Fine tuning</span>
-      <span class="word" style="right:4%;top:48%;background:var(--gold);transform:rotate(-10deg)">Parameters</span>
-      <span class="word" style="left:14%;top:80%;background:#2F8F8A;color:var(--cream);transform:rotate(4deg)">Inference</span>
-      <span class="q" style="left:41%;top:40%">?</span>
-      <span class="q" style="left:56%;top:52%">?</span>
-      <svg class="family" viewBox="0 0 360 320" aria-hidden="true"><rect x="95" y="240" width="22" height="80" rx="9" fill="#2B3A67"/><rect x="125" y="240" width="22" height="80" rx="9" fill="#2B3A67"/><rect x="80" y="140" width="82" height="112" rx="26" fill="#2F8F8A"/><circle cx="121" cy="86" r="44" fill="#3B2A2A"/><circle cx="121" cy="92" r="38" fill="#E0A98A"/><circle cx="108" cy="90" r="5" fill="#121A33"/><circle cx="134" cy="90" r="5" fill="#121A33"/><path d="M108 112 q13 -8 26 0" stroke="#121A33" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="232" y="270" width="18" height="50" rx="8" fill="#2B3A67"/><rect x="256" y="270" width="18" height="50" rx="8" fill="#2B3A67"/><rect x="220" y="200" width="66" height="80" rx="22" fill="#4F86C6"/><circle cx="222" cy="164" r="12" fill="#6B3A2A"/><circle cx="284" cy="164" r="12" fill="#6B3A2A"/><circle cx="253" cy="170" r="33" fill="#F1C7A5"/><circle cx="242" cy="168" r="4.5" fill="#121A33"/><circle cx="264" cy="168" r="4.5" fill="#121A33"/><path d="M243 186 q10 -6 20 0" stroke="#121A33" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
+    <div class="feed-row">
+      <div class="reveal">
+        <p class="eyebrow">The problem</p>
+        <h2>AI moves fast. New AI news lands every day.</h2>
+        <p class="lead">And most of it is written for tech people, full of words like <i class="jw">agentic</i>, <i class="jw">benchmark</i> and <i class="jw">AI agent</i>.</p>
+      </div>
+      <div class="feed reveal" style="--d:.15s" aria-label="A stream of real AI headlines from this month">
+        <div class="feed-top"><span class="live"></span>AI headlines, this month</div>
+        <div class="feed-win"><ul><li><span class="tag">Microsoft Security</span><p>Hackers used <i>agentic AI</i> in a <i>supply chain</i> attack</p></li><li><span class="tag">Kimi</span><p>Kimi K3.1 Pro claims a top <i>benchmark</i> score</p></li><li><span class="tag">Microsoft AI</span><p><i>MAI-DxO</i> beats doctors on hard <i>NEJM</i> cases</p></li><li><span class="tag">OpenAI</span><p>OpenAI is reportedly raising about $30 billion</p></li><li><span class="tag">Anthropic</span><p>Claude Duet, a personal <i>AI agent</i>, asks before it acts</p></li><li><span class="tag">Microsoft Research</span><p><i>AI agents</i> help prove a 31 year old math problem</p></li><li><span class="tag">AI safety</span><p>An AI model took <i>unapproved actions</i> in safety tests</p></li><li><span class="tag">Microsoft and CMU</span><p>PRAISE teaches engineers to use AI wisely</p></li><li><span class="tag">Education</span><p>A university voids an exam after AI cheating</p></li><li aria-hidden="true"><span class="tag">Microsoft Security</span><p>Hackers used <i>agentic AI</i> in a <i>supply chain</i> attack</p></li><li aria-hidden="true"><span class="tag">Kimi</span><p>Kimi K3.1 Pro claims a top <i>benchmark</i> score</p></li><li aria-hidden="true"><span class="tag">Microsoft AI</span><p><i>MAI-DxO</i> beats doctors on hard <i>NEJM</i> cases</p></li><li aria-hidden="true"><span class="tag">OpenAI</span><p>OpenAI is reportedly raising about $30 billion</p></li><li aria-hidden="true"><span class="tag">Anthropic</span><p>Claude Duet, a personal <i>AI agent</i>, asks before it acts</p></li><li aria-hidden="true"><span class="tag">Microsoft Research</span><p><i>AI agents</i> help prove a 31 year old math problem</p></li><li aria-hidden="true"><span class="tag">AI safety</span><p>An AI model took <i>unapproved actions</i> in safety tests</p></li><li aria-hidden="true"><span class="tag">Microsoft and CMU</span><p>PRAISE teaches engineers to use AI wisely</p></li><li aria-hidden="true"><span class="tag">Education</span><p>A university voids an exam after AI cheating</p></li></ul></div>
+      </div>
     </div>
-    <div class="stats">
-      <div><b>2 in 3</b><span>teens use AI regularly. Less than half of parents do.</span></div>
-      <div><b>58%</b><span>of parents want schools to teach responsible AI across classes.</span></div>
+
+    <div class="lit reveal">
+      <div>
+        <p class="eyebrow">Why it matters</p>
+        <h3 class="big">AI literacy matters, and it should start young.</h3>
+        <p class="lead">Kids are growing up with AI. They should grow up understanding it too.</p>
+      </div>
+      <div class="stats">
+        <div><b>2 in 3</b><span>teens use AI regularly. Less than half of parents do.</span></div>
+        <div><b>58%</b><span>of parents want schools to teach responsible AI across classes.</span></div>
+      </div>
     </div>
-    <p class="src">Sources: Common Sense Media survey, March 2026. Child Trends and NORC survey of 720 parents, August 2026.</p>
+
+    <h3 class="big ask reveal">So how do we explain today’s AI news to…</h3>
+    <div class="faces"><figure class="reveal" style="--d:0.0s"><div class="face"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><clipPath id="cu4"><circle cx="80" cy="80" r="76"/></clipPath></defs><circle cx="80" cy="80" r="76" fill="#DCEBF5"/><g clip-path="url(#cu4)"><circle cx="41" cy="58" r="15" fill="#5A3825"/><circle cx="119" cy="58" r="15" fill="#5A3825"/><circle cx="51" cy="64" r="4" fill="#F08A6E"/><circle cx="109" cy="64" r="4" fill="#F08A6E"/><path d="M30 168 Q32 124 80 121 Q128 124 130 168Z" fill="#4F86C6"/><path d="M66 122 Q80 134 94 122" fill="none" stroke="#F7F1E3" stroke-width="4" stroke-linecap="round"/><circle cx="80" cy="146" r="7" fill="#F2C94C"/><rect x="71" y="104" width="18" height="20" rx="6" fill="#E8B38F"/><circle cx="47" cy="84" r="6.5" fill="#E8B38F"/><circle cx="113" cy="84" r="6.5" fill="#E8B38F"/><ellipse cx="80" cy="80" rx="33" ry="35" fill="#F6CBA9"/><path d="M47 74 Q45 38 80 37 Q115 38 113 74 Q108 56 92 52 Q86 60 70 58 Q56 58 47 74Z" fill="#5A3825"/><path d="M60 46 q10 -5 22 -4" stroke="#7A5238" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="68" cy="80" rx="3.8" ry="4.6" fill="#121A33"/><ellipse cx="92" cy="80" rx="3.8" ry="4.6" fill="#121A33"/><circle cx="69.4" cy="78.2" r="1.4" fill="#fff"/><circle cx="93.4" cy="78.2" r="1.4" fill="#fff"/><ellipse cx="60" cy="91" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><ellipse cx="100" cy="91" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><path d="M62 69 q6 -4 12 -1 M86 66 q6 -2 12 2" stroke="#5A3825" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse cx="80" cy="96" rx="4.5" ry="5" fill="#9C4A3A"/></g></svg><span class="bubble" style="--b:0.0s">?</span></div><figcaption>A 6 year old</figcaption></figure><figure class="reveal" style="--d:0.12s"><div class="face"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><clipPath id="cu5"><circle cx="80" cy="80" r="76"/></clipPath></defs><circle cx="80" cy="80" r="76" fill="#FBE7C2"/><g clip-path="url(#cu5)"><path d="M44 80 Q38 34 80 32 Q122 34 116 80 L122 128 Q104 120 80 120 Q56 120 38 128Z" fill="#2E211E"/><path d="M26 168 Q28 124 80 121 Q132 124 134 168Z" fill="#2F8F8A"/><path d="M68 121 L80 136 L92 121" fill="#F7F1E3"/><rect x="71" y="104" width="18" height="20" rx="6" fill="#D69A78"/><circle cx="49" cy="84" r="6.5" fill="#D69A78"/><circle cx="111" cy="84" r="6.5" fill="#D69A78"/><ellipse cx="80" cy="80" rx="31" ry="35" fill="#E5AE8C"/><path d="M48 76 Q46 40 80 39 Q112 40 112 70 Q96 66 84 48 Q74 64 48 76Z" fill="#2E211E"/><path d="M90 46 q10 3 15 12" stroke="#5A4038" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="68" cy="80" rx="3.8" ry="4.6" fill="#121A33"/><ellipse cx="92" cy="80" rx="3.8" ry="4.6" fill="#121A33"/><circle cx="69.4" cy="78.2" r="1.4" fill="#fff"/><circle cx="93.4" cy="78.2" r="1.4" fill="#fff"/><ellipse cx="60" cy="91" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><ellipse cx="100" cy="91" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><path d="M62 70 q6 -3 12 0 M86 67 q6 -4 12 -1" stroke="#2E211E" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M73 97 q7 -3 14 1" stroke="#9C4A3A" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="49" cy="92" r="3" fill="#F2C94C"/><circle cx="111" cy="92" r="3" fill="#F2C94C"/></g></svg><span class="bubble" style="--b:0.4s">?</span></div><figcaption>Your mom</figcaption></figure><figure class="reveal" style="--d:0.24s"><div class="face"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><clipPath id="cu6"><circle cx="80" cy="80" r="76"/></clipPath></defs><circle cx="80" cy="80" r="76" fill="#F8D9CF"/><g clip-path="url(#cu6)"><circle cx="80" cy="30" r="15" fill="#C9CED8"/><circle cx="76" cy="26" r="4" fill="#E4E7EE"/><path d="M26 168 Q28 124 80 121 Q132 124 134 168Z" fill="#C9746A"/><path d="M62 122 Q80 140 98 122" fill="none" stroke="#F7F1E3" stroke-width="5"/><circle cx="66" cy="128" r="2.6" fill="#FFFCF5"/><circle cx="72" cy="132" r="2.6" fill="#FFFCF5"/><circle cx="80" cy="134" r="2.6" fill="#FFFCF5"/><circle cx="88" cy="132" r="2.6" fill="#FFFCF5"/><circle cx="94" cy="128" r="2.6" fill="#FFFCF5"/><rect x="71" y="104" width="18" height="20" rx="6" fill="#E2B696"/><circle cx="48" cy="84" r="6.5" fill="#E2B696"/><circle cx="112" cy="84" r="6.5" fill="#E2B696"/><ellipse cx="80" cy="80" rx="32" ry="35" fill="#F3CDB0"/><path d="M46 80 Q42 40 80 39 Q118 40 114 80 Q112 60 100 54 Q90 50 80 54 Q70 50 60 54 Q48 60 46 80Z" fill="#C9CED8"/><path d="M58 50 q8 -5 18 -5" stroke="#E9ECF2" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="68" cy="80" rx="3.8" ry="4.6" fill="#121A33"/><ellipse cx="92" cy="80" rx="3.8" ry="4.6" fill="#121A33"/><circle cx="69.4" cy="78.2" r="1.4" fill="#fff"/><circle cx="93.4" cy="78.2" r="1.4" fill="#fff"/><ellipse cx="60" cy="91" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><ellipse cx="100" cy="91" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><path d="M60 66 q7 -2 13 2 M87 68 q6 -4 13 -2" stroke="#9AA0AC" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M72 98 q8 5 16 0" stroke="#9C4A3A" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="none" stroke="#6A5A4A" stroke-width="2.4"><circle cx="68" cy="80" r="10"/><circle cx="92" cy="80" r="10"/><path d="M78 79 q2 -2 4 0 M58 78 L48 75 M102 78 L112 75"/></g></g></svg><span class="bubble" style="--b:0.8s">?</span></div><figcaption>Your grandma</figcaption></figure><figure class="reveal" style="--d:0.36s"><div class="face"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><clipPath id="cu7"><circle cx="80" cy="80" r="76"/></clipPath></defs><circle cx="80" cy="80" r="76" fill="#D6EFE4"/><g clip-path="url(#cu7)"><path d="M26 168 Q28 122 80 119 Q132 122 134 168Z" fill="#F2C94C"/><path d="M52 122 Q80 146 108 122" fill="#D9A82E"/><path d="M72 128 v18 M88 128 v18" stroke="#F7F1E3" stroke-width="3" stroke-linecap="round"/><rect x="71" y="104" width="18" height="20" rx="6" fill="#B27654"/><circle cx="49" cy="84" r="6.5" fill="#B27654"/><circle cx="111" cy="84" r="6.5" fill="#B27654"/><ellipse cx="80" cy="80" rx="31" ry="34" fill="#C68B67"/><g fill="#1E1A1A"><circle cx="54" cy="58" r="11"/><circle cx="64" cy="46" r="12"/><circle cx="80" cy="42" r="13"/><circle cx="96" cy="46" r="12"/><circle cx="106" cy="58" r="11"/><circle cx="50" cy="70" r="8"/><circle cx="110" cy="70" r="8"/></g><ellipse cx="68" cy="81" rx="3.8" ry="4.6" fill="#121A33"/><ellipse cx="92" cy="81" rx="3.8" ry="4.6" fill="#121A33"/><circle cx="69.4" cy="79.2" r="1.4" fill="#fff"/><circle cx="93.4" cy="79.2" r="1.4" fill="#fff"/><ellipse cx="60" cy="92" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><ellipse cx="100" cy="92" rx="6" ry="3.4" fill="#F08A6E" opacity=".38"/><path d="M62 70 q6 -3 12 0 M86 69 q6 -3 12 0" stroke="#1E1A1A" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M72 98 q5 -4 9 0 q4 4 8 -1" stroke="#6E3A2A" stroke-width="3" fill="none" stroke-linecap="round"/></g></svg><span class="bubble" style="--b:1.2000000000000002s">?</span></div><figcaption>Your non tech friend</figcaption></figure></div>
+    <p class="src">Sources: Common Sense Media survey, March 2026. Child Trends and NORC survey of 720 parents, August 2026. Headlines are from the stories our agent read.</p>
   </div>
 </section>
 
@@ -230,7 +338,7 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
     <p class="eyebrow">What’s our product</p>
     <h2>Real AI news, turned into a bedtime story</h2>
     <p class="lead">For parents and kids 5 to 10, together at bedtime.</p>
-    <div class="hook-row">
+    <div class="reveal hook-row">
       <div class="card-dark">
         <p class="eyebrow" style="margin:0">Today’s AI news</p>
         <p class="headline">MAI-DxO, a diagnostic orchestrator, solved 83% of complex NEJM cases, compared with 36% for physicians working alone.</p>
@@ -238,16 +346,42 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
       </div>
       <svg class="arrow" viewBox="0 0 64 36" style="color:var(--gold)" aria-hidden="true"><use href="#arrowR"/></svg>
       <div class="card-page">
-        <svg role="img" aria-label="Pip the robot holding a magnifying glass next to a doctor’s clipboard" viewBox="0 0 480 300" style="width:100%;max-width:400px;height:auto"><rect x="30" y="110" width="90" height="120" rx="10" fill="#FFFCF5" stroke="#121A33" stroke-width="4"/><rect x="63" y="140" width="24" height="60" fill="#3DBE8B"/><rect x="45" y="158" width="60" height="24" fill="#3DBE8B"/><g transform="translate(140 40) scale(1.6)"><use href="#pipDark" width="120" height="140"/></g><line x1="352" y1="150" x2="306" y2="214" stroke="#7A4E2D" stroke-width="14" stroke-linecap="round"/><circle cx="384" cy="118" r="46" fill="#DCEBF5" stroke="#B7791F" stroke-width="10"/></svg>
+        <svg role="img" aria-label="Pip the robot detective holding a magnifying glass next to a doctor’s clipboard" viewBox="0 0 480 300" style="width:100%;max-width:400px;height:auto">
+<ellipse cx="240" cy="284" rx="200" ry="8" fill="#121A33" opacity=".08"/>
+<g class="clip"><rect x="34" y="98" width="100" height="138" rx="14" fill="#7A4E2D"/><rect x="44" y="112" width="80" height="116" rx="8" fill="#FFFCF5"/><rect x="66" y="90" width="36" height="18" rx="6" fill="#9AA6C4"/>
+<rect x="74" y="130" width="20" height="44" rx="4" fill="#3DBE8B"/><rect x="62" y="142" width="44" height="20" rx="4" fill="#3DBE8B"/>
+<path d="M56 190 h56 M56 204 h40 M56 216 h48" stroke="#E6DCC4" stroke-width="5" stroke-linecap="round"/></g>
+<g transform="translate(150 54) scale(1.6)"><defs><linearGradient id="phu3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33407A"/><stop offset="1" stop-color="#151D3B"/></linearGradient><linearGradient id="pbu3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AFCFEC"/><stop offset="1" stop-color="#7BA7D3"/></linearGradient><radialGradient id="pgu3"><stop offset="0" stop-color="#F2C94C" stop-opacity=".75"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="p-shadow" cx="60" cy="136" rx="28" ry="3.6" fill="#000" opacity=".16"/>
+<g class="p-bob">
+<circle class="p-glow" cx="60" cy="10" r="15" fill="url(#pgu3)"/>
+<path d="M60 15 V29" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="10" r="6.2" fill="#F2C94C"/><circle cx="58" cy="8" r="2" fill="#FFF6D6"/>
+<rect x="14.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/><rect x="95.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/>
+<rect x="22" y="28" width="76" height="58" rx="23" fill="url(#phu3)"/>
+<path d="M35 37 q9 -5 21 -4.5" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" fill="none" opacity="0.25"/>
+<g class="p-eyes"><ellipse cx="44" cy="56" rx="7.6" ry="8.6" fill="#F7F1E3"/><ellipse cx="76" cy="56" rx="7.6" ry="8.6" fill="#F7F1E3"/><circle cx="46.8" cy="52.4" r="2.7" fill="#121A33"/><circle cx="78.8" cy="52.4" r="2.7" fill="#121A33"/><circle cx="41.6" cy="59.4" r="1.2" fill="#121A33" opacity=".8"/><circle cx="73.6" cy="59.4" r="1.2" fill="#121A33" opacity=".8"/></g>
+<ellipse cx="34.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/><ellipse cx="85.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/>
+<path d="M51 70 Q60 77.5 69 70" stroke="#F7F1E3" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+<rect x="51" y="85" width="18" height="8" rx="3" fill="#0E1530"/>
+<g class="p-arm-l"><rect x="23" y="94" width="11" height="26" rx="5.5" fill="url(#pbu3)" transform="rotate(14 29 96)"/><circle cx="23" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<g class="p-arm-r"><rect x="86" y="94" width="11" height="26" rx="5.5" fill="url(#pbu3)" transform="rotate(-14 91 96)"/><circle cx="97" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<rect x="34" y="91" width="52" height="40" rx="16" fill="url(#pbu3)"/>
+<path d="M41 98 q6 -3.5 13 -3.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>
+<circle class="p-ring" cx="60" cy="111" r="11" fill="none" stroke="#F2C94C" stroke-width="2" opacity=".45"/>
+<path d="M60 116.5 C 51 110, 53 103.5, 57.2 104.5 C 59 105, 60 106.6, 60 106.6 C 60 106.6, 61 105, 62.8 104.5 C 67 103.5, 69 110, 60 116.5 Z" fill="#F2C94C"/>
+</g></g>
+<g class="glass"><line x1="356" y1="156" x2="312" y2="216" stroke="#7A4E2D" stroke-width="14" stroke-linecap="round"/><circle cx="386" cy="120" r="46" fill="#DCEBF5" stroke="#B7791F" stroke-width="10"/><path d="M362 104 q10 -16 28 -16" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+<g fill="#F2C94C"><path class="spark" d="M150 40 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z"/><path class="spark s2" d="M440 40 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z"/><path class="spark s3" d="M444 214 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z"/></g>
+</svg>
         <p>Pip the detective helps doctors find clues.</p>
       </div>
     </div>
-    <div class="feat row">
+    <div class="reveal feat row">
       <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 L19 12 L8 19 Z" fill="#121A33"/></svg></span><span><h3>For kids</h3><p>Pictures and a friendly voice. No reading needed.</p></span></div>
       <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 L10 17 L19 7" fill="none" stroke="#121A33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>For parents</h3><p>Real facts, with sources, ready in 5 minutes.</p></span></div>
       <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#121A33" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><h3>Together</h3><p>A small daily habit of talking about AI.</p></span></div>
     </div>
-    <div class="banner only"><p>Only we combine <span>real AI news</span> with <span>a parent in charge.</span></p></div>
+    <div class="reveal banner only"><p>Only we combine <span>real AI news</span> with <span>a parent in charge.</span></p></div>
     <p class="src">News source: Science paper on Microsoft’s MAI-DxO, as reported October 23, 2026.</p>
   </div>
 </section>
@@ -257,25 +391,43 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
   <div class="wrap">
     <p class="eyebrow">How it works</p>
     <h2>How tonight’s story is made</h2>
-    <div class="flow">
-      <div class="stage"><div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>9 AI stories read</p></div>
+    <div class="reveal flow">
+      <div class="stage"><div class="tiles all"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>9 AI stories read</p></div>
       <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="stage"><div class="tiles"><i class="dim"></i><i class="on"></i><i class="dim"></i><i class="dim"></i><i class="dim"></i><i class="on"></i><i class="on"></i><i class="dim"></i><i class="dim"></i></div><p>6 skipped, 3 picked</p></div>
+      <div class="stage"><div class="tiles pick"><i class="dim"></i><i class="on"></i><i class="dim"></i><i class="dim"></i><i class="dim"></i><i class="on"></i><i class="on"></i><i class="dim"></i><i class="dim"></i></div><p>6 skipped, 3 picked</p></div>
       <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
       <div class="lanes"><p style="background:var(--green)">Green: shares automatically</p><p style="background:var(--gold)">Yellow: asks the parent</p><p style="background:var(--coral)">Red: parents only</p></div>
       <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
       <div class="stage gate"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2" fill="#121A33"/><circle cx="17" cy="9" r="2.6" fill="#121A33"/><path d="M3 19 q6 -9 12 0 z M13.5 19 q4 -7 8 0 z" fill="#121A33"/></svg></span><p>Parent decides</p></div>
       <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="stage" style="background:transparent;border-color:transparent"><svg viewBox="0 0 120 140" style="width:92px;height:108px" aria-hidden="true"><use href="#pipDark"/></svg><p>Pip reads to the kid</p></div>
+      <div class="stage" style="background:transparent;border-color:transparent"><svg style="width:92px;height:108px" class="mini-pip" aria-hidden="true" viewBox="0 0 120 140"><defs><linearGradient id="phu2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33407A"/><stop offset="1" stop-color="#151D3B"/></linearGradient><linearGradient id="pbu2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AFCFEC"/><stop offset="1" stop-color="#7BA7D3"/></linearGradient><radialGradient id="pgu2"><stop offset="0" stop-color="#F2C94C" stop-opacity=".75"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="p-shadow" cx="60" cy="136" rx="28" ry="3.6" fill="#000" opacity=".16"/>
+<g class="p-bob">
+<circle class="p-glow" cx="60" cy="10" r="15" fill="url(#pgu2)"/>
+<path d="M60 15 V29" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="10" r="6.2" fill="#F2C94C"/><circle cx="58" cy="8" r="2" fill="#FFF6D6"/>
+<rect x="14.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/><rect x="95.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/>
+<rect x="22" y="28" width="76" height="58" rx="23" fill="url(#phu2)"/>
+<path d="M35 37 q9 -5 21 -4.5" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" fill="none" opacity="0.25"/>
+<g class="p-eyes"><ellipse cx="44" cy="56" rx="7.6" ry="8.6" fill="#F7F1E3"/><ellipse cx="76" cy="56" rx="7.6" ry="8.6" fill="#F7F1E3"/><circle cx="46.8" cy="52.4" r="2.7" fill="#121A33"/><circle cx="78.8" cy="52.4" r="2.7" fill="#121A33"/><circle cx="41.6" cy="59.4" r="1.2" fill="#121A33" opacity=".8"/><circle cx="73.6" cy="59.4" r="1.2" fill="#121A33" opacity=".8"/></g>
+<ellipse cx="34.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/><ellipse cx="85.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/>
+<path d="M51 70 Q60 77.5 69 70" stroke="#F7F1E3" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+<rect x="51" y="85" width="18" height="8" rx="3" fill="#0E1530"/>
+<g class="p-arm-l"><rect x="23" y="94" width="11" height="26" rx="5.5" fill="url(#pbu2)" transform="rotate(14 29 96)"/><circle cx="23" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<g class="p-arm-r"><rect x="86" y="94" width="11" height="26" rx="5.5" fill="url(#pbu2)" transform="rotate(-14 91 96)"/><circle cx="97" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<rect x="34" y="91" width="52" height="40" rx="16" fill="url(#pbu2)"/>
+<path d="M41 98 q6 -3.5 13 -3.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>
+<circle class="p-ring" cx="60" cy="111" r="11" fill="none" stroke="#F2C94C" stroke-width="2" opacity=".45"/>
+<path d="M60 116.5 C 51 110, 53 103.5, 57.2 104.5 C 59 105, 60 106.6, 60 106.6 C 60 106.6, 61 105, 62.8 104.5 C 67 103.5, 69 110, 60 116.5 Z" fill="#F2C94C"/>
+</g></svg><p>Pip reads to the kid</p></div>
     </div>
-    <div class="banner"><p>Automate where it’s safe. <span>Let the parent decide where it matters.</span></p></div>
+    <div class="reveal banner"><p>Automate where it’s safe. <span>Let the parent decide where it matters.</span></p></div>
   </div>
 </section>
 
 <!-- 5. Demo -->
 <section class="dark" id="demo">
   <div class="wrap demo">
-    <div class="phones">
+    <div class="reveal phones">
       <div class="phone"><div class="frame"><img src="assets/parent-mode.png" alt="Parent mode: a yellow story card waiting for approval, with facts, checks and Share buttons"></div><p>Parent mode</p></div>
       <div class="phone"><div class="frame"><img src="assets/kid-mode.png" alt="Kid mode: the story shelf with only shared stories, and the animated story"></div><p>Kid mode</p></div>
     </div>
@@ -294,7 +446,7 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
   <div class="wrap">
     <p class="eyebrow">Future work</p>
     <h2>What comes next</h2>
-    <div class="future">
+    <div class="reveal future">
       <ol class="road">
         <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 L5 14 H11 L10 22 L19 9 H13 Z" fill="#F2C94C"/></svg></span><span><b>2027</b><span>Live daily stories</span></span></li>
         <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#F2C94C" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><b>2028</b><span>Kids ask Pip questions</span></span></li>
@@ -307,9 +459,28 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
 
 <!-- 7. Ending -->
 <section class="close">
-  <svg class="stars" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="1040" cy="120" r="80" fill="#F2C94C"/><circle cx="1072" cy="98" r="72" fill="#1E2851"/><g fill="#F7F1E3"><circle cx="140" cy="90" r="3"/><circle cx="480" cy="50" r="2"/><circle cx="700" cy="140" r="3"/><circle cx="90" cy="520" r="2"/><circle cx="620" cy="560" r="3"/></g></svg>
+  <svg class="stars" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="1040" cy="120" r="80" fill="#F2C94C"/><circle cx="1072" cy="98" r="72" fill="#1E2851"/><g fill="#F7F1E3" class="tw"><circle cx="140" cy="90" r="3"/><circle cx="480" cy="50" r="2"/><circle cx="700" cy="140" r="3"/><circle cx="90" cy="520" r="2"/><circle cx="620" cy="560" r="3"/></g></svg>
   <div class="wrap" style="position:relative">
     <div>
+      <div class="sleeper" aria-hidden="true"><svg class="sleep-pip" aria-hidden="true" viewBox="0 0 120 140"><defs><linearGradient id="phu8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFDF8"/><stop offset="1" stop-color="#EADFC6"/></linearGradient><linearGradient id="pbu8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AFCFEC"/><stop offset="1" stop-color="#7BA7D3"/></linearGradient><radialGradient id="pgu8"><stop offset="0" stop-color="#F2C94C" stop-opacity=".75"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="p-shadow" cx="60" cy="136" rx="28" ry="3.6" fill="#000" opacity=".16"/>
+<g class="p-bob sleepy">
+<circle class="p-glow" cx="60" cy="10" r="15" fill="url(#pgu8)"/>
+<path d="M60 15 V29" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="10" r="6.2" fill="#F2C94C"/><circle cx="58" cy="8" r="2" fill="#FFF6D6"/>
+<rect x="14.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/><rect x="95.5" y="47" width="10" height="20" rx="5" fill="#8FB8DE"/>
+<rect x="22" y="28" width="76" height="58" rx="23" fill="url(#phu8)"/>
+<path d="M35 37 q9 -5 21 -4.5" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" fill="none" opacity="0.95"/>
+<path d="M37 57 q7 6 14 0 M69 57 q7 6 14 0" stroke="#121A33" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+<ellipse cx="34.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/><ellipse cx="85.5" cy="68" rx="5.6" ry="3.2" fill="#F08A6E" opacity=".45"/>
+<ellipse cx="60" cy="72" rx="4" ry="3" fill="#121A33" opacity=".85"/>
+<rect x="51" y="85" width="18" height="8" rx="3" fill="#D8CBAE"/>
+<g class="p-arm-l"><rect x="23" y="94" width="11" height="26" rx="5.5" fill="url(#pbu8)" transform="rotate(14 29 96)"/><circle cx="23" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<g class="p-arm-r"><rect x="86" y="94" width="11" height="26" rx="5.5" fill="url(#pbu8)" transform="rotate(-14 91 96)"/><circle cx="97" cy="119" r="5.5" fill="#F7F1E3"/></g>
+<rect x="34" y="91" width="52" height="40" rx="16" fill="url(#pbu8)"/>
+<path d="M41 98 q6 -3.5 13 -3.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>
+<circle class="p-ring" cx="60" cy="111" r="11" fill="none" stroke="#F2C94C" stroke-width="2" opacity=".45"/>
+<path d="M60 116.5 C 51 110, 53 103.5, 57.2 104.5 C 59 105, 60 106.6, 60 106.6 C 60 106.6, 61 105, 62.8 104.5 C 67 103.5, 69 110, 60 116.5 Z" fill="#F2C94C"/>
+</g></svg><span class="z z1">z</span><span class="z z2">z</span><span class="z z3">z</span></div>
       <h2>“Every family understands the AI shaping their future, <span>starting at bedtime.</span>”</h2>
       <p class="lead" style="font-family:var(--f-display)">Goodnight, AI · by Judy Lee</p>
     </div>
@@ -327,5 +498,14 @@ footer ul { margin: 8px 0 0; padding-left: 18px }
     </ul>
   </div>
 </footer>
+<script>
+document.documentElement.classList.add("js");
+(function () {
+  var els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in") }); return }
+  var io = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target) } }) }, { threshold: .15 });
+  els.forEach(function (e) { io.observe(e) });
+})();
+</script>
 </body>
 </html>
