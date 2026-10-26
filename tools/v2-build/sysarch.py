@@ -72,8 +72,8 @@ put(x + y + 1, f'<svg x="{gx_-17:.0f}" y="{gy_-38:.0f}" width="34" height="40" v
 label('kid', x + 46, y + 30, Z + 10, 'Kid app', 'p', 12)
 
 # Edge and API
-x, y = L(1, 30, 30);   put(x + y, box(x, y, Z, 54, 54, 42, '#FFF1C9')); label('cdn', x + 27, y + 27, Z + 42, 'Static hosting and CDN', 'p', -52)
-x, y = L(1, 100, 130); put(x + y, box(x, y, Z, 54, 54, 28, '#6C8BEF')); label('api', x + 27, y + 27, Z + 28, 'API and parent approval', 'p', 10)
+x, y = L(1, 20, 150);  put(x + y, box(x, y, Z, 54, 54, 42, '#FFF1C9')); label('cdn', x + 27, y + 27, Z + 42, 'Static hosting and CDN', 'p', -52)
+x, y = L(1, 110, 20);  put(x + y, box(x, y, Z, 54, 54, 28, '#6C8BEF')); label('api', x + 27, y + 27, Z + 28, 'API and parent approval', 'p', 10)
 
 # Agent core
 x, y = L(6, 162, 150); put(x + y, cyl(x, y, Z, 18, 40, '#F7A23B', 2)); label('sched', x, y, Z + 40, 'Nightly scheduler', 'n', 50)
