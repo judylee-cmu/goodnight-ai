@@ -324,6 +324,17 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 #product .fb-pages { max-height: 56vh; aspect-ratio: 16 / 9 }
 #product .fb-cap { min-height: 1.4em } @media (max-width: 1100px) { #product .fb-cap { min-height: 2.6em } }
 @media (max-width: 860px) { #product .hook-row { grid-template-columns: 1fr !important } }
+
+.demo-steps { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px }
+.demo-steps li { display: flex; align-items: center; gap: 14px; font-size: clamp(17px, 1.6vw, 20px); font-weight: 600; color: var(--cream) }
+.demo-steps b { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--gold); color: var(--night); display: grid; place-items: center; font-family: var(--f-display); font-size: 17px }
+.demo-cta { margin-top: 32px; display: flex; align-items: center; gap: 22px; background: var(--night2); border: 1px solid var(--night3); border-radius: 22px; padding: 18px; max-width: 520px }
+.demo-cta img { flex: none; width: 128px; height: 128px; background: #FFF8E6; border-radius: 14px; padding: 8px }
+.demo-cta > div { min-width: 0 }
+.cta-label { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold) }
+.cta-url { margin: 6px 0 14px; font-size: 15px; color: var(--mist); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.demo-cta .btn { padding: 11px 20px; font-size: 16px; min-height: 44px }
+@media (max-width: 420px) { .demo-cta { flex-direction: column; align-items: flex-start } }
 </style>
 </head>
 <body>
@@ -608,9 +619,19 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
     <div>
       <p class="eyebrow">Live demo</p>
       <h2>Try it live</h2>
-      <ol class="steps"><li>1 Run the agent</li><li>2 Approve</li><li>3 Pip reads</li></ol>
-      <div class="qr"><img src="assets/qr-code.png" alt="QR code linking to goodnight-ai-opal.vercel.app"><p>goodnight-ai-opal.vercel.app</p></div>
-      <div class="btns"><a class="btn" href="index-v2.html">▶ Open the demo</a></div>
+      <ol class="demo-steps">
+        <li><b>1</b><span>Run tonight’s agent</span></li>
+        <li><b>2</b><span>Approve a story</span></li>
+        <li><b>3</b><span>Pip reads it to your kid</span></li>
+      </ol>
+      <div class="demo-cta">
+        <img src="assets/qr-code.png" alt="QR code linking to goodnight-ai-opal.vercel.app">
+        <div>
+          <p class="cta-label">Scan or tap to try</p>
+          <p class="cta-url">goodnight-ai-opal.vercel.app</p>
+          <a class="btn" href="index-v2.html">▶ Open the demo</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
