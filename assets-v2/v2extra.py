@@ -258,5 +258,47 @@ s = s.replace('</style>', """
 @media (max-width: 420px) { .demo-cta { flex-direction: column; align-items: flex-start } }
 </style>""", 1)
 
+# 13. Future work: four ideas, no dates, hand drawn icons
+INKC = '#1A1A2E'
+PF = 'filter="url(#gn-paint)"'
+IK = 'filter="url(#gn-ink)"'
+icons = {
+ 'voice': f"""<svg viewBox="0 0 96 96" aria-hidden="true">
+   <g {PF}><rect x="34" y="14" width="26" height="42" rx="13" fill="#F48FB1"/><rect x="44" y="62" width="6" height="14" rx="3" fill="#C4864F"/><rect x="32" y="76" width="30" height="7" rx="3.5" fill="#C4864F"/></g>
+   <g {IK} fill="none" stroke="{INKC}" stroke-width="3" stroke-linecap="round"><path d="M26 40 C26 56 68 56 68 40"/><path d="M40 26 h14 M40 34 h14 M40 42 h14" stroke="#FFF8E6" stroke-width="2.6"/></g>
+   <g {IK} fill="none" stroke="#FFD23F" stroke-width="3.6" stroke-linecap="round"><path d="M74 28 C80 34 80 44 74 50"/><path d="M82 22 C92 32 92 46 82 56"/><path d="M20 28 C14 34 14 44 20 50"/></g></svg>""",
+ 'ask': f"""<svg viewBox="0 0 96 96" aria-hidden="true">
+   <g {PF}><path d="M14 22 C14 14 20 10 28 10 L70 10 C78 10 84 14 84 22 L84 50 C84 58 78 62 70 62 L42 62 L26 78 L28 62 C20 62 14 58 14 50Z" fill="#6C8BEF"/>
+   <circle cx="72" cy="78" r="12" fill="#FFD23F"/></g>
+   <g {IK}><path d="M38 28 C38 18 60 18 60 28 C60 36 49 36 49 44" stroke="#FFF8E6" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="49" cy="53" r="3.4" fill="#FFF8E6"/></g>
+   <circle cx="68" cy="77" r="1.8" fill="{INKC}"/><circle cx="76" cy="77" r="1.8" fill="{INKC}"/><path d="M68 82 q4 3 8 0" stroke="{INKC}" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>""",
+ 'level': f"""<svg viewBox="0 0 96 96" aria-hidden="true">
+   <g {PF}><rect x="10" y="62" width="24" height="22" rx="4" fill="#4FA65B"/><rect x="36" y="44" width="24" height="40" rx="4" fill="#F7A23B"/><rect x="62" y="24" width="24" height="60" rx="4" fill="#F08A6E"/>
+   <rect x="71" y="6" width="3.5" height="20" rx="1.5" fill="#C4864F"/><path d="M74.5 7 L88 11 L74.5 16Z" fill="#FFD23F"/></g>
+   <g {IK} fill="{INKC}" font-family="Fredoka, Arial, sans-serif" font-weight="600" text-anchor="middle"><text x="22" y="78" font-size="13">A</text><text x="48" y="68" font-size="12">Ab</text><text x="74" y="56" font-size="10.5">Abc</text></g></svg>""",
+ 'world': f"""<svg viewBox="0 0 96 96" aria-hidden="true">
+   <g {PF}><rect x="8" y="14" width="64" height="46" rx="6" fill="#3A7F45"/><rect x="8" y="58" width="64" height="6" rx="3" fill="#C4864F"/>
+   <circle cx="70" cy="64" r="20" fill="#7FC8F8"/><path d="M58 56 C62 52 68 56 66 62 C64 68 56 66 58 56Z M74 52 C80 50 86 56 84 62 C80 64 74 60 74 52Z M68 72 C72 70 78 74 74 80 C70 82 66 76 68 72Z" fill="#4FA65B"/></g>
+   <g {IK} fill="#FFF8E6" font-family="Fredoka, Arial, sans-serif" font-weight="600" text-anchor="middle"><text x="22" y="42" font-size="18">A</text><text x="40" y="44" font-size="16">文</text><text x="56" y="40" font-size="14">あ</text></g>
+   <path d="M16 50 h22" stroke="#FFF8E6" stroke-width="2.4" stroke-linecap="round" {IK}/></svg>""",
+}
+items = [('voice', 'A warmer, more natural voice for Pip with ElevenLabs'),
+         ('ask', 'Kids ask Pip questions'),
+         ('level', 'Choose your level, elementary to adult'),
+         ('world', 'More languages and classroom mode')]
+road = '<ol class="road road2">' + ''.join(f'<li><span class="ic2">{icons[k]}</span><span class="rt">{t}</span></li>' for k, t in items) + '</ol>'
+a = s.index('<ol class="road">'); b = s.index('</ol>', a) + 5
+s = s[:a] + road + s[b:]
+s = s.replace('</style>', """
+.road2 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 22px !important }
+.road2 li { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; background: var(--night); border: 1px solid var(--night3); border-radius: 22px; padding: 22px; animation: none }
+.ic2 { width: 96px; height: 96px; display: block; transition: transform .3s }
+.ic2 svg { width: 100%; height: 100%; display: block; overflow: visible }
+.road2 li:hover .ic2 { transform: rotate(-6deg) scale(1.05) }
+.road2 .rt { font-size: clamp(17px, 1.6vw, 21px); font-weight: 600; color: var(--cream); line-height: 1.35 }
+@media (max-width: 860px) { .road2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important } }
+@media (max-width: 480px) { .road2 { grid-template-columns: 1fr !important } .road2 li { flex-direction: row !important; align-items: center !important } .ic2 { width: 72px; height: 72px; flex: none } }
+</style>""", 1)
+
 open(P, 'w').write(s)
 print('v2extra ok', len(s))
