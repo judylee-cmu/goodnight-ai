@@ -424,20 +424,20 @@ _cards = [
     (False, 'Asking a chatbot', 'No sources. No fact or safety check. Not made to read together.'),
     (True, 'Goodnight, AI', 'Real AI news, checked against sources, read together, with the parent deciding.'),
 ]
-_html = ('\n<!-- 3b. Why us -->\n<section class="dark" id="whyus">\n  ' + wave(9, '#121A33') + '\n  <div class="wrap">\n'
+_html = ('\n<!-- 4b. Why us -->\n<section class="dark2" id="whyus">\n  ' + wave(9, '#1C2647') + '\n  <div class="wrap">\n'
          '    <p class="eyebrow">Why us</p>\n'
          '    <h2 class="wu-h">Kids news sites skip AI. Chatbots skip sources.</h2>\n'
          '    <div class="wu-grid">'
          + ''.join(f'<div class="reveal wu-card{" ours" if ok else ""}" style="--d:{i*0.1}s">{_mark(ok)}<p class="wu-t">{t}</p><p class="wu-d">{d}</p></div>' for i, (ok, t, d) in enumerate(_cards))
          + '</div>\n  </div>\n</section>\n')
-s = s.replace('\n<!-- 4. How -->', _html + '\n<!-- 4. How -->', 1)
+s = s.replace('\n<!-- 5. Demo -->', _html + '\n<!-- 5. Demo -->', 1)
 assert 'id="whyus"' in s
-s = s.replace('<li><a href="#product">Product</a></li>', '<li><a href="#product">Product</a></li>\n      <li><a href="#whyus">Why us</a></li>', 1)
+s = s.replace('<li><a href="#how">How it works</a></li>', '<li><a href="#how">How it works</a></li>\n      <li><a href="#whyus">Why us</a></li>', 1)
 s = s.replace('</style>', """
 #whyus { position: relative; padding-block: clamp(56px, 7vw, 88px) }
 .wu-h { max-width: 24ch; font-size: clamp(28px, 3.6vw, 46px) }
 .wu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 32px }
-.wu-card { background: var(--night2); border: 2px solid var(--night3); border-radius: 22px; padding: 22px 24px }
+.wu-card { background: var(--night); border: 2px solid var(--night3); border-radius: 22px; padding: 22px 24px }
 .wu-card.ours { background: #FFF8E6; color: #121A33; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,210,63,.18) }
 .wu-mark { width: 34px; height: 34px; display: block; overflow: visible }
 .wu-t { margin: 14px 0 6px; font-family: var(--f-display); font-weight: 600; font-size: 21px }

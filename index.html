@@ -383,7 +383,7 @@ footer { position: relative; border-top: 0 !important }
 #whyus { position: relative; padding-block: clamp(56px, 7vw, 88px) }
 .wu-h { max-width: 24ch; font-size: clamp(28px, 3.6vw, 46px) }
 .wu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 32px }
-.wu-card { background: var(--night2); border: 2px solid var(--night3); border-radius: 22px; padding: 22px 24px }
+.wu-card { background: var(--night); border: 2px solid var(--night3); border-radius: 22px; padding: 22px 24px }
 .wu-card.ours { background: #FFF8E6; color: #121A33; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,210,63,.18) }
 .wu-mark { width: 34px; height: 34px; display: block; overflow: visible }
 .wu-t { margin: 14px 0 6px; font-family: var(--f-display); font-weight: 600; font-size: 21px }
@@ -427,8 +427,8 @@ footer { position: relative; border-top: 0 !important }
     <ul>
       <li><a href="#problem">Problem</a></li>
       <li><a href="#product">Product</a></li>
-      <li><a href="#whyus">Why us</a></li>
       <li><a href="#how">How it works</a></li>
+      <li><a href="#whyus">Why us</a></li>
       <li><a href="#demo">Demo</a></li>
       <li><a href="#future">Next</a></li>
     </ul>
@@ -621,16 +621,6 @@ footer { position: relative; border-top: 0 !important }
   </div>
 </section>
 
-<!-- 3b. Why us -->
-<section class="dark" id="whyus">
-  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 21.6 C80.9 7.7 124.3 22.5 191.1 11.3 C250.4 -1.5 290.5 27.0 350.0 21.3 C406.2 14.0 464.2 25.6 549.7 25.4 C651.5 22.1 725.6 11.0 801.3 22.2 C873.2 20.0 904.6 17.7 983.3 24.2 C1054.6 15.8 1109.2 25.4 1156.4 14.7 C1210.8 1.4 1255.5 28.5 1312.4 17.1 C1347.4 19.3 1405.4 14.0 1440.0 22.3 L1440 48Z" fill="#121A33"/></g></svg>
-  <div class="wrap">
-    <p class="eyebrow">Why us</p>
-    <h2 class="wu-h">Kids news sites skip AI. Chatbots skip sources.</h2>
-    <div class="wu-grid"><div class="reveal wu-card" style="--d:0.0s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#2B3766"/></g><path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/></svg><p class="wu-t">Kids news sites</p><p class="wu-d">Lots of text. Little about AI. No room for parents.</p></div><div class="reveal wu-card" style="--d:0.1s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#2B3766"/></g><path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/></svg><p class="wu-t">Asking a chatbot</p><p class="wu-d">No sources. No fact or safety check. Not made to read together.</p></div><div class="reveal wu-card ours" style="--d:0.2s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#FFD23F"/></g><path d="M7 17 C10 20 12 23 14 25 C18 17 23 11 29 6" stroke="#121A33" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><p class="wu-t">Goodnight, AI</p><p class="wu-d">Real AI news, checked against sources, read together, with the parent deciding.</p></div></div>
-  </div>
-</section>
-
 <!-- 4. How -->
 <section class="cream" id="how">
   <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 21.4 C72.6 21.6 141.2 21.4 211.6 30.2 C295.9 18.8 337.6 11.7 417.9 23.1 C479.7 36.6 595.5 29.0 656.9 24.6 C712.0 25.4 779.3 3.1 874.7 11.8 C935.2 10.1 1001.6 9.3 1051.3 8.7 C1135.6 7.5 1184.8 33.9 1271.7 20.0 C1337.6 14.8 1372.0 22.3 1440.0 28.2 L1440 48Z" fill="#F7F1E3"/></g></svg>
@@ -695,6 +685,16 @@ footer { position: relative; border-top: 0 !important }
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
   <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  <g filter="url(#gn-paint)"><path d="M86 66 C86 34 112 22 136 22 C162 22 186 34 186 64 Z" fill="#FFD23F"/><path d="M70 66 C100 58 170 56 202 62 C204 70 198 74 190 74 C150 70 110 70 78 76 C70 76 66 70 70 66 Z" fill="#F7A23B"/><path d="M130 24 C128 38 128 52 130 64 M142 24 C144 38 144 52 142 64" stroke="#F7A23B" stroke-width="6" fill="none" stroke-linecap="round"/></g></g></svg></a></div>
+  </div>
+</section>
+
+<!-- 4b. Why us -->
+<section class="dark2" id="whyus">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 21.6 C80.9 7.7 124.3 22.5 191.1 11.3 C250.4 -1.5 290.5 27.0 350.0 21.3 C406.2 14.0 464.2 25.6 549.7 25.4 C651.5 22.1 725.6 11.0 801.3 22.2 C873.2 20.0 904.6 17.7 983.3 24.2 C1054.6 15.8 1109.2 25.4 1156.4 14.7 C1210.8 1.4 1255.5 28.5 1312.4 17.1 C1347.4 19.3 1405.4 14.0 1440.0 22.3 L1440 48Z" fill="#1C2647"/></g></svg>
+  <div class="wrap">
+    <p class="eyebrow">Why us</p>
+    <h2 class="wu-h">Kids news sites skip AI. Chatbots skip sources.</h2>
+    <div class="wu-grid"><div class="reveal wu-card" style="--d:0.0s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#2B3766"/></g><path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/></svg><p class="wu-t">Kids news sites</p><p class="wu-d">Lots of text. Little about AI. No room for parents.</p></div><div class="reveal wu-card" style="--d:0.1s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#2B3766"/></g><path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/></svg><p class="wu-t">Asking a chatbot</p><p class="wu-d">No sources. No fact or safety check. Not made to read together.</p></div><div class="reveal wu-card ours" style="--d:0.2s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#FFD23F"/></g><path d="M7 17 C10 20 12 23 14 25 C18 17 23 11 29 6" stroke="#121A33" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><p class="wu-t">Goodnight, AI</p><p class="wu-d">Real AI news, checked against sources, read together, with the parent deciding.</p></div></div>
   </div>
 </section>
 
