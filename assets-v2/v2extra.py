@@ -69,7 +69,7 @@ caps = ['A busy little town. Every house is a computer.',
         'Sneaky raccoons borrow the key.',
         'Their AI helper tries door after door, super fast.',
         'The computer police shine a light. Lock up tight!']
-pages = ''.join(f'<figure class="fb-page{" on" if i == 0 else ""}" data-i="{i}"><img src="assets/story-key-{i+1}.jpg" alt="Story page {i+1}: {c}" loading="lazy"><figcaption>{c}</figcaption></figure>' for i, c in enumerate(caps))
+pages = ''.join(f'<img class="fb-page{" on" if i == 0 else ""}" data-cap="{c}" src="assets/story-key-{i+1}.jpg" alt="Story page {i+1}: {c}">' for i, c in enumerate(caps))
 dots = ''.join(f'<button type="button" class="fb-dot{" on" if i == 0 else ""}" aria-label="Page {i+1}" data-go="{i}"></button>' for i in range(len(caps)))
 a = s.index('<div class="reveal hook-row">'); b = s.index('<div class="who reveal">', a)
 s = s[:a] + f'''<div class="reveal hook-row">
@@ -83,6 +83,7 @@ s = s[:a] + f'''<div class="reveal hook-row">
       <div class="flipbook" aria-roledescription="carousel" aria-label="The Magic Key and the Computer Police, a bedtime story">
         <p class="fb-title">The Magic Key and the Computer Police</p>
         <div class="fb-pages">{pages}</div>
+        <p class="fb-cap" aria-live="polite">{caps[0]}</p>
         <div class="fb-nav">
           <button type="button" class="fb-btn" data-step="-1" aria-label="Previous page">‹</button>
           <div class="fb-dots">{dots}</div>
@@ -146,14 +147,13 @@ css = '''
 .bubble { background: none !important; border: 0 !important; width: 32% !important }
 .bubble svg { width: 100%; height: 100%; display: block; overflow: visible }
 .news-card .headline { font-family: var(--f-display); font-size: clamp(22px, 2.6vw, 30px) !important; color: var(--cream) !important; line-height: 1.2 }
-.flipbook { background: #FFF8E6; color: var(--ink); border-radius: 26px; padding: 18px 18px 14px; box-shadow: 0 24px 50px -24px rgba(0,0,0,.6); perspective: 1400px }
+.flipbook { background: #FFF8E6; color: var(--ink); border-radius: 26px; padding: 18px 18px 14px; box-shadow: 0 24px 50px -24px rgba(0,0,0,.6); min-width: 0 }
 .fb-title { margin: 0 4px 12px; font-family: var(--f-display); font-weight: 600; font-size: 18px; color: var(--amber) }
-.fb-pages { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #1F2F6B }
-.fb-page { position: absolute; inset: 0; margin: 0; opacity: 0; transform-origin: left center; transform: rotateY(-70deg); transition: transform .7s cubic-bezier(.3,.7,.2,1), opacity .5s; backface-visibility: hidden }
-.fb-page.on { opacity: 1; transform: none }
-.fb-page.out { opacity: 0; transform: rotateY(80deg) }
-.fb-page img { width: 100%; height: 100%; object-fit: cover; display: block }
-.fb-page figcaption { position: absolute; left: 12px; right: 12px; bottom: 12px; background: rgba(255,248,230,.94); color: var(--ink); border-radius: 12px; padding: 8px 12px; font-family: var(--f-display); font-weight: 600; font-size: clamp(15px, 1.6vw, 19px); line-height: 1.3 }
+.fb-pages { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #1F2F6B; isolation: isolate }
+.fb-page { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .6s ease }
+.fb-page.on { opacity: 1 }
+.fb-cap { margin: 12px 4px 0; min-height: 2.6em; font-family: var(--f-display); font-weight: 600; font-size: clamp(16px, 1.7vw, 20px); line-height: 1.3; color: var(--ink); transition: opacity .3s ease }
+.fb-cap.fade { opacity: 0 }
 .fb-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px }
 .fb-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--gold); color: var(--night); font-size: 26px; font-weight: 700; line-height: 1; cursor: pointer }
 .fb-btn:focus-visible, .fb-dot:focus-visible { outline: 3px solid var(--green); outline-offset: 2px }
@@ -180,11 +180,13 @@ js = '''<script>
   var box = document.querySelector(".flipbook"); if (!box) return;
   var pages = box.querySelectorAll(".fb-page"), dots = box.querySelectorAll(".fb-dot"), cur = 0, t = null;
   var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cap = box.querySelector(".fb-cap");
   function go(n) {
     n = (n + pages.length) % pages.length; if (n === cur) return;
-    pages[cur].classList.remove("on"); pages[cur].classList.add("out");
-    var old = pages[cur]; setTimeout(function () { old.classList.remove("out") }, 700);
-    pages[n].classList.add("on"); dots[cur].classList.remove("on"); dots[n].classList.add("on"); cur = n;
+    pages[cur].classList.remove("on"); pages[n].classList.add("on");
+    dots[cur].classList.remove("on"); dots[n].classList.add("on"); cur = n;
+    cap.classList.add("fade");
+    setTimeout(function () { cap.textContent = pages[n].getAttribute("data-cap"); cap.classList.remove("fade") }, 280);
   }
   function auto() { clearInterval(t); if (!still) t = setInterval(function () { go(cur + 1) }, 3800) }
   box.addEventListener("click", function (e) {
