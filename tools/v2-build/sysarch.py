@@ -76,7 +76,7 @@ x, y = L(1, 30, 30);   put(x + y, box(x, y, Z, 54, 54, 42, '#FFF1C9')); label('c
 x, y = L(1, 100, 130); put(x + y, box(x, y, Z, 54, 54, 28, '#6C8BEF')); label('api', x + 27, y + 27, Z + 28, 'API and parent approval', 'p', 10)
 
 # Agent core
-x, y = L(2, 40, 40);   put(x + y, cyl(x, y, Z, 18, 40, '#F7A23B', 2)); label('sched', x, y, Z + 40, 'Nightly scheduler', 'n', -54)
+x, y = L(6, 162, 150); put(x + y, cyl(x, y, Z, 18, 40, '#F7A23B', 2)); label('sched', x, y, Z + 40, 'Nightly scheduler', 'n', 50)
 x, y = L(2, 120, 150)
 gx_, gy_ = P(x, y, Z)
 put(x + y, f'<svg x="{gx_-60:.0f}" y="{gy_-142:.0f}" width="120" height="145" viewBox="0 -24 270 324" overflow="visible">{PIP}</svg>')
@@ -110,8 +110,8 @@ for name, lx, ly, c, t, tag, dy in [('stories', 60, 60, '#FFF1C9', 'Story store'
 NODES['data'] = P(*L(5, 160, 80), Z + 50)
 
 # Ops
-x, y = L(6, 40, 40);   put(x + y, box(x, y, Z, 56, 42, 38, '#7FD3B4')); label('mon', x + 28, y + 21, Z + 38, 'Monitoring and evals', 'n', -52)
-x, y = L(6, 100, 140); put(x + y, box(x, y, Z, 48, 42, 26, '#FFD23F')); label('notify', x + 24, y + 21, Z + 26, 'Parent alerts', 'n', 10)
+x, y = L(6, 30, 30);   put(x + y, box(x, y, Z, 56, 42, 38, '#7FD3B4')); label('mon', x + 28, y + 21, Z + 38, 'Monitoring and evals', 'n', -52)
+x, y = L(6, 20, 150);  put(x + y, box(x, y, Z, 48, 42, 26, '#FFD23F')); label('notify', x + 24, y + 21, Z + 26, 'Parent alerts', 'n', 10)
 
 ITEMS.sort(key=lambda t: t[0])
 
@@ -119,20 +119,25 @@ BADGES = []
 def badge(x, y, t, fill, ink='#121A33'):
     BADGES.append(f'<g transform="translate({x:.0f} {y:.0f})"><circle r="18" fill="{fill}" stroke="#121A33" stroke-width="3"/>'
                   f'<text y="6.5" text-anchor="middle" font-family="Fredoka, Arial" font-weight="600" font-size="19" fill="{ink}">{t}</text></g>')
-def flow(a, b, cls='flow', bend=0, mark=None, col='#FFD23F'):
+def flow(a, b, cls='flow', bend=0, mark=None, col='#FFD23F', t=.5):
     (x1, y1), (x2, y2) = NODES[a], NODES[b]
     mx, my = (x1 + x2) / 2, (y1 + y2) / 2 - bend
     ang = math.degrees(math.atan2(y2 - my, x2 - mx))
     if mark:
-        badge(.25 * x1 + .5 * mx + .25 * x2, .25 * y1 + .5 * my + .25 * y2, mark, col)
+        u = 1 - t
+        badge(u*u*x1 + 2*u*t*mx + t*t*x2, u*u*y1 + 2*u*t*my + t*t*y2, mark, col)
     return (f'<path class="{cls}" d="M{x1:.0f} {y1:.0f} Q{mx:.0f} {my:.0f} {x2:.0f} {y2:.0f}"/>'
             f'<path d="M-9 -6 L0 0 L-9 6" transform="translate({x2:.0f} {y2:.0f}) rotate({ang:.0f})" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
 G_ = '#FFD23F'; M_ = '#7FD3B4'; K_ = '#F48FB1'
-nightly = ''.join([flow('sched', 'orch', bend=20, mark='1'), flow('orch', 'workers', bend=30), flow('workers', 'src', bend=20, mark='2'),
-                   flow('workers', 'ai', bend=40, mark='3'), flow('workers', 'data', bend=-10, mark='5'), flow('data', 'notify', bend=40),
-                   flow('orch', 'mon', bend=40)])
-wx4, wy4 = NODES['workers']; badge(wx4 + 34, wy4 - 34, '4', G_)
-parent_l = ''.join([flow('notify', 'parent', 'flow2', 40, '6', G_), flow('parent', 'api', 'flow2', 20, 'A', M_), flow('api', 'data', 'flow2', 20, 'B', M_)])
+nightly = ''.join([flow('sched', 'orch', bend=20, mark='1', t=.5), flow('orch', 'workers', bend=30, mark='2', t=.62), flow('workers', 'src', bend=20, mark='3'),
+                   flow('workers', 'ai', bend=40, mark='4'), flow('workers', 'data', bend=-10, mark='6'), flow('data', 'notify', bend=40, mark='7')])
+wx4, wy4 = NODES['workers']; badge(wx4 + 34, wy4 - 34, '5', G_)
+(mx1, my1), (mx2, my2) = NODES['orch'], NODES['mon']
+ops_l = flow('orch', 'mon', 'flow4', 40)
+_qx, _qy = (mx1 + mx2) / 2, (my1 + my2) / 2 - 40
+_bx, _by = .25 * mx1 + .5 * _qx + .25 * mx2, .25 * my1 + .5 * _qy + .25 * my2
+BADGES.append(f'<g transform="translate({_bx:.0f} {_by:.0f})"><rect x="-62" y="-15" width="124" height="30" rx="15" fill="#121A33" stroke="#9AA6C4" stroke-width="2" stroke-dasharray="4 4"/><text y="5.5" text-anchor="middle" font-family="Nunito Sans, Arial" font-weight="700" font-size="14" fill="#CBD3E8">logs every step</text></g>')
+parent_l = ''.join([flow('notify', 'parent', 'flow2', 40, '8', G_), flow('parent', 'api', 'flow2', 20, 'A', M_), flow('api', 'data', 'flow2', 20, 'B', M_, t=.38)])
 kid_l = flow('cdn', 'kid', 'flow3', -30, 'C', K_)
 badge(PERSON_K[0] + 52, PERSON_K[1] - 86, 'D', K_)
 family = parent_l
@@ -146,7 +151,7 @@ person_tags = (ptag(PERSON_P[0] - 10, PERSON_P[1] - 196, 'Parent · the editor',
                + ptag(PERSON_K[0] - 40, PERSON_K[1] + 74, 'Kid · read only', 'Only approved stories, no account', '#F48FB1'))
 ztitles = []
 for gx, gy, sx, sy, c, t in ZONES:
-    tx, ty = P(gx + sx, gy + sy, -12)
+    tx, ty = P(gx, gy + sy, -12) if t == 'Ops' else P(gx + sx, gy + sy, -12)
     w = len(t) * 11 + 32
     ztitles.append(f'<g transform="translate({tx:.0f} {ty+8:.0f})"><rect x="{-w/2:.0f}" y="0" width="{w:.0f}" height="34" rx="17" fill="#FFF8E6"/>'
                    f'<text x="0" y="23" text-anchor="middle" font-family="Fredoka, Arial" font-weight="600" font-size="18" fill="{shade(c, .8)}">{t}</text></g>')
@@ -161,6 +166,7 @@ svg = f'''<svg class="iso" viewBox="{VB}" role="img" aria-label="2.5D system arc
   <defs>{DEFS}<radialGradient id="mglow"><stop offset="0" stop-color="#FFD23F" stop-opacity=".55"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient></defs>
   {''.join(zone_svg)}
   {''.join(s for _, s in ITEMS)}
+  <g class="ops" style="color:#9AA6C4">{ops_l}</g>
   <g class="night" style="color:#FFD23F">{nightly}</g>
   <g class="fam" style="color:#7FD3B4">{family}</g>
   <g class="kidl" style="color:#F48FB1">{kid_l}</g>
@@ -176,10 +182,10 @@ def card(t, c, rows):
 cards = ''.join([
     card('Families', '#3B4F96', [('Parent app', 'p', 'Run tonight’s agent, see facts and sources, approve.'), ('Kid app', 'p', 'Story shelf with only shared stories.')]),
     card('Edge and API', '#4B5FB0', [('Static hosting and CDN', 'p', 'Serves both apps fast, anywhere.'), ('API gateway', 'n', 'One door for app requests, with sign in.'), ('Parent approval', 'p', 'Share, not tonight, or make it simpler.')]),
-    card('Agent core', '#3A4FA8', [('Nightly scheduler', 'n', 'Wakes the agent every evening.'), ('Orchestrator', 'p', 'One goal, time and cost limits, logs each step.'), ('Job queue and workers', 'n', 'Discover, verify, rewrite, self check, risk, in parallel.')]),
+    card('Agent core', '#3A4FA8', [('Orchestrator', 'p', 'One goal, time and cost limits, logs each step.'), ('Job queue and workers', 'n', 'Discover, verify, rewrite, self check, risk, in parallel.')]),
     card('AI services', '#7A4F86', [('Language model', 'n', 'Reads, checks and rewrites, grounded in sources.'), ('Voice', 'p', 'Today: the browser’s built in speech.'), ('Picture maker', 'n', 'Today: hand drawn SVG scenes.')]),
     card('Data and sources', '#B7791F', [('Approved news feeds', 'p', 'Only listed sources, no open scraping.'), ('Story store and family settings', 'p', 'Today: JavaScript objects in the page.'), ('Evidence log and cache', 'n', 'Every line keeps its source and time.')]),
-    card('Ops', '#2F6F7A', [('Monitoring and evals', 'n', 'Accuracy checks, cost per story, errors.'), ('Parent alerts', 'n', 'A short note when tonight’s story is ready.')]),
+    card('Ops', '#2F6F7A', [('Nightly scheduler', 'n', 'Wakes the agent every evening.'), ('Monitoring and evals', 'n', 'Accuracy checks, cost per story, errors.'), ('Parent alerts', 'n', 'A short note when tonight’s story is ready.')]),
 ])
 
 html = f'''<!doctype html>
@@ -213,6 +219,7 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
 .iso {{ width: 100%; height: auto; display: block; overflow: visible }}
 .flow, .flow2 {{ fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 2 11; animation: flow 1.2s linear infinite }}
 .flow2 {{ stroke-dasharray: 7 8 }}
+.flow4 {{ fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 4 7; opacity: .8 }}
 .flow3 {{ fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 7 8; animation: flow 1.2s linear infinite }}
 @keyframes flow {{ to {{ stroke-dashoffset: -26 }} }}
 .cards {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 10px }}
@@ -251,6 +258,7 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
       <span><span class="ln" style="color:#FFD23F;border-top-style:dotted"></span>Nightly agent run</span>
       <span><span class="ln" style="color:#7FD3B4"></span>Parent</span>
       <span><span class="ln" style="color:#F48FB1"></span>Kid, read only</span>
+      <span><span class="ln" style="color:#9AA6C4;border-top-style:dotted"></span>Monitoring, always on</span>
     </div>
   </div>
   <p class="swipe">Swipe to see the whole system →</p>
@@ -258,11 +266,13 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
   <div class="seq">
     <div class="sq"><p class="sqh"><span class="sqd" style="background:#FFD23F"></span>Tonight, automatic</p><ol>
       <li><b>1</b>The scheduler wakes the orchestrator.</li>
-      <li><b>2</b>Workers read the approved news feeds.</li>
-      <li><b>3</b>The language model helps verify and rewrite each story.</li>
-      <li><b>4</b>Self check every line, then sort by risk.</li>
-      <li><b>5</b>Save the story with its sources and evidence.</li>
-      <li><b>6</b>Alert the parent: tonight’s story is ready.</li></ol></div>
+      <li><b>2</b>The orchestrator hands jobs to the workers.</li>
+      <li><b>3</b>Workers read the approved news feeds.</li>
+      <li><b>4</b>AI services help verify, rewrite, voice and draw.</li>
+      <li><b>5</b>Self check every line, then sort by risk.</li>
+      <li><b>6</b>Save the story with its sources and evidence.</li>
+      <li><b>7</b>Saving a story sends a parent alert.</li>
+      <li><b>8</b>The parent hears: tonight’s story is ready.</li></ol></div>
     <div class="sq"><p class="sqh"><span class="sqd" style="background:#7FD3B4"></span>At bedtime, with people</p><ol class="abc">
       <li><b style="background:#7FD3B4">A</b>The parent opens the story, the facts and the sources.</li>
       <li><b style="background:#7FD3B4">B</b>The parent approves, skips or asks for a simpler version.</li>
