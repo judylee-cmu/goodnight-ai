@@ -111,7 +111,7 @@ NODES['data'] = P(*L(5, 160, 80), Z + 50)
 
 # Ops
 x, y = L(6, 30, 30);   put(x + y, box(x, y, Z, 56, 42, 38, '#7FD3B4')); label('mon', x + 28, y + 21, Z + 38, 'Monitoring and evals', 'n', -52)
-x, y = L(6, 20, 150);  put(x + y, box(x, y, Z, 48, 42, 26, '#FFD23F')); label('notify', x + 24, y + 21, Z + 26, 'Parent alerts', 'n', 10)
+x, y = L(6, 20, 150);  put(x + y, box(x, y, Z, 48, 42, 26, '#FFD23F')); label('notify', x + 24, y + 21, Z + 26, 'Parent notifications', 'n', 10)
 
 ITEMS.sort(key=lambda t: t[0])
 
@@ -162,7 +162,7 @@ _pts = [tuple(map(float, q.split(','))) for m in _re.findall(r'points="([^"]+)"'
 _x0 = min(p[0] for p in _pts) - 110; _x1 = max(p[0] for p in _pts) + 30
 _y0 = min(p[1] for p in _pts) - 90; _y1 = max(p[1] for p in _pts) + 60
 VB = '%.0f %.0f %.0f %.0f' % (_x0, _y0, _x1 - _x0, _y1 - _y0)
-svg = f'''<svg class="iso" viewBox="{VB}" role="img" aria-label="2.5D system architecture. Families use a parent app and a kid app served from static hosting. The parent app talks to an API gateway and a parent approval service. A nightly scheduler wakes the orchestrator, which puts jobs on a queue for five agent workers: discover, verify, rewrite, self check and risk. Workers read approved news feeds, call a language model, a voice service and a picture maker, and write to a story store and an evidence log. Data also holds family settings and a cache. Ops has monitoring and evals plus parent alerts.">
+svg = f'''<svg class="iso" viewBox="{VB}" role="img" aria-label="2.5D system architecture. Families use a parent app and a kid app served from static hosting. The parent app talks to an API gateway and a parent approval service. A nightly scheduler wakes the orchestrator, which puts jobs on a queue for five agent workers: discover, verify, rewrite, self check and risk. Workers read approved news feeds, call a language model, a voice service and a picture maker, and write to a story store and an evidence log. Data also holds family settings and a cache. Ops has monitoring and evals plus parent notifications.">
   <defs>{DEFS}<radialGradient id="mglow"><stop offset="0" stop-color="#FFD23F" stop-opacity=".55"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient></defs>
   {''.join(zone_svg)}
   {''.join(s for _, s in ITEMS)}
@@ -185,7 +185,7 @@ cards = ''.join([
     card('Agent core', '#3A4FA8', [('Orchestrator', 'p', 'One goal, time and cost limits, logs each step.'), ('Job queue and workers', 'n', 'Discover, verify, rewrite, self check, risk, in parallel.')]),
     card('AI services', '#7A4F86', [('Language model', 'n', 'Reads, checks and rewrites, grounded in sources.'), ('Voice', 'p', 'Today: the browser’s built in speech.'), ('Picture maker', 'n', 'Today: hand drawn SVG scenes.')]),
     card('Data and sources', '#B7791F', [('Approved news feeds', 'p', 'Only listed sources, no open scraping.'), ('Story store and family settings', 'p', 'Today: JavaScript objects in the page.'), ('Evidence log and cache', 'n', 'Every line keeps its source and time.')]),
-    card('Ops', '#2F6F7A', [('Nightly scheduler', 'n', 'Wakes the agent every evening.'), ('Monitoring and evals', 'n', 'Accuracy checks, cost per story, errors.'), ('Parent alerts', 'n', 'A short note when tonight’s story is ready.')]),
+    card('Ops', '#2F6F7A', [('Nightly scheduler', 'n', 'Wakes the agent every evening.'), ('Monitoring and evals', 'n', 'Accuracy checks, cost per story, errors.'), ('Parent notifications', 'n', 'A short note when tonight’s story is ready.')]),
 ])
 
 html = f'''<!doctype html>
@@ -271,7 +271,7 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
       <li><b>4</b>AI services help verify, rewrite, voice and draw.</li>
       <li><b>5</b>Self check every line, then sort by risk.</li>
       <li><b>6</b>Save the story with its sources and evidence.</li>
-      <li><b>7</b>Saving a story sends a parent alert.</li>
+      <li><b>7</b>Saving a story sends a parent notification.</li>
       <li><b>8</b>The parent hears: tonight’s story is ready.</li></ol></div>
     <div class="sq"><p class="sqh"><span class="sqd" style="background:#7FD3B4"></span>At bedtime, with people</p><ol class="abc">
       <li><b style="background:#7FD3B4">A</b>The parent opens the story, the facts and the sources.</li>
