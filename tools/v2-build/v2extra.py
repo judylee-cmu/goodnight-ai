@@ -388,7 +388,9 @@ new = ('<div class="reveal banner"><p>Automate where it’s safe.<br><span>Let t
        '<span class="tk-txt">Curious how I’m built?<b>See the system <span class="nw">behind it →</span></b></span></span>' + _t + '</a></div>')
 s = s.replace(old, new, 1)
 s = s.replace('</style>', """
-.banner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; overflow: visible }
+.banner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: nowrap; overflow: visible }
+.banner > p { flex: 1 1 auto; min-width: 0 }
+.tinker-link { flex: none }
 .tinker-link { display: flex; align-items: flex-end; gap: 6px; text-decoration: none; color: var(--cream); margin: -30px -6px -26px auto }
 .tinker-link svg.tinker { width: 128px; height: auto; overflow: visible; flex: none }
 .banner .tk-bubble, .banner .tk-bubble span { color: #121A33 }
@@ -403,7 +405,7 @@ s = s.replace('</style>', """
 @keyframes tkbob { 50% { transform: translateY(-4px) rotate(-1deg) } }
 @media (prefers-reduced-motion: reduce) { .tk-bubble { animation: none } }
 .tinker-link:hover svg.tinker .p-arm-r.wave { animation: wave 1.3s ease-in-out 1 !important }
-@media (max-width: 760px) { .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
+@media (max-width: 760px) { .banner { flex-wrap: wrap } .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
 </style>""", 1)
 
 open(P, 'w').write(s)
