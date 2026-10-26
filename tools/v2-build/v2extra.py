@@ -389,7 +389,9 @@ new = ('<div class="reveal banner"><p>Automate where it’s safe.<br><span>Let t
 s = s.replace(old, new, 1)
 s = s.replace('</style>', """
 .banner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: nowrap; overflow: visible }
-.banner > p { flex: 1 1 auto; min-width: 0 }
+.banner > p { flex: 1 1 auto; min-width: 0; font-size: clamp(22px, 2.5vw, 40px) }
+.banner > p > span { white-space: nowrap }
+@media (max-width: 760px) { .banner > p > span { white-space: normal } }
 .tinker-link { flex: none }
 .tinker-link { display: flex; align-items: flex-end; gap: 6px; text-decoration: none; color: var(--cream); margin: -30px -6px -26px auto }
 .tinker-link svg.tinker { width: 128px; height: auto; overflow: visible; flex: none }
