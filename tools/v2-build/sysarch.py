@@ -44,7 +44,7 @@ def label(name, x, y, z, text, tag, dy=16):
                   f'<text x="{-w/2+27:.0f}" y="20.5" font-family="Nunito Sans, Arial" font-weight="700" font-size="15" fill="#F7F1E3">{text}</text></g>')
 
 ZONES = [  # gx, gy, sx, sy, color, title
-    (0,   580, 180, 210, '#3B4F96', 'Families'),
+    (-60, 560, 240, 250, '#3B4F96', 'Families'),
     (270, 430, 180, 210, '#4B5FB0', 'Edge and API'),
     (560, 110, 320, 320, '#3A4FA8', 'Agent core'),
     (980, -170, 200, 280, '#7A4F86', 'AI services'),
@@ -59,8 +59,14 @@ def L(i, x, y):
     return ZONES[i][0] + x, ZONES[i][1] + y
 
 # Families
-x, y = L(0, 40, 40);  put(x + y, box(x, y, Z, 46, 26, 72, '#2B2F3A', top='#6C8BEF')); label('parent', x + 23, y + 13, Z + 72, 'Parent app', 'p', -62)
-x, y = L(0, 50, 120); put(x + y, box(x, y, Z, 92, 60, 10, '#2B2F3A', top='#F48FB1'))
+x, y = L(0, 110, 40);  put(x + y, box(x, y, Z, 46, 26, 72, '#2B2F3A', top='#6C8BEF')); label('parent', x + 23, y + 13, Z + 72, 'Parent app', 'p', -62)
+px_, py_ = P(*L(0, 50, 60), Z)
+put(L(0, 50, 60)[0] + L(0, 50, 60)[1], f'<ellipse cx="{px_:.0f}" cy="{py_:.0f}" rx="42" ry="12" fill="#000" opacity=".25"/><svg x="{px_-66:.0f}" y="{py_-132:.0f}" width="132" height="138" viewBox="0 0 210 220" overflow="visible">{cast["parentFace"]}</svg>')
+PERSON_P = (px_, py_)
+kx_, ky_ = P(*L(0, 60, 190), Z)
+put(L(0, 60, 190)[0] + L(0, 60, 190)[1], f'<ellipse cx="{kx_:.0f}" cy="{ky_:.0f}" rx="30" ry="9" fill="#000" opacity=".25"/><svg x="{kx_-56:.0f}" y="{ky_-112:.0f}" width="112" height="117" viewBox="0 0 210 220" overflow="visible">{cast["kid"]}</svg>')
+PERSON_K = (kx_, ky_)
+x, y = L(0, 120, 140); put(x + y, box(x, y, Z, 92, 60, 10, '#2B2F3A', top='#F48FB1'))
 gx_, gy_ = P(x + 46, y + 30, Z + 10)
 put(x + y + 1, f'<svg x="{gx_-17:.0f}" y="{gy_-38:.0f}" width="34" height="40" viewBox="0 -24 270 324" overflow="visible">{PIP}</svg>')
 label('kid', x + 46, y + 30, Z + 10, 'Kid app', 'p', 12)
@@ -109,17 +115,35 @@ x, y = L(6, 100, 140); put(x + y, box(x, y, Z, 48, 42, 26, '#FFD23F')); label('n
 
 ITEMS.sort(key=lambda t: t[0])
 
-def flow(a, b, cls='flow', bend=0):
+BADGES = []
+def badge(x, y, t, fill, ink='#121A33'):
+    BADGES.append(f'<g transform="translate({x:.0f} {y:.0f})"><circle r="18" fill="{fill}" stroke="#121A33" stroke-width="3"/>'
+                  f'<text y="6.5" text-anchor="middle" font-family="Fredoka, Arial" font-weight="600" font-size="19" fill="{ink}">{t}</text></g>')
+def flow(a, b, cls='flow', bend=0, mark=None, col='#FFD23F'):
     (x1, y1), (x2, y2) = NODES[a], NODES[b]
     mx, my = (x1 + x2) / 2, (y1 + y2) / 2 - bend
     ang = math.degrees(math.atan2(y2 - my, x2 - mx))
+    if mark:
+        badge(.25 * x1 + .5 * mx + .25 * x2, .25 * y1 + .5 * my + .25 * y2, mark, col)
     return (f'<path class="{cls}" d="M{x1:.0f} {y1:.0f} Q{mx:.0f} {my:.0f} {x2:.0f} {y2:.0f}"/>'
             f'<path d="M-9 -6 L0 0 L-9 6" transform="translate({x2:.0f} {y2:.0f}) rotate({ang:.0f})" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
-nightly = ''.join([flow('sched', 'orch', bend=20), flow('orch', 'workers', bend=30), flow('workers', 'src', bend=20),
-                   flow('workers', 'ai', bend=40), flow('workers', 'data', bend=-10), flow('orch', 'mon', bend=40)])
-family = ''.join([flow('kid', 'cdn', 'flow2', 30), flow('parent', 'api', 'flow2', 20), flow('api', 'data', 'flow2', 20),
-                  flow('notify', 'parent', 'flow2', 40)])
+G_ = '#FFD23F'; M_ = '#7FD3B4'; K_ = '#F48FB1'
+nightly = ''.join([flow('sched', 'orch', bend=20, mark='1'), flow('orch', 'workers', bend=30), flow('workers', 'src', bend=20, mark='2'),
+                   flow('workers', 'ai', bend=40, mark='3'), flow('workers', 'data', bend=-10, mark='5'), flow('data', 'notify', bend=40),
+                   flow('orch', 'mon', bend=40)])
+wx4, wy4 = NODES['workers']; badge(wx4 + 34, wy4 - 34, '4', G_)
+parent_l = ''.join([flow('notify', 'parent', 'flow2', 40, '6', G_), flow('parent', 'api', 'flow2', 20, 'A', M_), flow('api', 'data', 'flow2', 20, 'B', M_)])
+kid_l = flow('cdn', 'kid', 'flow3', -30, 'C', K_)
+badge(PERSON_K[0] + 52, PERSON_K[1] - 86, 'D', K_)
+family = parent_l
 
+def ptag(x, y, title, sub, col):
+    w = max(len(title) * 11.5, len(sub) * 8.6) + 40
+    return (f'<g transform="translate({x:.0f} {y:.0f})"><rect x="{-w/2:.0f}" y="0" width="{w:.0f}" height="56" rx="16" fill="#FFF8E6" stroke="{col}" stroke-width="3"/>'
+            f'<text x="0" y="23" text-anchor="middle" font-family="Fredoka, Arial" font-weight="600" font-size="20" fill="#121A33">{title}</text>'
+            f'<text x="0" y="44" text-anchor="middle" font-family="Nunito Sans, Arial" font-size="15" fill="#4A5568">{sub}</text></g>')
+person_tags = (ptag(PERSON_P[0] - 10, PERSON_P[1] - 196, 'Parent · the editor', 'Sees facts and sources, approves', '#7FD3B4')
+               + ptag(PERSON_K[0] - 40, PERSON_K[1] + 74, 'Kid · read only', 'Only approved stories, no account', '#F48FB1'))
 ztitles = []
 for gx, gy, sx, sy, c, t in ZONES:
     tx, ty = P(gx + sx, gy + sy, -12)
@@ -130,7 +154,7 @@ for gx, gy, sx, sy, c, t in ZONES:
 import re as _re
 _all = ''.join(zone_svg) + ''.join(x for _, x in ITEMS)
 _pts = [tuple(map(float, q.split(','))) for m in _re.findall(r'points="([^"]+)"', _all) for q in m.split()]
-_x0 = min(p[0] for p in _pts) - 30; _x1 = max(p[0] for p in _pts) + 30
+_x0 = min(p[0] for p in _pts) - 110; _x1 = max(p[0] for p in _pts) + 30
 _y0 = min(p[1] for p in _pts) - 90; _y1 = max(p[1] for p in _pts) + 60
 VB = '%.0f %.0f %.0f %.0f' % (_x0, _y0, _x1 - _x0, _y1 - _y0)
 svg = f'''<svg class="iso" viewBox="{VB}" role="img" aria-label="2.5D system architecture. Families use a parent app and a kid app served from static hosting. The parent app talks to an API gateway and a parent approval service. A nightly scheduler wakes the orchestrator, which puts jobs on a queue for five agent workers: discover, verify, rewrite, self check and risk. Workers read approved news feeds, call a language model, a voice service and a picture maker, and write to a story store and an evidence log. Data also holds family settings and a cache. Ops has monitoring and evals plus parent alerts.">
@@ -139,8 +163,11 @@ svg = f'''<svg class="iso" viewBox="{VB}" role="img" aria-label="2.5D system arc
   {''.join(s for _, s in ITEMS)}
   <g class="night" style="color:#FFD23F">{nightly}</g>
   <g class="fam" style="color:#7FD3B4">{family}</g>
+  <g class="kidl" style="color:#F48FB1">{kid_l}</g>
   {''.join(ztitles)}
   {''.join(LABELS)}
+  {person_tags}
+  {''.join(BADGES)}
 </svg>'''
 
 def card(t, c, rows):
@@ -186,6 +213,7 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
 .iso {{ width: 100%; height: auto; display: block; overflow: visible }}
 .flow, .flow2 {{ fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 2 11; animation: flow 1.2s linear infinite }}
 .flow2 {{ stroke-dasharray: 7 8 }}
+.flow3 {{ fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 7 8; animation: flow 1.2s linear infinite }}
 @keyframes flow {{ to {{ stroke-dashoffset: -26 }} }}
 .cards {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 10px }}
 .dc {{ background: var(--night2); border: 1px solid var(--night3); border-radius: 18px; padding: 14px 16px }}
@@ -196,6 +224,15 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
 .dc li span {{ display: block; color: var(--mist) }}
 .dc em, .dc i {{ font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 1px 7px; margin-left: 4px; vertical-align: 1px }}
 .dc i {{ background: var(--gold); color: var(--night) }} .dc em {{ border: 1.5px dashed var(--mist2); color: var(--mist) }}
+.seq {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px }}
+.sq {{ background: var(--night2); border: 1px solid var(--night3); border-radius: 18px; padding: 14px 16px }}
+.sqh {{ margin: 0 0 8px; display: flex; align-items: center; gap: 9px; font-family: var(--f-display); font-weight: 600; font-size: 17px }}
+.sqd {{ width: 14px; height: 14px; border-radius: 50% }}
+.sq ol {{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px }}
+.sq li {{ display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--mist) }}
+.sq li b {{ flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: var(--night); display: grid; place-items: center; font-family: var(--f-display); font-size: 13px; border: 2px solid var(--night) }}
+.meet {{ grid-column: 1 / -1; margin: 0; font-size: 14px; color: var(--cream); background: rgba(255,210,63,.1); border: 1px dashed var(--gold); border-radius: 14px; padding: 10px 14px }}
+@media (max-width: 760px) {{ .seq {{ grid-template-columns: 1fr }} }}
 .note {{ margin: 16px 0 0; font-size: 13.5px; color: var(--mist2); max-width: 96ch }}
 .swipe {{ display: none; margin: 12px 0 0; font-size: 13px; font-weight: 700; color: var(--gold) }}
 @media (max-width: 900px) {{ .cards {{ grid-template-columns: 1fr 1fr }} }}
@@ -212,11 +249,27 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
       <span><span class="k" style="background:#FFD23F"></span>In today’s prototype</span>
       <span><span class="k" style="border:1.5px dashed #9AA6C4"></span>Next, for the full service</span>
       <span><span class="ln" style="color:#FFD23F;border-top-style:dotted"></span>Nightly agent run</span>
-      <span><span class="ln" style="color:#7FD3B4"></span>Family requests</span>
+      <span><span class="ln" style="color:#7FD3B4"></span>Parent</span>
+      <span><span class="ln" style="color:#F48FB1"></span>Kid, read only</span>
     </div>
   </div>
   <p class="swipe">Swipe to see the whole system →</p>
   <div class="stage">{svg}</div>
+  <div class="seq">
+    <div class="sq"><p class="sqh"><span class="sqd" style="background:#FFD23F"></span>Tonight, automatic</p><ol>
+      <li><b>1</b>The scheduler wakes the orchestrator.</li>
+      <li><b>2</b>Workers read the approved news feeds.</li>
+      <li><b>3</b>The language model helps verify and rewrite each story.</li>
+      <li><b>4</b>Self check every line, then sort by risk.</li>
+      <li><b>5</b>Save the story with its sources and evidence.</li>
+      <li><b>6</b>Alert the parent: tonight’s story is ready.</li></ol></div>
+    <div class="sq"><p class="sqh"><span class="sqd" style="background:#7FD3B4"></span>At bedtime, with people</p><ol class="abc">
+      <li><b style="background:#7FD3B4">A</b>The parent opens the story, the facts and the sources.</li>
+      <li><b style="background:#7FD3B4">B</b>The parent approves, skips or asks for a simpler version.</li>
+      <li><b style="background:#F48FB1">C</b>Only approved stories appear on the kid’s shelf.</li>
+      <li><b style="background:#F48FB1">D</b>Pip reads it aloud, and they talk about it together.</li></ol></div>
+    <p class="meet">The two paths meet at the story store. Everything before it is automatic; nothing after it reaches a kid without the risk rules and, when needed, the parent.</p>
+  </div>
   <div class="cards">{cards}</div>
   <p class="note">Components use generic names on purpose. Today’s prototype runs as static pages: the orchestrator plays a labeled replay of one real agent run, stories and family rules live in the page, and Pip speaks with the browser’s built in voice. In the full service, each agent worker becomes a real AI call with its own tools and checks, and nothing reaches a kid without passing the risk rules and, when needed, the parent.</p>
 </div>

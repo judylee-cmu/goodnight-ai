@@ -148,6 +148,7 @@ function readHero(){
 }
 
 const out = {
+  parentFace: parent(),
   readHero: readHero(),
   defs,
   hero: pipSVG('wave', D, 'class="pip" role="img" aria-label="Pip, a small blue robot with a moon antenna, waving"'),
