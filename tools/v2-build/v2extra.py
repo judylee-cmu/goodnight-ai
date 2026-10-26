@@ -383,17 +383,25 @@ old = '<div class="reveal banner"><p>Automate where it’s safe.<br><span>Let th
 assert old in s
 new = ('<div class="reveal banner"><p>Automate where it’s safe.<br><span>Let the parent decide where it matters.</span></p>'
        '<a class="tinker-link" href="system.html" aria-label="See the system behind it">'
-       '<span class="tk-bubble">Curious how I’m built?<b>See the system behind it →</b></span>' + _t + '</a></div>')
+       '<span class="tk-bubble"><svg class="tk-shape" viewBox="0 0 240 130" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-paint)">'
+       '<path d="M22 10 C70 2 170 4 214 12 C234 16 238 34 236 58 C234 82 230 96 210 100 C206 102 200 102 196 102 L232 128 L150 103 C110 106 60 106 26 100 C8 96 2 80 4 56 C6 30 4 14 22 10 Z"/></g></svg>'
+       '<span class="tk-txt">Curious how I’m built?<b>See the system <span class="nw">behind it →</span></b></span></span>' + _t + '</a></div>')
 s = s.replace(old, new, 1)
 s = s.replace('</style>', """
 .banner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; overflow: visible }
 .tinker-link { display: flex; align-items: flex-end; gap: 6px; text-decoration: none; color: var(--cream); margin: -30px -6px -26px auto }
 .tinker-link svg.tinker { width: 128px; height: auto; overflow: visible; flex: none }
-.banner .tk-bubble { color: #121A33 }
-.tk-bubble { position: relative; background: #FFF8E6; color: #121A33; border-radius: 18px 18px 4px 18px; padding: 10px 14px; font-size: 14px; line-height: 1.35; margin-bottom: 64px; max-width: 190px }
+.banner .tk-bubble, .banner .tk-bubble span { color: #121A33 }
+.nw { white-space: nowrap }
+.tk-bubble { position: relative; display: block; width: 236px; padding: 18px 22px 42px; margin-bottom: 70px; margin-right: -18px; color: #121A33; font-size: 14px; line-height: 1.35 }
+.tk-shape { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: #FFF8E6; transition: fill .2s }
+.tk-txt { position: relative; display: block }
 .tk-bubble b { display: block; font-family: var(--f-display); font-weight: 600; font-size: 16px; color: #121A33 }
-.tinker-link:hover .tk-bubble, .tinker-link:focus-visible .tk-bubble { background: var(--gold) }
+.tinker-link:hover .tk-shape, .tinker-link:focus-visible .tk-shape { fill: var(--gold) }
 .tinker-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; border-radius: 16px }
+.tk-bubble { animation: tkbob 3.2s ease-in-out infinite }
+@keyframes tkbob { 50% { transform: translateY(-4px) rotate(-1deg) } }
+@media (prefers-reduced-motion: reduce) { .tk-bubble { animation: none } }
 .tinker-link:hover svg.tinker .p-arm-r.wave { animation: wave 1.3s ease-in-out 1 !important }
 @media (max-width: 760px) { .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
 </style>""", 1)
