@@ -410,13 +410,14 @@ s = s.replace('</style>', """
 @media (max-width: 760px) { .banner { flex-wrap: wrap } .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
 </style>""", 1)
 
-# 19. One line "why us"
-old = '<p class="lead">For parents and kids 5 to 10, together at bedtime.</p>\n      <div class="card-dark news-card">'
-assert old in s
-s = s.replace(old, '<p class="lead">For parents and kids 5 to 10, together at bedtime.</p>\n      <p class="whyus"><b>Why us</b>Kids news sites skip AI. Chatbots skip sources. We bring real AI news, checked against sources, with a parent in charge.</p>\n      <div class="card-dark news-card">', 1)
+# 19. One line "why us", as a full width strip under the product row
+pi = s.index('id="product"')
+end = s.index('\n  </div>\n</section>', pi)
+s = s[:end] + '\n    <p class="reveal whyus"><b>Why us</b><span>Kids news sites skip AI. Chatbots skip sources. We bring real AI news, checked against sources, with a parent in charge.</span></p>' + s[end:]
 s = s.replace('</style>', """
-.whyus { margin: 14px 0 0; max-width: 44ch; font-size: 15.5px; line-height: 1.5; color: var(--cream); border-left: 3px solid var(--gold); padding: 2px 0 2px 14px }
-.whyus b { display: block; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px }
+.whyus { margin: 34px 0 0; display: flex; align-items: baseline; gap: 16px; font-size: 17px; line-height: 1.5; color: var(--cream); border-top: 2px dashed rgba(255,210,63,.35); padding-top: 18px }
+.whyus b { flex: none; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold) }
+@media (max-width: 760px) { .whyus { display: block } .whyus b { display: block; margin-bottom: 4px } }
 </style>""", 1)
 
 open(P, 'w').write(s)
