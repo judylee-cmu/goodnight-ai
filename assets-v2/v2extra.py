@@ -300,5 +300,20 @@ s = s.replace('</style>', """
 @media (max-width: 480px) { .road2 { grid-template-columns: 1fr !important } .road2 li { flex-direction: row !important; align-items: center !important } .ic2 { width: 72px; height: 72px; flex: none } }
 </style>""", 1)
 
+# 14. Calmer ending: keep the family bedtime scene only
+s = re.sub(r'<mask id="crescent2">.*?</mask><g filter="url\(#gn-paint\)"><circle cx="1040" cy="120" r="80" fill="#FFD23F" mask="url\(#crescent2\)"/></g>', '', s, flags=re.S)
+a = s.index('<div class="sleeper" aria-hidden="true">')
+depth = 0; i = a
+for m in re.finditer(r'<div\b|</div>', s[a:]):
+    depth += 1 if m.group(0) == '<div' else -1
+    if depth == 0:
+        b = a + m.end(); break
+s = s[:a] + s[b:]
+sub('Goodnight, AI · by Judy Lee', 'by Goodnight, AI')
+s = s.replace('</style>', """
+.close .wrap { align-items: center }
+.close h2 { font-size: clamp(34px, 4.6vw, 60px) !important }
+</style>""", 1)
+
 open(P, 'w').write(s)
 print('v2extra ok', len(s))
