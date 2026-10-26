@@ -1,6 +1,7 @@
 import json, re
 SP = '/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/'
 R = '/home/claude/gn-repo/'
+SRC = SP + 'v1src/'  # the first version of the pages, kept locally outside the repo
 c = json.load(open(SP + 'cast.json'))
 
 defs = c['defs'] + '<radialGradient id="mglow"><stop offset="0" stop-color="#FFD23F" stop-opacity=".55"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient>'
@@ -71,7 +72,7 @@ LULLJS = """<script>
 </script>"""
 
 # ---------------- pitch-v2 ----------------
-s = open(R + 'v1/pitch.html').read()
+s = open(SRC + 'pitch.html').read()
 s = s.replace('<body>', '<body>\n' + DEFS_SVG, 1)
 s = replace_svg(s, '<svg class="pip"', c['readHero'])
 s = replace_svg(s, '<svg class="bed"', c['bed'])
@@ -140,7 +141,7 @@ s = s.replace('<g fill="#F7F1E3" class="tw"><circle cx="120" cy="80" r="3"/>', '
 open('/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/build/pitch-v2.html', 'w').write(s)
 
 # ---------------- index-v2 ----------------
-t = open(R + 'v1/index.html').read()
+t = open(SRC + 'index.html').read()
 t = t.replace('<body>', '<body>\n' + DEFS_SVG, 1)
 a = t.index('<g id="pip">'); b = t.index('</g>', a) + 4
 t = t[:a] + f'<g id="pip"><g transform="translate(3 10) scale(.42)">{c["indexPip"]}</g></g>' + t[b:]

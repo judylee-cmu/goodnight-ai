@@ -12,8 +12,8 @@ Visit https://goodnight-ai-opal.vercel.app or open the files in a browser.
 
 - `index.html`: the one page pitch
 - `demo.html`: the interactive demo (the QR code points to `/demo`)
-- `v1/`: the first version of both pages, kept for comparison
-- `tools/v2-build/`: the scripts that generate the v2 pages
+- `system.html`: the system architecture
+- `tools/v2-build/`: the scripts that generate the pages
 
 1. **For parents:** tap "Run tonight's agent" to watch the agent's steps, see which stories it skipped and why, and approve, revise or skip each story.
 2. **For kids:** only stories the parent shared appear. Tap "Start the story" and Pip reads it out loud.
