@@ -372,5 +372,31 @@ footer { position: relative; border-top: 0 !important }
 @media (prefers-reduced-motion: reduce) { .charm { animation: none } }
 </style>""", 1)
 
+# 18. Tinker Pip invites people to see the system behind the product
+import json as _json, re as _re
+_c = _json.load(open('/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/cast.json'))
+_names = _re.findall(r'id="([A-Za-z]+)"', _c['defs'] + '<radialGradient id="mglow">')
+_t = _c['tinker']
+for _n in _names:
+    _t = _t.replace(f'url(#{_n})', f'url(#gn-{_n})')
+old = '<div class="reveal banner"><p>Automate where it’s safe.<br><span>Let the parent decide where it matters.</span></p></div>'
+assert old in s
+new = ('<div class="reveal banner"><p>Automate where it’s safe.<br><span>Let the parent decide where it matters.</span></p>'
+       '<a class="tinker-link" href="system.html" aria-label="See the system behind it">'
+       '<span class="tk-bubble">Curious how I’m built?<b>See the system behind it →</b></span>' + _t + '</a></div>')
+s = s.replace(old, new, 1)
+s = s.replace('</style>', """
+.banner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; overflow: visible }
+.tinker-link { display: flex; align-items: flex-end; gap: 6px; text-decoration: none; color: var(--cream); margin: -30px -6px -26px auto }
+.tinker-link svg.tinker { width: 128px; height: auto; overflow: visible; flex: none }
+.banner .tk-bubble { color: #121A33 }
+.tk-bubble { position: relative; background: #FFF8E6; color: #121A33; border-radius: 18px 18px 4px 18px; padding: 10px 14px; font-size: 14px; line-height: 1.35; margin-bottom: 64px; max-width: 190px }
+.tk-bubble b { display: block; font-family: var(--f-display); font-weight: 600; font-size: 16px; color: #121A33 }
+.tinker-link:hover .tk-bubble, .tinker-link:focus-visible .tk-bubble { background: var(--gold) }
+.tinker-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; border-radius: 16px }
+.tinker-link:hover svg.tinker .p-arm-r.wave { animation: wave 1.3s ease-in-out 1 !important }
+@media (max-width: 760px) { .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
+</style>""", 1)
+
 open(P, 'w').write(s)
 print('v2extra ok', len(s))

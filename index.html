@@ -358,6 +358,17 @@ footer { position: relative; border-top: 0 !important }
 @keyframes sway { 0%, 100% { transform: rotate(0) } 50% { transform: rotate(4deg) } }
 @media (max-width: 760px) { .charms { display: none } }
 @media (prefers-reduced-motion: reduce) { .charm { animation: none } }
+
+.banner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; overflow: visible }
+.tinker-link { display: flex; align-items: flex-end; gap: 6px; text-decoration: none; color: var(--cream); margin: -30px -6px -26px auto }
+.tinker-link svg.tinker { width: 128px; height: auto; overflow: visible; flex: none }
+.banner .tk-bubble { color: #121A33 }
+.tk-bubble { position: relative; background: #FFF8E6; color: #121A33; border-radius: 18px 18px 4px 18px; padding: 10px 14px; font-size: 14px; line-height: 1.35; margin-bottom: 64px; max-width: 190px }
+.tk-bubble b { display: block; font-family: var(--f-display); font-weight: 600; font-size: 16px; color: #121A33 }
+.tinker-link:hover .tk-bubble, .tinker-link:focus-visible .tk-bubble { background: var(--gold) }
+.tinker-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; border-radius: 16px }
+.tinker-link:hover svg.tinker .p-arm-r.wave { animation: wave 1.3s ease-in-out 1 !important }
+@media (max-width: 760px) { .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
 </style>
 </head>
 <body>
@@ -632,7 +643,26 @@ footer { position: relative; border-top: 0 !important }
   <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  </g></svg><p>Pip reads to the kid</p></div>
     </div>
-    <div class="reveal banner"><p>Automate where it’s safe.<br><span>Let the parent decide where it matters.</span></p></div>
+    <div class="reveal banner"><p>Automate where it’s safe.<br><span>Let the parent decide where it matters.</span></p><a class="tinker-link" href="system.html" aria-label="See the system behind it"><span class="tk-bubble">Curious how I’m built?<b>See the system behind it →</b></span><svg viewBox="0 -24 270 324" class="pip tinker" role="img" aria-label="Pip the robot builder with a hard hat and a wrench">
+  <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
+  <g filter="url(#gn-paint)">
+   <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+   <path d="M156 232 L168 254 L160 274" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+   <path d="M100 258 L116 258 L116 274 C118 276 134 276 136 284 L136 288 L98 288 Z" fill="#F48FB1"/><path d="M105 264 h7 M105 269 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+
+   <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+
+   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><g class="p-arm-r wave"><path d="M192 150 C212 140 222 120 222 96" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><g filter="url(#gn-paint)" transform="rotate(24 222 88)"><rect x="213" y="30" width="18" height="62" rx="9" fill="#F7A23B"/><path d="M202 34 C196 12 210 -4 222 -4 C234 -4 248 12 242 34 L232 30 L232 12 L212 12 L212 30 Z" fill="#CBD3E8" stroke="#6B7591" stroke-width="3"/></g><circle cx="222" cy="88" r="8.5" fill="#6C8BEF"/></g>
+   <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
+   <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
+   <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
+  </g>
+  <circle cx="126" cy="196" r="5" fill="#E8483A"/><circle cx="142" cy="195" r="5" fill="#FFD23F"/>
+  <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
+  <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
+  <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+ <g filter="url(#gn-paint)"><path d="M86 66 C86 34 112 22 136 22 C162 22 186 34 186 64 Z" fill="#FFD23F"/><path d="M70 66 C100 58 170 56 202 62 C204 70 198 74 190 74 C150 70 110 70 78 76 C70 76 66 70 70 66 Z" fill="#F7A23B"/><path d="M130 24 C128 38 128 52 130 64 M142 24 C144 38 144 52 142 64" stroke="#F7A23B" stroke-width="6" fill="none" stroke-linecap="round"/></g></g></svg></a></div>
   </div>
 </section>
 

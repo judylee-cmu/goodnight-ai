@@ -97,6 +97,19 @@ function detective(){
 }
 
 
+
+// Tinker Pip: a little builder with a hard hat and a wrench in the raised hand.
+function tinker(){
+  let s = pipSVG('wave', D, 'class="pip tinker" role="img" aria-label="Pip the robot builder with a hard hat and a wrench"');
+  const wrench = '<g filter="url(#paint)" transform="rotate(24 222 88)"><rect x="213" y="30" width="18" height="62" rx="9" fill="#F7A23B"/>'
+    + '<path d="M202 34 C196 12 210 -4 222 -4 C234 -4 248 12 242 34 L232 30 L232 12 L212 12 L212 30 Z" fill="#CBD3E8" stroke="#6B7591" stroke-width="3"/></g>';
+  s = s.replace('<circle cx="222" cy="88" r="8.5" fill="#6C8BEF"/></g>', wrench + '<circle cx="222" cy="88" r="8.5" fill="#6C8BEF"/></g>');
+  const hat = '<g filter="url(#paint)"><path d="M86 66 C86 34 112 22 136 22 C162 22 186 34 186 64 Z" fill="#FFD23F"/>'
+    + '<path d="M70 66 C100 58 170 56 202 62 C204 70 198 74 190 74 C150 70 110 70 78 76 C70 76 66 70 70 66 Z" fill="#F7A23B"/>'
+    + '<path d="M130 24 C128 38 128 52 130 64 M142 24 C144 38 144 52 142 64" stroke="#F7A23B" stroke-width="6" fill="none" stroke-linecap="round"/></g>';
+  return s.replace(/<\/g><\/svg>\s*$/, hat + '</g></svg>');
+}
+
 // Hero: Pip tucked into bed, leaning on a pillow, reading a glowing storybook.
 function readHero(){
   window.EYE = [106,131,14,158,126,14,0,4,5.8];
@@ -155,6 +168,7 @@ const out = {
   mini: pipSVG('stand', D, 'class="mini-pip" aria-hidden="true" style="width:96px;height:116px;overflow:visible"'),
   sleep: pipSVG('sleep', A, 'class="sleep-pip" aria-hidden="true"'),
   detective: detective(),
+  tinker: tinker(),
   bed: bed(),
   kid: stripQ(C.kid()),
   grandma: stripQ(C.person('grandma')),
