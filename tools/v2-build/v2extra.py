@@ -282,7 +282,7 @@ icons = {
    <g {IK} fill="#FFF8E6" font-family="Fredoka, Arial, sans-serif" font-weight="600" text-anchor="middle"><text x="22" y="42" font-size="18">A</text><text x="40" y="44" font-size="16">文</text><text x="56" y="40" font-size="14">あ</text></g>
    <path d="M16 50 h22" stroke="#FFF8E6" stroke-width="2.4" stroke-linecap="round" {IK}/></svg>""",
 }
-items = [('voice', 'A warmer, more natural voice for Pip with ElevenLabs'),
+items = [('voice', 'A warmer, more natural voice for Pip'),
          ('ask', 'Kids ask Pip questions'),
          ('level', 'Choose your level, elementary to adult'),
          ('world', 'More languages and classroom mode')]
@@ -370,6 +370,67 @@ footer { position: relative; border-top: 0 !important }
 @keyframes sway { 0%, 100% { transform: rotate(0) } 50% { transform: rotate(4deg) } }
 @media (max-width: 760px) { .charms { display: none } }
 @media (prefers-reduced-motion: reduce) { .charm { animation: none } }
+</style>""", 1)
+
+# 17. Back to the core cohort, competitive edge, how it is built
+sub('<figcaption>Your non tech friend</figcaption></figure></div>',
+    '<figcaption>Your non tech friend</figcaption></figure></div>\n    <p class="lead core-line reveal">If grown ups can’t follow it, how will a 6 year old? <b>We start with parents and kids 5 to 10, together at bedtime.</b></p>')
+
+# how it is built, inside How it works
+PFX2 = 1
+def box(t, sub_, color):
+    return f'<div class="arch-box"><span class="arch-dot" style="background:{color}"></span><b>{t}</b><span>{sub_}</span></div>'
+arch = ('<div class="arch reveal"><p class="eyebrow">How it’s built</p><div class="arch-row">'
+  + box('Story data', 'Each story is a JavaScript object: lines, scenes, sources and a parent note.', '#6C8BEF')
+  + '<span class="arch-to" aria-hidden="true">→</span>'
+  + box('Agent steps', 'A list of steps the page plays in order: read, skip, check, rewrite, fix.', '#F7A23B')
+  + '<span class="arch-to" aria-hidden="true">→</span>'
+  + box('Risk rules', 'Green shares itself. Yellow and red wait for the parent.', '#4FA65B')
+  + '<span class="arch-to" aria-hidden="true">→</span>'
+  + box('Kid view', 'SVG pictures animated with CSS, read aloud with the browser’s speech API.', '#F48FB1')
+  + '</div><p class="arch-note">Plain HTML, CSS and JavaScript. No server. In the real product, each agent step becomes a real AI call; the flow stays the same.</p></div>')
+sub('<div class="reveal banner"><p>Automate where it’s safe.', arch + '\n    <div class="reveal banner"><p>Automate where it’s safe.')
+
+# competitive edge section
+edge_sec = f"""<!-- 4b. Why us -->
+<section class="dark2" id="why">
+  {wave(37, '#1C2647')}
+  <div class="wrap">
+    <p class="eyebrow">Why Goodnight, AI</p>
+    <h2>Only we combine real AI news with a parent in charge</h2>
+    <div class="why-grid reveal">
+      <div class="why-card"><p class="why-k">Kids news sites</p><ul><li>All kinds of news, lots of text</li><li>Little about AI</li><li>No space for parents</li></ul></div>
+      <div class="why-card"><p class="why-k">Asking a chatbot to “explain like I’m 5”</p><ul><li>No sources, no fact check</li><li>No safety check for kids</li><li>Not made to read together</li></ul></div>
+      <div class="why-card me"><p class="why-k">Goodnight, AI</p><ul><li>Real AI news, checked against sources</li><li>A story for the kid, the facts for the parent</li><li>The parent decides what the kid sees</li></ul></div>
+    </div>
+  </div>
+</section>
+
+"""
+sub('<!-- 5. Demo -->', edge_sec + '<!-- 5. Demo -->')
+s = s.replace('<li><a href="#demo">Demo</a></li>', '<li><a href="#why">Why us</a></li><li><a href="#demo">Demo</a></li>', 1)
+s = s.replace('</style>', """
+.core-line { max-width: 48ch !important; margin: 44px auto 0 !important; text-align: center }
+.core-line b { color: var(--ink) }
+.arch { margin-top: 40px; background: var(--paper); border: 2px solid var(--line); border-radius: 24px; padding: clamp(20px, 3vw, 32px) }
+.arch .eyebrow { margin-bottom: 18px }
+.arch-row { display: flex; align-items: stretch; gap: 12px }
+.arch-box { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; background: #fff; border-radius: 16px; padding: 16px; border: 1px solid var(--line) }
+.arch-box b { font-family: var(--f-display); font-size: 18px; color: var(--ink) }
+.arch-box span:last-child { font-size: 14.5px; line-height: 1.45; color: var(--ink2) }
+.arch-dot { width: 14px; height: 14px; border-radius: 50% }
+.arch-to { align-self: center; font-size: 24px; font-weight: 700; color: var(--amber) }
+.arch-note { margin: 16px 0 0; font-size: 15px; color: var(--ink2) }
+@media (max-width: 860px) { .arch-row { flex-direction: column } .arch-to { transform: rotate(90deg) } }
+#why { position: relative }
+.why-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px }
+.why-card { background: var(--night); border: 1px solid var(--night3); border-radius: 22px; padding: 24px }
+.why-card.me { background: #FFF8E6; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,210,63,.25) }
+.why-k { margin: 0 0 12px; font-family: var(--f-display); font-weight: 600; font-size: 20px; color: var(--cream) }
+.why-card.me .why-k { color: var(--amber) }
+.why-card ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--mist); font-size: 16px }
+.why-card.me ul { color: var(--ink); font-weight: 600 }
+@media (max-width: 860px) { .why-grid { grid-template-columns: 1fr } }
 </style>""", 1)
 
 open(P, 'w').write(s)
