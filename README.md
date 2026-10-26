@@ -8,14 +8,19 @@ Built for SEM Week 1 (Option 2: Agentic AI News Portal).
 
 ## Try it
 
-Open `index.html` in a browser, or visit the deployed site.
+Visit https://goodnight-ai-opal.vercel.app or open the files in a browser.
+
+- `index.html`: the one page pitch
+- `demo.html`: the interactive demo (the QR code points to `/demo`)
+- `v1/`: the first version of both pages, kept for comparison
+- `tools/v2-build/`: the scripts that generate the v2 pages
 
 1. **For parents:** tap "Run tonight's agent" to watch the agent's steps, see which stories it skipped and why, and approve, revise or skip each story.
 2. **For kids:** only stories the parent shared appear. Tap "Start the story" and Pip reads it out loud.
 
 ## How the prototype works
 
-One static page, no server and no build step.
+Static pages, no server. The pages are plain HTML, CSS and JavaScript.
 
 - **Story data:** each story is a JavaScript object with its lines, the scene for each line, and a note for parents.
 - **Animation:** each story is an inline SVG. The page adds scene classes to the SVG, and CSS transitions and keyframes animate the characters.
