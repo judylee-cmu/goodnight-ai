@@ -3,7 +3,7 @@ Keeps every class name the animation code depends on."""
 import re, base64, io, random
 from PIL import Image
 
-P = '/home/claude/gn-repo/index-v2.html'
+P = '/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/build/index-v2.html'
 s = open(P).read()
 INK = '#1A1A2E'
 PAINT = 'filter="url(#gn-paint)"'

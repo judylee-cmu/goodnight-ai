@@ -71,7 +71,7 @@ LULLJS = """<script>
 </script>"""
 
 # ---------------- pitch-v2 ----------------
-s = open(R + 'pitch.html').read()
+s = open(R + 'v1/pitch.html').read()
 s = s.replace('<body>', '<body>\n' + DEFS_SVG, 1)
 s = replace_svg(s, '<svg class="pip"', c['readHero'])
 s = replace_svg(s, '<svg class="bed"', c['bed'])
@@ -137,10 +137,10 @@ s = s.replace('<a class="btn ghost" href="#how">See how it works</a>\n      </di
 assert 'id="lullaby"' in s
 # a few more stars in the hero sky
 s = s.replace('<g fill="#F7F1E3" class="tw"><circle cx="120" cy="80" r="3"/>', '<g fill="#F7F1E3" class="tw"><circle cx="300" cy="200" r="2"/><circle cx="980" cy="90" r="2.5"/><circle cx="1080" cy="260" r="2"/><circle cx="860" cy="560" r="2.5"/><circle cx="240" cy="420" r="2"/><circle cx="120" cy="80" r="3"/>', 1)
-open(R + 'pitch-v2.html', 'w').write(s)
+open('/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/build/pitch-v2.html', 'w').write(s)
 
 # ---------------- index-v2 ----------------
-t = open(R + 'index.html').read()
+t = open(R + 'v1/index.html').read()
 t = t.replace('<body>', '<body>\n' + DEFS_SVG, 1)
 a = t.index('<g id="pip">'); b = t.index('</g>', a) + 4
 t = t[:a] + f'<g id="pip"><g transform="translate(3 10) scale(.42)">{c["indexPip"]}</g></g>' + t[b:]
@@ -157,5 +157,5 @@ use[href="#pip"] { cursor: pointer }
 @media (prefers-reduced-motion: reduce) { .p-eyes, .p-arm-r.wave { animation: none !important } }
 </style>''', 1)
 t = t.replace('</body>', TAPJS + '\n</body>', 1)
-open(R + 'index-v2.html', 'w').write(t)
+open('/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/build/index-v2.html', 'w').write(t)
 print('ok', len(s), len(t))

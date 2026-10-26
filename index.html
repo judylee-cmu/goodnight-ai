@@ -347,6 +347,14 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 .close .wrap { align-items: center }
 .close h2 { font-size: clamp(34px, 4.6vw, 60px) !important }
+
+#problem, #product, #how, #demo, #future, .close { position: relative }
+.edge { position: absolute; left: 0; top: -46px; width: 100%; height: 48px; display: block; pointer-events: none; z-index: 2 }
+.charms { position: absolute; left: 0; top: -40px; width: 100%; height: 170px; pointer-events: none; z-index: 3; overflow: visible }
+.charm { animation: sway 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0 }
+@keyframes sway { 0%, 100% { transform: rotate(0) } 50% { transform: rotate(4deg) } }
+@media (max-width: 760px) { .charms { display: none } }
+@media (prefers-reduced-motion: reduce) { .charm { animation: none } }
 </style>
 </head>
 <body>
@@ -468,6 +476,8 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 2. Problem -->
 <section class="cream" id="problem">
+  <svg class="charms" viewBox="0 0 1440 170" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><g transform="translate(170 0)"><g class="charm" style="animation-delay:0s"><path d="M0 0 L0 74" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/><g filter="url(#gn-paint)"><path d="M0 74 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" fill="#FFD23F"/></g></g></g><g transform="translate(250 0)"><g class="charm" style="animation-delay:0.8s"><path d="M0 0 L0 120" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/><g filter="url(#gn-paint)"><path d="M6 118 C-12 126 -12 154 8 160 C-2 150 -2 132 6 118Z" fill="#FFD23F"/></g></g></g><g transform="translate(322 0)"><g class="charm" style="animation-delay:1.6s"><path d="M0 0 L0 56" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/><g filter="url(#gn-paint)"><path d="M0 56 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" fill="#F7A23B"/></g></g></g><g transform="translate(1120 0)"><g class="charm" style="animation-delay:0.4s"><path d="M0 0 L0 96" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/><g filter="url(#gn-paint)"><path d="M0 96 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" fill="#F7A23B"/></g></g></g><g transform="translate(1195 0)"><g class="charm" style="animation-delay:1.2s"><path d="M0 0 L0 62" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/><g filter="url(#gn-paint)"><path d="M6 60 C-12 68 -12 96 8 102 C-2 92 -2 74 6 60Z" fill="#FFD23F"/></g></g></g><g transform="translate(1270 0)"><g class="charm" style="animation-delay:2s"><path d="M0 0 L0 84" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/><g filter="url(#gn-paint)"><path d="M0 84 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" fill="#FFD23F"/></g></g></g></svg>
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 18.9 C77.8 22.4 118.2 3.2 209.9 16.9 C281.7 30.8 365.8 23.6 452.0 14.2 C508.7 18.0 598.4 24.0 654.4 23.3 C715.2 30.6 809.1 18.5 885.9 24.1 C938.8 30.2 997.3 34.8 1039.3 28.8 C1142.4 27.2 1224.6 28.1 1290.7 17.5 C1334.5 30.5 1385.8 14.8 1440.0 11.3 L1440 48Z" fill="#F7F1E3"/></g></svg>
   <div class="wrap">
     <div class="feed-row">
       <div class="reveal">
@@ -545,6 +555,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 3. Product -->
 <section class="dark2" id="product">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 19.9 C44.1 20.9 103.8 11.2 166.6 23.6 C235.9 11.6 283.5 6.8 372.4 8.9 C443.4 12.5 550.6 13.1 613.4 11.0 C663.6 21.0 731.1 21.5 807.0 31.4 C874.3 22.5 915.6 19.3 970.0 15.4 C1020.1 3.1 1082.9 26.2 1160.9 21.1 C1233.3 19.8 1281.1 23.8 1358.0 15.5 C1387.9 16.2 1417.4 20.3 1440.0 13.9 L1440 48Z" fill="#1C2647"/></g></svg>
   <div class="wrap">
     <div class="reveal hook-row">
       <div class="prod-left">
@@ -576,6 +587,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 4. How -->
 <section class="cream" id="how">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 21.4 C72.6 21.6 141.2 21.4 211.6 30.2 C295.9 18.8 337.6 11.7 417.9 23.1 C479.7 36.6 595.5 29.0 656.9 24.6 C712.0 25.4 779.3 3.1 874.7 11.8 C935.2 10.1 1001.6 9.3 1051.3 8.7 C1135.6 7.5 1184.8 33.9 1271.7 20.0 C1337.6 14.8 1372.0 22.3 1440.0 28.2 L1440 48Z" fill="#F7F1E3"/></g></svg>
   <div class="wrap">
     <p class="eyebrow">How it works</p>
     <h2>How tonight’s story is made</h2>
@@ -623,6 +635,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 5. Demo -->
 <section class="dark" id="demo">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 22.3 C73.5 29.7 164.9 35.6 238.7 31.1 C291.7 38.0 336.1 8.7 400.9 8.6 C482.0 5.9 539.5 16.1 585.8 28.3 C652.8 34.1 744.2 41.8 825.2 29.0 C899.0 32.9 931.1 9.3 998.3 21.0 C1112.1 10.9 1178.8 28.2 1251.6 19.4 C1312.7 6.8 1383.6 4.4 1440.0 8.4 L1440 48Z" fill="#121A33"/></g></svg>
   <div class="wrap demo">
     <div class="reveal phones">
       <div class="phone"><div class="frame"><video src="assets/parent-mode.mp4" autoplay muted loop playsinline preload="auto" aria-label="Screen recording of parent mode: the agent reads the news, skips stories, checks facts and waits for the parent"></video></div><p>Parent mode</p></div>
@@ -650,6 +663,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 6. Future work -->
 <section class="dark2" id="future">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 27.1 C67.8 29.7 161.4 30.3 254.3 29.4 C310.0 21.6 359.7 -0.7 418.7 12.6 C472.0 13.0 529.8 21.1 578.1 25.0 C635.6 29.5 683.5 40.0 734.4 26.8 C795.9 28.8 864.0 21.0 924.4 26.2 C987.1 28.8 1026.3 23.4 1083.8 19.4 C1137.3 28.2 1183.9 1.5 1253.8 12.3 C1302.9 14.3 1368.7 4.2 1414.7 8.9 C1422.5 16.7 1431.4 8.2 1440.0 14.9 L1440 48Z" fill="#1C2647"/></g></svg>
   <div class="wrap">
     <p class="eyebrow">Future work</p>
     <h2>What comes next</h2>
@@ -675,6 +689,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 7. Ending -->
 <section class="close">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 22.6 C57.9 22.9 116.4 25.9 188.0 28.3 C275.2 20.6 347.4 24.5 445.2 10.5 C507.4 16.9 564.2 13.4 631.4 22.6 C712.2 24.3 747.9 22.7 829.1 17.8 C882.9 15.3 958.4 20.7 1011.9 20.3 C1097.5 24.3 1158.5 29.5 1244.7 26.2 C1330.1 22.4 1357.5 0.6 1440.0 10.4 L1440 48Z" fill="#141C3B"/></g></svg>
   <svg class="stars" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="#F7F1E3" class="tw"><circle cx="140" cy="90" r="3"/><circle cx="480" cy="50" r="2"/><circle cx="700" cy="140" r="3"/><circle cx="90" cy="520" r="2"/><circle cx="620" cy="560" r="3"/></g></svg>
   <div class="wrap" style="position:relative">
     <div>

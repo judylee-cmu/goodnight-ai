@@ -1,6 +1,6 @@
 """Round of edits on pitch-v2.html (runs after buildv2.py)."""
 import re
-P = '/home/claude/gn-repo/pitch-v2.html'
+P = '/tmp/claude-0/-home-claude/3e881c95-6cf0-56cd-aa41-2012ca221448/scratchpad/build/pitch-v2.html'
 s = open(P).read()
 INK = '#1A1A2E'
 
@@ -317,6 +317,55 @@ s = s.replace('</style>', """
 
 # 15. Hero eyebrow with byline
 sub('<p class="eyebrow">SEM Week 1 · Agentic AI News</p>', '<p class="eyebrow">SEM Week 1 · Agentic AI News · By Judy Lee</p>')
+
+# 16. Hand drawn wavy edges between sections, plus hanging stars
+import random
+def wave(seed, color):
+    r = random.Random(seed)
+    W, H = 1440, 48
+    pts = []
+    x = 0
+    y = r.uniform(16, 28)
+    d = f'M0 {H} L0 {y:.1f}'
+    while x < W:
+        nx = min(W, x + r.uniform(150, 260))
+        ny = r.uniform(8, 32)
+        c1x = x + (nx - x) * r.uniform(.25, .45); c1y = y + r.uniform(-14, 14)
+        c2x = x + (nx - x) * r.uniform(.55, .75); c2y = ny + r.uniform(-14, 14)
+        d += f' C{c1x:.1f} {c1y:.1f} {c2x:.1f} {c2y:.1f} {nx:.1f} {ny:.1f}'
+        x, y = nx, ny
+    d += f' L{W} {H}Z'
+    return (f'<svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true">'
+            f'<g filter="url(#gn-ink)"><path d="{d}" fill="{color}"/></g></svg>')
+edges = {'problem': ('#F7F1E3', 3), 'product': ('#1C2647', 7), 'how': ('#F7F1E3', 11),
+         'demo': ('#121A33', 17), 'future': ('#1C2647', 23)}
+for sid, (col, seed) in edges.items():
+    tag = re.search(r'<section class="[^"]*" id="%s">' % sid, s).group(0)
+    s = s.replace(tag, tag + '\n  ' + wave(seed, col), 1)
+s = s.replace('<section class="close">', '<section class="close">\n  ' + wave(29, '#141C3B'), 1)
+
+def charm(x, length, kind, delay, color='#FFD23F'):
+    if kind == 'star':
+        shape = f'<path d="M0 {length} l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" fill="{color}"/>'
+    else:
+        shape = f'<path d="M6 {length-2} C-12 {length+6} -12 {length+34} 8 {length+40} C-2 {length+30} -2 {length+12} 6 {length-2}Z" fill="{color}"/>'
+    return (f'<g transform="translate({x} 0)"><g class="charm" style="animation-delay:{delay}s">'
+            f'<path d="M0 0 L0 {length}" stroke="#B7791F" stroke-width="2" stroke-linecap="round" opacity=".7"/>'
+            f'<g filter="url(#gn-paint)">{shape}</g></g></g>')
+hang = ('<svg class="charms" viewBox="0 0 1440 170" preserveAspectRatio="xMidYMin slice" aria-hidden="true">'
+        + charm(170, 74, 'star', 0) + charm(250, 120, 'moon', .8) + charm(322, 56, 'star', 1.6, '#F7A23B')
+        + charm(1120, 96, 'star', .4, '#F7A23B') + charm(1195, 62, 'moon', 1.2) + charm(1270, 84, 'star', 2) + '</svg>')
+tag = '<section class="cream" id="problem">'
+s = s.replace(tag, tag + '\n  ' + hang, 1)
+s = s.replace('</style>', """
+#problem, #product, #how, #demo, #future, .close { position: relative }
+.edge { position: absolute; left: 0; top: -46px; width: 100%; height: 48px; display: block; pointer-events: none; z-index: 2 }
+.charms { position: absolute; left: 0; top: -40px; width: 100%; height: 170px; pointer-events: none; z-index: 3; overflow: visible }
+.charm { animation: sway 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0 }
+@keyframes sway { 0%, 100% { transform: rotate(0) } 50% { transform: rotate(4deg) } }
+@media (max-width: 760px) { .charms { display: none } }
+@media (prefers-reduced-motion: reduce) { .charm { animation: none } }
+</style>""", 1)
 
 open(P, 'w').write(s)
 print('v2extra ok', len(s))
