@@ -315,5 +315,8 @@ s = s.replace('</style>', """
 .close h2 { font-size: clamp(34px, 4.6vw, 60px) !important }
 </style>""", 1)
 
+# 15. Hero eyebrow with byline
+sub('<p class="eyebrow">SEM Week 1 · Agentic AI News</p>', '<p class="eyebrow">SEM Week 1 · Agentic AI News · By Judy Lee</p>')
+
 open(P, 'w').write(s)
 print('v2extra ok', len(s))
