@@ -280,6 +280,41 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 @media (prefers-reduced-motion: reduce) { .hero::before { animation: none; opacity: .3 } .floaty { display: none } }
 @media (max-width: 860px) { .faces { grid-template-columns: repeat(3, minmax(0, 1fr)) !important } }
 @media (max-width: 520px) { .faces { grid-template-columns: repeat(2, minmax(0, 1fr)) !important } }
+
+/* round 3 */
+.feed ul { animation-duration: 46s !important }
+.feed-src { margin: 0 !important; padding: 10px 4px 16px; font-size: 12.5px; color: var(--mist2) !important }
+.stats { align-items: stretch }
+.stat-src { grid-column: 1 / -1; margin: 2px 0 0 !important; font-size: 13px }
+.bubble { background: none !important; border: 0 !important; width: 32% !important }
+.bubble svg { width: 100%; height: 100%; display: block; overflow: visible }
+.news-card .headline { font-family: var(--f-display); font-size: clamp(22px, 2.6vw, 30px) !important; color: var(--cream) !important; line-height: 1.2 }
+.flipbook { background: #FFF8E6; color: var(--ink); border-radius: 26px; padding: 18px 18px 14px; box-shadow: 0 24px 50px -24px rgba(0,0,0,.6); perspective: 1400px }
+.fb-title { margin: 0 4px 12px; font-family: var(--f-display); font-weight: 600; font-size: 18px; color: var(--amber) }
+.fb-pages { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #1F2F6B }
+.fb-page { position: absolute; inset: 0; margin: 0; opacity: 0; transform-origin: left center; transform: rotateY(-70deg); transition: transform .7s cubic-bezier(.3,.7,.2,1), opacity .5s; backface-visibility: hidden }
+.fb-page.on { opacity: 1; transform: none }
+.fb-page.out { opacity: 0; transform: rotateY(80deg) }
+.fb-page img { width: 100%; height: 100%; object-fit: cover; display: block }
+.fb-page figcaption { position: absolute; left: 12px; right: 12px; bottom: 12px; background: rgba(255,248,230,.94); color: var(--ink); border-radius: 12px; padding: 8px 12px; font-family: var(--f-display); font-weight: 600; font-size: clamp(15px, 1.6vw, 19px); line-height: 1.3 }
+.fb-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px }
+.fb-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--gold); color: var(--night); font-size: 26px; font-weight: 700; line-height: 1; cursor: pointer }
+.fb-btn:focus-visible, .fb-dot:focus-visible { outline: 3px solid var(--green); outline-offset: 2px }
+.fb-dots { display: flex; gap: 8px }
+.fb-dot { width: 12px; height: 12px; border-radius: 50%; border: 0; padding: 0; background: #E6DCC4; cursor: pointer }
+.fb-dot.on { background: var(--amber) }
+.hook-row { grid-template-columns: minmax(0, .8fr) auto minmax(0, 1.2fr) !important }
+@media (max-width: 860px) { .hook-row { grid-template-columns: 1fr !important } }
+.end-bed svg { width: 100%; height: auto; display: block; border-radius: 28px }
+.close .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) !important }
+@media (max-width: 860px) { .close .wrap { grid-template-columns: 1fr !important } }
+.gate-ic { width: 76px !important; height: 76px !important; background: #FFF8E6 !important }
+.gate-ic svg { width: 58px !important; height: 58px !important; overflow: visible }
+.phone .frame { animation: none !important }
+.phones { align-items: center }
+.phone .frame video { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; background: #0E1530 }
+.phone.wide .frame { width: clamp(260px, 30vw, 400px); aspect-ratio: 16 / 9; border-radius: 26px }
+@media (max-width: 860px) { .phones { flex-direction: column } .phone .frame { width: min(70vw, 260px) } .phone.wide .frame { width: min(88vw, 400px) } }
 </style>
 </head>
 <body>
@@ -337,7 +372,6 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
         <a class="btn" href="index-v2.html">▶ Try the demo</a>
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
-      <button type="button" class="lullaby" id="lullaby" aria-pressed="false">♪ Lullaby: off</button>
     </div>
     <svg viewBox="0 0 640 500" class="pip reader" role="img" aria-label="Pip, a small blue robot, tucked into bed under a blanket, reading a glowing storybook next to a night lamp">
   <defs>
@@ -411,7 +445,8 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
       </div>
       <div class="feed reveal" style="--d:.15s" aria-label="A stream of real AI headlines from this month">
         <div class="feed-top"><span class="live"></span>AI headlines, this month</div>
-        <div class="feed-win"><ul><li><span class="tag">Microsoft Security</span><p>Hackers used <i>agentic AI</i> in a <i>supply chain</i> attack</p></li><li><span class="tag">Kimi</span><p>Kimi K3.1 Pro claims a top <i>benchmark</i> score</p></li><li><span class="tag">Microsoft AI</span><p><i>MAI-DxO</i> beats doctors on hard <i>NEJM</i> cases</p></li><li><span class="tag">OpenAI</span><p>OpenAI is reportedly raising about $30 billion</p></li><li><span class="tag">Anthropic</span><p>Claude Duet, a personal <i>AI agent</i>, asks before it acts</p></li><li><span class="tag">Microsoft Research</span><p><i>AI agents</i> help prove a 31 year old math problem</p></li><li><span class="tag">AI safety</span><p>An AI model took <i>unapproved actions</i> in safety tests</p></li><li><span class="tag">Microsoft and CMU</span><p>PRAISE teaches engineers to use AI wisely</p></li><li><span class="tag">Education</span><p>A university voids an exam after AI cheating</p></li><li aria-hidden="true"><span class="tag">Microsoft Security</span><p>Hackers used <i>agentic AI</i> in a <i>supply chain</i> attack</p></li><li aria-hidden="true"><span class="tag">Kimi</span><p>Kimi K3.1 Pro claims a top <i>benchmark</i> score</p></li><li aria-hidden="true"><span class="tag">Microsoft AI</span><p><i>MAI-DxO</i> beats doctors on hard <i>NEJM</i> cases</p></li><li aria-hidden="true"><span class="tag">OpenAI</span><p>OpenAI is reportedly raising about $30 billion</p></li><li aria-hidden="true"><span class="tag">Anthropic</span><p>Claude Duet, a personal <i>AI agent</i>, asks before it acts</p></li><li aria-hidden="true"><span class="tag">Microsoft Research</span><p><i>AI agents</i> help prove a 31 year old math problem</p></li><li aria-hidden="true"><span class="tag">AI safety</span><p>An AI model took <i>unapproved actions</i> in safety tests</p></li><li aria-hidden="true"><span class="tag">Microsoft and CMU</span><p>PRAISE teaches engineers to use AI wisely</p></li><li aria-hidden="true"><span class="tag">Education</span><p>A university voids an exam after AI cheating</p></li></ul></div>
+        <div class="feed-win"><ul><li><span class="tag">Microsoft Security</span><p>Hackers used <i>agentic AI</i> in a <i>supply chain</i> attack</p></li><li><span class="tag">NVIDIA</span><p><i>Nemotron 3.5 Super VL 120B A12B</i> is out</p></li><li><span class="tag">Kimi</span><p>Kimi K3.1 Pro claims a top <i>benchmark</i> score</p></li><li><span class="tag">Microsoft AI</span><p><i>MAI-DxO</i> beats doctors on hard <i>NEJM</i> cases</p></li><li><span class="tag">Liquid AI</span><p>Liquid AI ships <i>LFM2.5-24B-A2B</i></p></li><li><span class="tag">OpenAI</span><p>OpenAI is reportedly raising about $30 billion</p></li><li><span class="tag">Reflection AI</span><p>Beam releases <i>open weights</i> under <i>Apache 2.0</i></p></li><li><span class="tag">Anthropic</span><p>Claude Duet, a personal <i>AI agent</i>, asks before it acts</p></li><li><span class="tag">NVIDIA Research</span><p><i>Dory</i>, a <i>looped model</i> with adjustable <i>inference depth</i></p></li><li><span class="tag">Microsoft Research</span><p><i>AI agents</i> help prove a 31 year old math problem</p></li><li><span class="tag">xAI</span><p>xAI releases <i>Grok Voice 3.0</i></p></li><li><span class="tag">AI safety</span><p>An AI model took <i>unapproved actions</i> in safety tests</p></li><li><span class="tag">Hugging Face</span><p><i>Carbon-X</i>, an <i>open source</i> DNA analysis model</p></li><li><span class="tag">Microsoft and CMU</span><p>PRAISE teaches engineers to use AI wisely</p></li><li><span class="tag">Meta</span><p>Meta releases <i>Muse Spark</i></p></li><li><span class="tag">Education</span><p>A university voids an exam after AI cheating</p></li><li aria-hidden="true"><span class="tag">Microsoft Security</span><p>Hackers used <i>agentic AI</i> in a <i>supply chain</i> attack</p></li><li aria-hidden="true"><span class="tag">NVIDIA</span><p><i>Nemotron 3.5 Super VL 120B A12B</i> is out</p></li><li aria-hidden="true"><span class="tag">Kimi</span><p>Kimi K3.1 Pro claims a top <i>benchmark</i> score</p></li><li aria-hidden="true"><span class="tag">Microsoft AI</span><p><i>MAI-DxO</i> beats doctors on hard <i>NEJM</i> cases</p></li><li aria-hidden="true"><span class="tag">Liquid AI</span><p>Liquid AI ships <i>LFM2.5-24B-A2B</i></p></li><li aria-hidden="true"><span class="tag">OpenAI</span><p>OpenAI is reportedly raising about $30 billion</p></li><li aria-hidden="true"><span class="tag">Reflection AI</span><p>Beam releases <i>open weights</i> under <i>Apache 2.0</i></p></li><li aria-hidden="true"><span class="tag">Anthropic</span><p>Claude Duet, a personal <i>AI agent</i>, asks before it acts</p></li><li aria-hidden="true"><span class="tag">NVIDIA Research</span><p><i>Dory</i>, a <i>looped model</i> with adjustable <i>inference depth</i></p></li><li aria-hidden="true"><span class="tag">Microsoft Research</span><p><i>AI agents</i> help prove a 31 year old math problem</p></li><li aria-hidden="true"><span class="tag">xAI</span><p>xAI releases <i>Grok Voice 3.0</i></p></li><li aria-hidden="true"><span class="tag">AI safety</span><p>An AI model took <i>unapproved actions</i> in safety tests</p></li><li aria-hidden="true"><span class="tag">Hugging Face</span><p><i>Carbon-X</i>, an <i>open source</i> DNA analysis model</p></li><li aria-hidden="true"><span class="tag">Microsoft and CMU</span><p>PRAISE teaches engineers to use AI wisely</p></li><li aria-hidden="true"><span class="tag">Meta</span><p>Meta releases <i>Muse Spark</i></p></li><li aria-hidden="true"><span class="tag">Education</span><p>A university voids an exam after AI cheating</p></li></ul></div>
+        <p class="src feed-src">Real headlines from October 2026: stories our agent read, plus the AF.NET model release tracker.</p>
       </div>
     </div>
 
@@ -419,11 +454,12 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
       <div>
         <p class="eyebrow">Why it matters</p>
         <h3 class="big">AI literacy matters, and it should start young.</h3>
-        <p class="lead">Kids are growing up with AI. They should grow up understanding it too.</p>
+        <p class="lead">Kids already use AI every day. They should also learn how it works.</p>
       </div>
       <div class="stats">
-        <div><b>2 in 3</b><span>teens use AI regularly. Less than half of parents do.</span></div>
+        <div><b>2 in 3</b><span>teens use AI often. Fewer than half of their parents do.</span></div>
         <div><b>58%</b><span>of parents want schools to teach responsible AI across classes.</span></div>
+        <p class="src stat-src">Sources: Common Sense Media survey, March 2026 (teens 12 to 17 and their parents). Child Trends and NORC survey of 720 parents, August 2026.</p>
       </div>
     </div>
 
@@ -442,7 +478,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
   <ellipse cx="104" cy="148" rx="5" ry="6" fill="#1A1A2E"/>
   <circle cx="70" cy="142" r="10" fill="#F48FB1" opacity=".6" filter="url(#gn-fuzz)"/><circle cx="138" cy="142" r="10" fill="#F48FB1" opacity=".6" filter="url(#gn-fuzz)"/>
   
- </svg><span class="bubble" style="--b:0.0s">?</span></div><figcaption>A 6 year old</figcaption></figure><figure class="reveal" style="--d:0.12s"><div class="face"><svg viewBox="0 0 210 220">
+ </svg><span class="bubble" style="--b:0.0s"><svg viewBox="0 0 60 60" aria-hidden="true"><g filter="url(#gn-paint)"><path d="M30 4 C46 3 57 14 56 30 C56 45 45 56 30 56 C14 57 3 46 4 30 C4 15 15 4 30 4Z" fill="#FFF8E6"/></g><path d="M30 5 C45 4 55 15 55 30 C55 44 44 55 30 55 C15 56 5 45 5 30 C5 16 16 6 30 5Z" fill="none" stroke="#1A1A2E" stroke-width="2.6" filter="url(#gn-ink)"/><g filter="url(#gn-ink)"><path d="M21 23 C21 14 39 13 39 23 C39 30 30 30 30 37" stroke="#1A1A2E" stroke-width="4.4" fill="none" stroke-linecap="round"/><circle cx="30" cy="45" r="2.8" fill="#1A1A2E"/></g></svg></span></div><figcaption>A 6 year old</figcaption></figure><figure class="reveal" style="--d:0.12s"><div class="face"><svg viewBox="0 0 210 220">
   <g filter="url(#gn-paint)">
    <g fill="#D8DBE3"><circle cx="66" cy="76" r="22"/><circle cx="92" cy="58" r="24"/><circle cx="120" cy="58" r="24"/><circle cx="142" cy="78" r="22"/><circle cx="54" cy="102" r="16"/><circle cx="152" cy="102" r="16"/></g>
    <path d="M44 220 C46 186 66 168 104 166 C142 168 162 186 164 220Z" fill="#F48FB1"/>
@@ -455,7 +491,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
   <circle cx="74" cy="128" r="8" fill="#F48FB1" opacity=".55" filter="url(#gn-fuzz)"/><circle cx="134" cy="126" r="8" fill="#F48FB1" opacity=".55" filter="url(#gn-fuzz)"/>
   <g fill="none" stroke="#E8483A" stroke-width="3"><circle cx="86" cy="112" r="12"/><circle cx="120" cy="110" r="12"/><path d="M98 111 h10 M74 110 l-12 -4 M132 108 l12 -4"/></g>
    <g fill="#FFF9EE"><circle cx="92" cy="180" r="3"/><circle cx="104" cy="184" r="3"/><circle cx="116" cy="180" r="3"/></g>
- </svg><span class="bubble" style="--b:0.4s">?</span></div><figcaption>Your grandma</figcaption></figure><figure class="reveal" style="--d:0.24s"><div class="face"><svg viewBox="0 0 210 220">
+ </svg><span class="bubble" style="--b:0.4s"><svg viewBox="0 0 60 60" aria-hidden="true"><g filter="url(#gn-paint)"><path d="M30 4 C46 3 57 14 56 30 C56 45 45 56 30 56 C14 57 3 46 4 30 C4 15 15 4 30 4Z" fill="#FFF8E6"/></g><path d="M30 5 C45 4 55 15 55 30 C55 44 44 55 30 55 C15 56 5 45 5 30 C5 16 16 6 30 5Z" fill="none" stroke="#1A1A2E" stroke-width="2.6" filter="url(#gn-ink)"/><g filter="url(#gn-ink)"><path d="M21 23 C21 14 39 13 39 23 C39 30 30 30 30 37" stroke="#1A1A2E" stroke-width="4.4" fill="none" stroke-linecap="round"/><circle cx="30" cy="45" r="2.8" fill="#1A1A2E"/></g></svg></span></div><figcaption>Your grandma</figcaption></figure><figure class="reveal" style="--d:0.24s"><div class="face"><svg viewBox="0 0 210 220">
   <g filter="url(#gn-paint)">
    <path d="M48 152 L46 102 C44 62 74 42 104 42 C134 42 162 62 160 102 L160 152 C150 158 140 158 134 152 L134 112 L74 112 L74 152 C66 158 56 158 48 152Z" fill="#17151C"/>
    <path d="M44 220 C46 186 66 168 104 166 C142 168 162 186 164 220Z" fill="#1E1E28"/>
@@ -471,8 +507,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
    <path d="M40 220 C42 192 56 176 84 170 L100 220Z" fill="#C99A5B"/><path d="M168 220 C166 192 152 176 124 170 L108 220Z" fill="#C99A5B"/></g>
    <path d="M53 124 v10 M155 122 v10" stroke="#E7B93A" stroke-width="2.5"/><rect x="47" y="134" width="12" height="16" rx="2" fill="#FFD23F" transform="rotate(45 53 142)"/><rect x="149" y="132" width="12" height="16" rx="2" fill="#FFD23F" transform="rotate(45 155 140)"/>
    <path d="M79 108 q7 -3 14 0 l4 -4 M111 106 q7 -3 14 0 l4 -4" stroke="#1A1A2E" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
- </svg><span class="bubble" style="--b:0.8s">?</span></div><figcaption>Your non tech friend</figcaption></figure></div>
-    <p class="src">Sources: Common Sense Media survey, March 2026. Child Trends and NORC survey of 720 parents, August 2026. Headlines are from the stories our agent read.</p>
+ </svg><span class="bubble" style="--b:0.8s"><svg viewBox="0 0 60 60" aria-hidden="true"><g filter="url(#gn-paint)"><path d="M30 4 C46 3 57 14 56 30 C56 45 45 56 30 56 C14 57 3 46 4 30 C4 15 15 4 30 4Z" fill="#FFF8E6"/></g><path d="M30 5 C45 4 55 15 55 30 C55 44 44 55 30 55 C15 56 5 45 5 30 C5 16 16 6 30 5Z" fill="none" stroke="#1A1A2E" stroke-width="2.6" filter="url(#gn-ink)"/><g filter="url(#gn-ink)"><path d="M21 23 C21 14 39 13 39 23 C39 30 30 30 30 37" stroke="#1A1A2E" stroke-width="4.4" fill="none" stroke-linecap="round"/><circle cx="30" cy="45" r="2.8" fill="#1A1A2E"/></g></svg></span></div><figcaption>Your non tech friend</figcaption></figure></div>
   </div>
 </section>
 
@@ -483,18 +518,50 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
     <h2>Real AI news, turned into a bedtime story</h2>
     <p class="lead">For parents and kids 5 to 10, together at bedtime.</p>
     <div class="reveal hook-row">
-      <div class="card-dark">
+      <div class="card-dark news-card">
         <p class="eyebrow" style="margin:0">Today’s AI news</p>
-        <p class="headline">MAI-DxO, a diagnostic orchestrator, solved 83% of complex NEJM cases, compared with 36% for physicians working alone.</p>
-        <div class="pills"><span class="pill">orchestrator?</span><span class="pill">NEJM cases?</span><span class="pill">83% vs. 36%?</span></div>
+        <p class="headline">Hackers used agentic AI in a supply chain attack.</p>
+        <div class="pills"><span class="pill">agentic AI?</span><span class="pill">supply chain?</span></div>
+        <p class="src" style="margin-top:14px">Microsoft Security Blog, October 21, 2026</p>
       </div>
       <svg class="arrow" viewBox="0 0 64 36" style="color:var(--gold)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="card-page">
-        <svg role="img" aria-label="Pip the robot detective holding a magnifying glass next to a doctor’s clipboard" viewBox="0 0 480 300" style="width:100%;max-width:400px;height:auto;overflow:visible">
-  <g filter="url(#gn-paint)" transform="rotate(-6 100 180)"><rect x="40" y="100" width="110" height="150" rx="14" fill="#C4864F"/><rect x="52" y="116" width="86" height="124" rx="8" fill="#FFFCF5"/><rect x="74" y="90" width="42" height="20" rx="7" fill="#9AA6C4"/>
-  <rect x="85" y="134" width="20" height="46" rx="4" fill="#4FA65B"/><rect x="72" y="147" width="46" height="20" rx="4" fill="#4FA65B"/>
-  <path d="M66 198 h58 M66 212 h40 M66 224 h50" stroke="#E6DCC4" stroke-width="5" stroke-linecap="round"/></g>
-  <svg x="210" y="-6" width="250" height="300" viewBox="0 -24 270 324">
+      <div class="flipbook" aria-roledescription="carousel" aria-label="The Magic Key and the Computer Police, a bedtime story">
+        <p class="fb-title">The Magic Key and the Computer Police</p>
+        <div class="fb-pages"><figure class="fb-page on" data-i="0"><img src="assets/story-key-1.jpg" alt="Story page 1: A busy little town. Every house is a computer." loading="lazy"><figcaption>A busy little town. Every house is a computer.</figcaption></figure><figure class="fb-page" data-i="1"><img src="assets/story-key-2.jpg" alt="Story page 2: A helper keeps a trusted key to every house." loading="lazy"><figcaption>A helper keeps a trusted key to every house.</figcaption></figure><figure class="fb-page" data-i="2"><img src="assets/story-key-3.jpg" alt="Story page 3: Sneaky raccoons borrow the key." loading="lazy"><figcaption>Sneaky raccoons borrow the key.</figcaption></figure><figure class="fb-page" data-i="3"><img src="assets/story-key-4.jpg" alt="Story page 4: Their AI helper tries door after door, super fast." loading="lazy"><figcaption>Their AI helper tries door after door, super fast.</figcaption></figure><figure class="fb-page" data-i="4"><img src="assets/story-key-5.jpg" alt="Story page 5: The computer police shine a light. Lock up tight!" loading="lazy"><figcaption>The computer police shine a light. Lock up tight!</figcaption></figure></div>
+        <div class="fb-nav">
+          <button type="button" class="fb-btn" data-step="-1" aria-label="Previous page">‹</button>
+          <div class="fb-dots"><button type="button" class="fb-dot on" aria-label="Page 1" data-go="0"></button><button type="button" class="fb-dot" aria-label="Page 2" data-go="1"></button><button type="button" class="fb-dot" aria-label="Page 3" data-go="2"></button><button type="button" class="fb-dot" aria-label="Page 4" data-go="3"></button><button type="button" class="fb-dot" aria-label="Page 5" data-go="4"></button></div>
+          <button type="button" class="fb-btn" data-step="1" aria-label="Next page">›</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- 4. How -->
+<section class="cream" id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>How tonight’s story is made</h2>
+    <div class="reveal flow">
+      <div class="stage"><div class="tiles all"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>9 AI stories read</p></div>
+      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
+      <div class="stage"><div class="tiles pick"><i class="dim"></i><i class="on"></i><i class="dim"></i><i class="dim"></i><i class="dim"></i><i class="on"></i><i class="on"></i><i class="dim"></i><i class="dim"></i></div><p>6 skipped, 3 picked</p></div>
+      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
+      <div class="lanes"><p style="background:var(--green)">Green: shares automatically</p><p style="background:var(--gold)">Yellow: asks the parent</p><p style="background:var(--coral)">Red: parents only</p></div>
+      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
+      <div class="stage gate"><span class="ic gate-ic"><svg viewBox="0 0 64 64" aria-hidden="true">
+        <g filter="url(#gn-paint)"><circle cx="24" cy="21" r="9" fill="#F6C4A8"/><path d="M19 12 C22 6 32 8 33 16 C29 13 24 13 19 18Z" fill="#4A2E22"/>
+        <path d="M10 50 C10 36 16 32 24 32 C32 32 38 36 38 50Z" fill="#4FA65B"/>
+        <circle cx="44" cy="31" r="7" fill="#F6C4A8"/><circle cx="37" cy="27" r="3.5" fill="#7A4A2C"/><circle cx="51" cy="27" r="3.5" fill="#7A4A2C"/><path d="M37.5 29 C38 22 50 22 50.5 29 C47 26 41 26 37.5 29Z" fill="#7A4A2C"/>
+        <path d="M34 50 C34 42 38 39 44 39 C50 39 54 42 54 50Z" fill="url(#gn-shirtRed)"/></g>
+        <circle cx="21" cy="21" r="1.4" fill="#1A1A2E"/><circle cx="27" cy="21" r="1.4" fill="#1A1A2E"/><path d="M21.5 25 q2.5 2 5 0" stroke="#1A1A2E" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <circle cx="42" cy="31" r="1.2" fill="#1A1A2E"/><circle cx="46.5" cy="31" r="1.2" fill="#1A1A2E"/>
+        <g transform="translate(48 8)"><circle r="8.5" fill="#3DBE8B"/><path d="M-4 0 l3 3 5 -6" stroke="#FFF8E6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+      </svg></span><p>Parent decides</p></div>
+      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
+      <div class="stage" style="background:transparent;border-color:transparent"><svg viewBox="0 -24 270 324" class="mini-pip" aria-hidden="true" style="width:96px;height:116px;overflow:visible">
   <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
   <g filter="url(#gn-paint)">
    <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
@@ -503,7 +570,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
    <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
 
-   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><g class="p-arm-r wave"><path d="M192 150 C212 140 222 120 222 96" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="222" cy="88" r="8.5" fill="#6C8BEF"/></g>
+   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><path d="M192 160 C210 172 214 190 210 210" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="209" cy="216" r="8.5" fill="#6C8BEF"/>
    <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
    <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
    <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
@@ -512,14 +579,75 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="125" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="120" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g><g><line x1="224" y1="92" x2="240" y2="66" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/><circle cx="248" cy="50" r="20" fill="#DCEBF5" opacity=".9" stroke="#F7A23B" stroke-width="6"/><path d="M238 44 q4 -8 12 -9" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></g>
- </g></svg>
- </svg>
-        <p>Pip the detective helps doctors find clues.</p>
-      </div>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+ </g></svg><p>Pip reads to the kid</p></div>
     </div>
-    <div class="who reveal">
-      <svg class="bed" role="img" aria-label="A parent and child in bed watching Pip on a tablet, with a sleepy moon in the window" viewBox="0 0 960 560">
+    <div class="reveal banner"><p>Automate where it’s safe.<br><span>Let the parent decide where it matters.</span></p></div>
+  </div>
+</section>
+
+<!-- 5. Demo -->
+<section class="dark" id="demo">
+  <div class="wrap demo">
+    <div class="reveal phones">
+      <div class="phone"><div class="frame"><video src="assets/parent-mode.mp4" autoplay muted loop playsinline preload="auto" aria-label="Screen recording of parent mode: the agent reads the news, skips stories, checks facts and waits for the parent"></video></div><p>Parent mode</p></div>
+      <div class="phone wide"><div class="frame"><video src="assets/kid-mode.mp4" autoplay muted loop playsinline preload="auto" aria-label="Screen recording of kid mode: The Little Builder and the Robot Bricks story playing"></video></div><p>Kid mode</p></div>
+    </div>
+    <div>
+      <p class="eyebrow">Live demo</p>
+      <h2>Try it live</h2>
+      <ol class="steps"><li>1 Run the agent</li><li>2 Approve</li><li>3 Pip reads</li></ol>
+      <div class="qr"><img src="assets/qr-code.png" alt="QR code linking to goodnight-ai-opal.vercel.app"><p>goodnight-ai-opal.vercel.app</p></div>
+      <div class="btns"><a class="btn" href="index-v2.html">▶ Open the demo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Future work -->
+<section class="dark2" id="future">
+  <div class="wrap">
+    <p class="eyebrow">Future work</p>
+    <h2>What comes next</h2>
+    <div class="reveal future">
+      <ol class="road">
+        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 L5 14 H11 L10 22 L19 9 H13 Z" fill="#F2C94C"/></svg></span><span><b>2027</b><span>Live daily stories</span></span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#F2C94C" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><b>2028</b><span>Kids ask Pip questions</span></span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9 L12 4 L22 9 L12 14 Z M6 11 v5 q6 4 12 0 v-5" fill="none" stroke="#F2C94C" stroke-width="2.2" stroke-linejoin="round"/></svg></span><span><b>2029</b><span>Choose your level, elementary to adult</span></span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#F2C94C" stroke-width="2.2"/><path d="M3 12 h18 M12 3 q-5 9 0 18 M12 3 q5 9 0 18" fill="none" stroke="#F2C94C" stroke-width="2"/></svg></span><span><b>2030</b><span>More languages and classroom mode</span></span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Ending -->
+<section class="close">
+  <svg class="stars" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><mask id="crescent2"><rect width="1200" height="600" fill="#fff"/><circle cx="1072" cy="98" r="72" fill="#000"/></mask><g filter="url(#gn-paint)"><circle cx="1040" cy="120" r="80" fill="#FFD23F" mask="url(#crescent2)"/></g><g fill="#F7F1E3" class="tw"><circle cx="140" cy="90" r="3"/><circle cx="480" cy="50" r="2"/><circle cx="700" cy="140" r="3"/><circle cx="90" cy="520" r="2"/><circle cx="620" cy="560" r="3"/></g></svg>
+  <div class="wrap" style="position:relative">
+    <div>
+      <div class="sleeper" aria-hidden="true"><svg viewBox="0 -24 270 324" class="sleep-pip" aria-hidden="true">
+  <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
+  <g filter="url(#gn-paint)">
+   <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+   <path d="M156 232 L168 254 L160 274" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+   <path d="M100 258 L116 258 L116 274 C118 276 134 276 136 284 L136 288 L98 288 Z" fill="#F48FB1"/><path d="M105 264 h7 M105 269 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+
+   <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+
+   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><path d="M192 160 C210 172 214 190 210 210" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="209" cy="216" r="8.5" fill="#6C8BEF"/>
+   <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
+   <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
+   <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
+  </g>
+  <circle cx="126" cy="196" r="5" fill="#E8483A"/><circle cx="142" cy="195" r="5" fill="#FFD23F"/>
+  <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
+  <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
+  <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
+  <path d="M104 136 q8 7 16 0 M146 132 q8 7 16 0" stroke="#1A1A2E" stroke-width="3.2" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><ellipse cx="134" cy="156" rx="4" ry="5" fill="#1A1A2E"/></g><g filter="url(#gn-paint)"><path d="M86 82 C100 52 154 40 188 66 C176 40 150 16 132 12 C112 16 92 44 86 82Z" fill="url(#gn-stRed)"/><path d="M84 84 C112 68 162 62 192 70 L194 80 C164 72 114 78 86 94Z" fill="#FFF1C9"/><circle cx="134" cy="12" r="11" fill="#FFF1C9"/></g>
+ </g></svg><span class="z z1">z</span><span class="z z2">z</span><span class="z z3">z</span></div>
+      <h2>“Every family understands the AI shaping their future, <span>starting at bedtime.</span>”</h2>
+      <p class="lead" style="font-family:var(--f-display)">Goodnight, AI · by Judy Lee</p>
+    </div>
+    <div class="end-bed"><svg class="bed" role="img" aria-label="A parent and child in bed watching Pip on a tablet, with a sleepy moon in the window" viewBox="0 0 960 560">
   <rect width="960" height="560" rx="32" fill="#1F2F6B"/>
   <g fill="#FFF1C9"><circle cx="90" cy="70" r="3"/><circle cx="280" cy="44" r="2.5"/><circle cx="520" cy="80" r="3"/><circle cx="430" cy="140" r="2"/></g>
   <g filter="url(#gn-paint)"><rect x="690" y="44" width="210" height="160" rx="18" fill="#2B3F86"/></g>
@@ -598,119 +726,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
   <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="125" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="120" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  </svg>
   <path d="M342 330 C370 344 396 346 414 342 M600 340 C584 352 566 358 552 356" stroke="#E9B394" stroke-width="16" fill="none" stroke-linecap="round" filter="url(#gn-paint)"/>
- </svg>
-      <div class="feat">
-      <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 L19 12 L8 19 Z" fill="#121A33"/></svg></span><span><h3>For kids</h3><p>Pictures and a friendly voice. No reading needed.</p></span></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 L10 17 L19 7" fill="none" stroke="#121A33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>For parents</h3><p>Real facts, with sources, ready in 5 minutes.</p></span></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#121A33" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><h3>Together</h3><p>A small daily habit of talking about AI.</p></span></div>
-      </div>
-    </div>
-    <div class="reveal banner only"><p>Only we combine <span>real AI news</span> with <span>a parent in charge.</span></p></div>
-    <p class="src">News source: Science paper on Microsoft’s MAI-DxO, as reported October 23, 2026.</p>
-  </div>
-</section>
-
-<!-- 4. How -->
-<section class="cream" id="how">
-  <div class="wrap">
-    <p class="eyebrow">How it works</p>
-    <h2>How tonight’s story is made</h2>
-    <div class="reveal flow">
-      <div class="stage"><div class="tiles all"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>9 AI stories read</p></div>
-      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="stage"><div class="tiles pick"><i class="dim"></i><i class="on"></i><i class="dim"></i><i class="dim"></i><i class="dim"></i><i class="on"></i><i class="on"></i><i class="dim"></i><i class="dim"></i></div><p>6 skipped, 3 picked</p></div>
-      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="lanes"><p style="background:var(--green)">Green: shares automatically</p><p style="background:var(--gold)">Yellow: asks the parent</p><p style="background:var(--coral)">Red: parents only</p></div>
-      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="stage gate"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2" fill="#121A33"/><circle cx="17" cy="9" r="2.6" fill="#121A33"/><path d="M3 19 q6 -9 12 0 z M13.5 19 q4 -7 8 0 z" fill="#121A33"/></svg></span><p>Parent decides</p></div>
-      <svg class="to" viewBox="0 0 64 36" style="color:var(--amber)" aria-hidden="true"><use href="#arrowR"/></svg>
-      <div class="stage" style="background:transparent;border-color:transparent"><svg viewBox="0 -24 270 324" class="mini-pip" aria-hidden="true" style="width:96px;height:116px;overflow:visible">
-  <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
-  <g filter="url(#gn-paint)">
-   <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-   <path d="M156 232 L168 254 L160 274" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-   <path d="M100 258 L116 258 L116 274 C118 276 134 276 136 284 L136 288 L98 288 Z" fill="#F48FB1"/><path d="M105 264 h7 M105 269 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
-
-   <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
-
-   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><path d="M192 160 C210 172 214 190 210 210" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="209" cy="216" r="8.5" fill="#6C8BEF"/>
-   <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
-   <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
-   <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
-  </g>
-  <circle cx="126" cy="196" r="5" fill="#E8483A"/><circle cx="142" cy="195" r="5" fill="#FFD23F"/>
-  <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
-  <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
-  <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
- </g></svg><p>Pip reads to the kid</p></div>
-    </div>
-    <div class="reveal banner"><p>Automate where it’s safe. <span>Let the parent decide where it matters.</span></p></div>
-  </div>
-</section>
-
-<!-- 5. Demo -->
-<section class="dark" id="demo">
-  <div class="wrap demo">
-    <div class="reveal phones">
-      <div class="phone"><div class="frame"><img src="assets/parent-mode.png" alt="Parent mode: a yellow story card waiting for approval, with facts, checks and Share buttons"></div><p>Parent mode</p></div>
-      <div class="phone"><div class="frame"><img src="assets/kid-mode.png" alt="Kid mode: the story shelf with only shared stories, and the animated story"></div><p>Kid mode</p></div>
-    </div>
-    <div>
-      <p class="eyebrow">Live demo</p>
-      <h2>Try it live</h2>
-      <ol class="steps"><li>1 Run the agent</li><li>2 Approve</li><li>3 Pip reads</li></ol>
-      <div class="qr"><img src="assets/qr-code.png" alt="QR code linking to goodnight-ai-opal.vercel.app"><p>goodnight-ai-opal.vercel.app</p></div>
-      <div class="btns"><a class="btn" href="index-v2.html">▶ Open the demo</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- 6. Future work -->
-<section class="dark2" id="future">
-  <div class="wrap">
-    <p class="eyebrow">Future work</p>
-    <h2>What comes next</h2>
-    <div class="reveal future">
-      <ol class="road">
-        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 L5 14 H11 L10 22 L19 9 H13 Z" fill="#F2C94C"/></svg></span><span><b>2027</b><span>Live daily stories</span></span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 h16 v10 h-9 l-5 4 v-4 h-2 z" fill="none" stroke="#F2C94C" stroke-width="2.5" stroke-linejoin="round"/></svg></span><span><b>2028</b><span>Kids ask Pip questions</span></span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9 L12 4 L22 9 L12 14 Z M6 11 v5 q6 4 12 0 v-5" fill="none" stroke="#F2C94C" stroke-width="2.2" stroke-linejoin="round"/></svg></span><span><b>2029</b><span>Choose your level, elementary to adult</span></span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#F2C94C" stroke-width="2.2"/><path d="M3 12 h18 M12 3 q-5 9 0 18 M12 3 q5 9 0 18" fill="none" stroke="#F2C94C" stroke-width="2"/></svg></span><span><b>2030</b><span>More languages and classroom mode</span></span></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<!-- 7. Ending -->
-<section class="close">
-  <svg class="stars" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="1040" cy="120" r="80" fill="#F2C94C"/><circle cx="1072" cy="98" r="72" fill="#1E2851"/><g fill="#F7F1E3" class="tw"><circle cx="140" cy="90" r="3"/><circle cx="480" cy="50" r="2"/><circle cx="700" cy="140" r="3"/><circle cx="90" cy="520" r="2"/><circle cx="620" cy="560" r="3"/></g></svg>
-  <div class="wrap" style="position:relative">
-    <div>
-      <div class="sleeper" aria-hidden="true"><svg viewBox="0 -24 270 324" class="sleep-pip" aria-hidden="true">
-  <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
-  <g filter="url(#gn-paint)">
-   <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-   <path d="M156 232 L168 254 L160 274" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-   <path d="M100 258 L116 258 L116 274 C118 276 134 276 136 284 L136 288 L98 288 Z" fill="#F48FB1"/><path d="M105 264 h7 M105 269 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
-
-   <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
-
-   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><path d="M192 160 C210 172 214 190 210 210" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="209" cy="216" r="8.5" fill="#6C8BEF"/>
-   <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
-   <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
-   <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
-  </g>
-  <circle cx="126" cy="196" r="5" fill="#E8483A"/><circle cx="142" cy="195" r="5" fill="#FFD23F"/>
-  <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
-  <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
-  <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <path d="M104 136 q8 7 16 0 M146 132 q8 7 16 0" stroke="#1A1A2E" stroke-width="3.2" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><ellipse cx="134" cy="156" rx="4" ry="5" fill="#1A1A2E"/></g><g filter="url(#gn-paint)"><path d="M86 82 C100 52 154 40 188 66 C176 40 150 16 132 12 C112 16 92 44 86 82Z" fill="url(#gn-stRed)"/><path d="M84 84 C112 68 162 62 192 70 L194 80 C164 72 114 78 86 94Z" fill="#FFF1C9"/><circle cx="134" cy="12" r="11" fill="#FFF1C9"/></g>
- </g></svg><span class="z z1">z</span><span class="z z2">z</span><span class="z z3">z</span></div>
-      <h2>“Every family understands the AI shaping their future, <span>starting at bedtime.</span>”</h2>
-      <p class="lead" style="font-family:var(--f-display)">Goodnight, AI · by Judy Lee</p>
-    </div>
-    <div class="qr"><img src="assets/qr-code.png" alt="QR code linking to the Goodnight, AI demo"><p>Scan to try the demo</p></div>
+ </svg></div>
   </div>
 </section>
 
@@ -742,32 +758,26 @@ document.addEventListener("click", function (e) {
   host.classList.remove("waving"); void host.getBoundingClientRect(); host.classList.add("waving");
   clearTimeout(host._wv); host._wv = setTimeout(function () { host.classList.remove("waving") }, 2700);
 });
-</script><script>
-/* Optional lullaby: a soft music box playing Twinkle Twinkle Little Star (traditional). Off until tapped. */
+</script>
+<script>
+/* Flip book: auto turns every few seconds, arrows and dots turn by hand. */
 (function () {
-  var btn = document.getElementById("lullaby"); if (!btn) return;
-  var ctx = null, timer = null, i = 0, on = false;
-  var N = { C: 523.25, D: 587.33, E: 659.25, F: 698.46, G: 783.99, A: 880 };
-  var song = "C C G G A A G- F F E E D D C- G G F F E E D- G G F F E E D- C C G G A A G- F F E E D D C-".split(" ");
-  function note(f, t, len) {
-    [1, 2].forEach(function (h, k) {
-      var o = ctx.createOscillator(), g = ctx.createGain();
-      o.type = "sine"; o.frequency.value = f * h;
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(k ? 0.025 : 0.09, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.9);
-      o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t + len + 1);
-    });
+  var box = document.querySelector(".flipbook"); if (!box) return;
+  var pages = box.querySelectorAll(".fb-page"), dots = box.querySelectorAll(".fb-dot"), cur = 0, t = null;
+  var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function go(n) {
+    n = (n + pages.length) % pages.length; if (n === cur) return;
+    pages[cur].classList.remove("on"); pages[cur].classList.add("out");
+    var old = pages[cur]; setTimeout(function () { old.classList.remove("out") }, 700);
+    pages[n].classList.add("on"); dots[cur].classList.remove("on"); dots[n].classList.add("on"); cur = n;
   }
-  function step() {
-    var n = song[i % song.length], hold = n.slice(-1) === "-", len = hold ? 0.9 : 0.45;
-    note(N[n[0]], ctx.currentTime + 0.02, len); i++;
-    timer = setTimeout(step, (i % song.length === 0 ? 2.2 : len + 0.05) * 1000);
-  }
-  btn.addEventListener("click", function () {
-    on = !on; btn.setAttribute("aria-pressed", on); btn.textContent = on ? "♪ Lullaby: on" : "♪ Lullaby: off";
-    if (on) { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); ctx.resume(); i = 0; step() }
-    else { clearTimeout(timer) }
+  function auto() { clearInterval(t); if (!still) t = setInterval(function () { go(cur + 1) }, 3800) }
+  box.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-step],[data-go]"); if (!b) return;
+    if (b.hasAttribute("data-step")) go(cur + Number(b.getAttribute("data-step"))); else go(Number(b.getAttribute("data-go")));
+    auto();
   });
+  auto();
 })();
 </script>
 </body>
