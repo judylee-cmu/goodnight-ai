@@ -259,8 +259,10 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 .hero::before { content: ""; position: absolute; inset: 0; background: #070B1C; opacity: 0; animation: nightfall 40s ease-in forwards; pointer-events: none }
 @keyframes nightfall { to { opacity: .45 } }
 .hero .wrap { z-index: 1 }
-.hero .pip.reader { width: min(100%, 460px) }
-@media (max-width: 760px) { .hero .pip.reader { width: 280px } }
+.hero .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) !important }
+.hero h1 { font-size: clamp(52px, 8vw, 104px) }
+.hero .pip.reader { width: min(100%, 620px); justify-self: end }
+@media (max-width: 760px) { .hero .wrap { grid-template-columns: 1fr !important } .hero .pip.reader { width: min(100%, 360px); justify-self: center } }
 .tw circle { animation: twinkle 5s ease-in-out infinite !important }
 .tw circle:nth-child(2n) { animation-delay: 1.7s !important } .tw circle:nth-child(3n) { animation-delay: 3.1s !important }
 @keyframes twinkle { 0%, 100% { opacity: 1 } 50% { opacity: .2 } }
@@ -269,7 +271,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 @keyframes glowbreath { 50% { opacity: .65; transform: scale(.94) } }
 .floaty { opacity: 0; animation: floatup 5s ease-out infinite; transform-box: fill-box; transform-origin: center }
 @keyframes floatup { 0% { opacity: 0; transform: translateY(0) scale(.5) } 20% { opacity: 1 } 100% { opacity: 0; transform: translateY(-120px) scale(1) } }
-.flip-page { transform-box: view-box; transform-origin: 255px 290px }
+.flip-page { transform-box: view-box; transform-origin: 300px 330px }
 .waving .flip-page { animation: pageflip 1.1s ease-in-out }
 @keyframes pageflip { 0% { transform: scaleX(1) } 50% { transform: scaleX(0) } 100% { transform: scaleX(-1) } }
 .lullaby { margin-top: 14px; background: none; border: 2px solid var(--night3); color: var(--mist); font: inherit; font-weight: 700; font-size: 15px; padding: 8px 16px; border-radius: 999px; cursor: pointer; min-height: 40px }
@@ -337,21 +339,27 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
       </div>
       <button type="button" class="lullaby" id="lullaby" aria-pressed="false">♪ Lullaby: off</button>
     </div>
-    <svg viewBox="0 0 480 440" class="pip reader" role="img" aria-label="Pip, a small blue robot, sitting on a pillow and reading a glowing storybook next to a night lamp">
+    <svg viewBox="0 0 640 500" class="pip reader" role="img" aria-label="Pip, a small blue robot, tucked into bed under a blanket, reading a glowing storybook next to a night lamp">
   <defs>
-   <radialGradient id="bookglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE08A" stop-opacity=".75"/><stop offset=".45" stop-color="#FFD23F" stop-opacity=".22"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient>
-   <radialGradient id="lampglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".55"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
+   <radialGradient id="bookglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE08A" stop-opacity=".75"/><stop offset=".45" stop-color="#FFD23F" stop-opacity=".2"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient>
+   <radialGradient id="lampglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".6"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
   </defs>
-  <circle class="lamp-glow" cx="66" cy="214" r="110" fill="url(#lampglow)"/>
-  <circle class="book-glow" cx="255" cy="270" r="210" fill="url(#bookglow)"/>
+  <circle class="lamp-glow" cx="572" cy="250" r="130" fill="url(#lampglow)"/>
+  <circle class="book-glow" cx="300" cy="300" r="240" fill="url(#bookglow)"/>
   <g filter="url(#gn-paint)">
-   <ellipse cx="66" cy="384" rx="34" ry="9" fill="#C4864F"/>
-   <path d="M66 380 C64 330 70 290 66 246" stroke="#FFF1C9" stroke-width="7" fill="none" stroke-linecap="round"/>
-   <path d="M30 248 C34 214 46 196 66 194 C86 196 100 214 104 248Z" fill="#FFD23F"/>
-   <path d="M92 404 C96 352 160 330 260 332 C362 334 438 350 446 404 C380 424 160 426 92 404Z" fill="url(#gn-dotPink)"/>
+   <!-- headboard -->
+   <path d="M150 330 L150 140 C150 96 200 84 300 84 C400 84 450 96 450 140 L450 330Z" fill="#C4864F"/>
+   <path d="M174 330 L174 152 C174 118 214 110 300 110 C386 110 426 118 426 152 L426 330Z" fill="#D99A5E"/>
+   <!-- pillow -->
+   <path d="M188 240 C182 196 230 184 300 186 C372 184 420 196 414 240 C420 278 372 290 300 288 C230 290 182 278 188 240Z" fill="#FFF8E6"/>
+   <!-- nightstand + lamp -->
+   <rect x="524" y="352" width="96" height="104" rx="10" fill="#7A4E2D"/><rect x="536" y="396" width="72" height="8" rx="4" fill="#5A3A22"/>
+   <path d="M572 352 C570 320 574 300 572 280" stroke="#FFF1C9" stroke-width="7" fill="none" stroke-linecap="round"/>
+   <path d="M536 284 C540 248 552 230 572 228 C592 230 604 248 608 284Z" fill="#FFD23F"/>
   </g>
-  <circle cx="66" cy="252" r="9" fill="#FFF8E6"/>
-  <svg x="120" y="30" width="270" height="324" viewBox="0 -24 270 324" overflow="visible">
+  <circle cx="572" cy="288" r="9" fill="#FFF8E6"/>
+  <!-- Pip leaning back on the pillow -->
+  <g transform="rotate(-4 300 330)"><svg x="185" y="112" width="230" height="276" viewBox="0 -24 270 324" overflow="visible">
   
   <g filter="url(#gn-paint)">
    <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
@@ -370,17 +378,24 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
   <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="106" cy="135" r="5.8" fill="#1A1A2E"/><circle cx="158" cy="130" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
- </svg>
+ </svg></g>
   <g filter="url(#gn-paint)">
-   <path d="M255 266 C230 254 198 254 168 262 L162 326 C194 318 228 318 255 330 C282 318 316 318 348 326 L342 262 C312 254 280 254 255 266Z" fill="#E8483A"/>
-   <path  d="M255 262 C232 250 202 250 176 258 L170 318 C196 310 228 310 255 322Z" fill="#FFF8E6"/><path  d="M255 262 C278 250 308 250 334 258 L340 318 C314 310 282 310 255 322Z" fill="#FFF8E6"/>
+   <!-- blanket over Pip, with a folded cream edge -->
+   <path d="M120 330 C150 312 220 318 300 314 C380 318 450 312 480 330 L500 452 C400 470 200 470 100 452Z" fill="url(#gn-dotPink)"/>
+   <path d="M118 332 C160 314 230 320 300 316 C372 320 442 314 482 332 L486 352 C440 336 372 342 300 338 C228 342 160 336 114 352Z" fill="#FFF1C9"/>
+   <!-- bed frame -->
+   <rect x="92" y="446" width="416" height="26" rx="10" fill="#C4864F"/>
+   <rect x="104" y="468" width="20" height="26" rx="5" fill="#7A4E2D"/><rect x="476" y="468" width="20" height="26" rx="5" fill="#7A4E2D"/>
+   <!-- book resting on the blanket -->
+   <path d="M300 306 C270 292 230 292 192 302 L186 372 C224 362 266 362 300 378 C334 362 376 362 414 372 L408 302 C370 292 330 292 300 306Z" fill="#E8483A"/>
+   <path d="M300 300 C272 286 234 286 202 296 L196 360 C228 350 268 350 300 364Z" fill="#FFF8E6"/><path d="M300 300 C328 286 366 286 398 296 L404 360 C372 350 332 350 300 364Z" fill="#FFF8E6"/>
   </g>
-  <g stroke="#D9C9A6" stroke-width="3.5" stroke-linecap="round"><path d="M186 274 q30 -8 58 -2 M186 288 q28 -7 56 -1 M188 302 q26 -6 52 0"/><path d="M266 272 q30 -7 58 1 M268 286 q28 -6 56 2 M270 300 q24 -5 50 2"/></g>
-  <path class="flip-page" d="M255 262 C278 250 308 250 334 258 L340 318 C314 310 282 310 255 322Z" fill="#FFF1D6"/>
-  <path d="M255 262 V322" stroke="#D9C9A6" stroke-width="3"/>
-  <circle cx="172" cy="290" r="9" fill="#6C8BEF"/><circle cx="338" cy="290" r="9" fill="#6C8BEF"/>
-  <circle class="face-glow" cx="255" cy="150" r="96" fill="url(#bookglow)" opacity=".45" style="mix-blend-mode:screen"/>
-  <path class="floaty" style="animation-delay:0s" d="M162 250 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFD23F"/><path class="floaty" style="animation-delay:1.4s" d="M352 246 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFF1C9"/><path class="floaty" style="animation-delay:2.6s" d="M180 240 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#F48FB1"/><path class="floaty" style="animation-delay:3.6s" d="M336 252 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFD23F"/>
+  <g stroke="#D9C9A6" stroke-width="3.5" stroke-linecap="round"><path d="M214 312 q36 -9 72 -2 M214 326 q34 -8 70 -1 M216 340 q32 -7 66 0"/><path d="M314 310 q36 -8 72 1 M316 324 q34 -7 70 2 M318 338 q30 -6 64 2"/></g>
+  <path class="flip-page" d="M300 300 C328 286 366 286 398 296 L404 360 C372 350 332 350 300 364Z" fill="#FFF1D6"/>
+  <path d="M300 300 V364" stroke="#D9C9A6" stroke-width="3"/>
+  <!-- little hands holding the book -->
+  <circle cx="192" cy="330" r="11" fill="#6C8BEF"/><circle cx="408" cy="330" r="11" fill="#6C8BEF"/>
+  <path class="floaty" style="animation-delay:0s" d="M196 286 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFD23F"/><path class="floaty" style="animation-delay:1.4s" d="M404 282 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFF1C9"/><path class="floaty" style="animation-delay:2.6s" d="M214 274 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#F48FB1"/><path class="floaty" style="animation-delay:3.6s" d="M388 290 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFD23F"/>
  </svg>
   </div>
 </section>
