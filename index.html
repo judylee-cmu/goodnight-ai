@@ -380,9 +380,16 @@ footer { position: relative; border-top: 0 !important }
 .tinker-link:hover svg.tinker .p-arm-r.wave { animation: wave 1.3s ease-in-out 1 !important }
 @media (max-width: 760px) { .banner { flex-wrap: wrap } .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
 
-.whyus { margin: 34px 0 0; display: flex; align-items: baseline; gap: 16px; font-size: 17px; line-height: 1.5; color: var(--cream); border-top: 2px dashed rgba(255,210,63,.35); padding-top: 18px }
-.whyus b { flex: none; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold) }
-@media (max-width: 760px) { .whyus { display: block } .whyus b { display: block; margin-bottom: 4px } }
+#whyus { position: relative; padding-block: clamp(56px, 7vw, 88px) }
+.wu-h { max-width: 24ch; font-size: clamp(28px, 3.6vw, 46px) }
+.wu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 32px }
+.wu-card { background: var(--night2); border: 2px solid var(--night3); border-radius: 22px; padding: 22px 24px }
+.wu-card.ours { background: #FFF8E6; color: #121A33; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,210,63,.18) }
+.wu-mark { width: 34px; height: 34px; display: block; overflow: visible }
+.wu-t { margin: 14px 0 6px; font-family: var(--f-display); font-weight: 600; font-size: 21px }
+.wu-d { margin: 0; font-size: 16px; line-height: 1.5; color: var(--mist) }
+.wu-card.ours .wu-d { color: #3A4256 }
+@media (max-width: 760px) { .wu-grid { grid-template-columns: 1fr } }
 </style>
 </head>
 <body>
@@ -420,6 +427,7 @@ footer { position: relative; border-top: 0 !important }
     <ul>
       <li><a href="#problem">Problem</a></li>
       <li><a href="#product">Product</a></li>
+      <li><a href="#whyus">Why us</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#demo">Demo</a></li>
       <li><a href="#future">Next</a></li>
@@ -610,7 +618,16 @@ footer { position: relative; border-top: 0 !important }
       </div>
     </div>
     
-    <p class="reveal whyus"><b>Why us</b><span>Kids news sites skip AI. Chatbots skip sources. We bring real AI news, checked against sources, with a parent in charge.</span></p>
+  </div>
+</section>
+
+<!-- 3b. Why us -->
+<section class="dark" id="whyus">
+  <svg class="edge" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#gn-ink)"><path d="M0 48 L0 21.6 C80.9 7.7 124.3 22.5 191.1 11.3 C250.4 -1.5 290.5 27.0 350.0 21.3 C406.2 14.0 464.2 25.6 549.7 25.4 C651.5 22.1 725.6 11.0 801.3 22.2 C873.2 20.0 904.6 17.7 983.3 24.2 C1054.6 15.8 1109.2 25.4 1156.4 14.7 C1210.8 1.4 1255.5 28.5 1312.4 17.1 C1347.4 19.3 1405.4 14.0 1440.0 22.3 L1440 48Z" fill="#121A33"/></g></svg>
+  <div class="wrap">
+    <p class="eyebrow">Why us</p>
+    <h2 class="wu-h">Kids news sites skip AI. Chatbots skip sources.</h2>
+    <div class="wu-grid"><div class="reveal wu-card" style="--d:0.0s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#2B3766"/></g><path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/></svg><p class="wu-t">Kids news sites</p><p class="wu-d">Lots of text. Little about AI. No room for parents.</p></div><div class="reveal wu-card" style="--d:0.1s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#2B3766"/></g><path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/></svg><p class="wu-t">Asking a chatbot</p><p class="wu-d">No sources. No fact or safety check. Not made to read together.</p></div><div class="reveal wu-card ours" style="--d:0.2s"><svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="#FFD23F"/></g><path d="M7 17 C10 20 12 23 14 25 C18 17 23 11 29 6" stroke="#121A33" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><p class="wu-t">Goodnight, AI</p><p class="wu-d">Real AI news, checked against sources, read together, with the parent deciding.</p></div></div>
   </div>
 </section>
 

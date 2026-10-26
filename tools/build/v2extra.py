@@ -410,14 +410,40 @@ s = s.replace('</style>', """
 @media (max-width: 760px) { .banner { flex-wrap: wrap } .tinker-link { margin: 0 auto 0 0 } .tinker-link svg.tinker { width: 104px } }
 </style>""", 1)
 
-# 19. One line "why us", as a full width strip under the product row
-pi = s.index('id="product"')
-end = s.index('\n  </div>\n</section>', pi)
-s = s[:end] + '\n    <p class="reveal whyus"><b>Why us</b><span>Kids news sites skip AI. Chatbots skip sources. We bring real AI news, checked against sources, with a parent in charge.</span></p>' + s[end:]
+# 19. Why us, as its own short section between Product and How it works
+def _mark(ok):
+    if ok:
+        d = '<path d="M7 17 C10 20 12 23 14 25 C18 17 23 11 29 6" stroke="#121A33" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+        bg = '#FFD23F'
+    else:
+        d = '<path d="M10 10 C14 14 19 19 24 24 M24 10 C19 15 15 19 10 24" stroke="#CBD3E8" stroke-width="4" fill="none" stroke-linecap="round"/>'
+        bg = '#2B3766'
+    return (f'<svg class="wu-mark" viewBox="0 0 34 34" aria-hidden="true"><g filter="url(#gn-ink)"><circle cx="17" cy="17" r="16" fill="{bg}"/></g>{d}</svg>')
+_cards = [
+    (False, 'Kids news sites', 'Lots of text. Little about AI. No room for parents.'),
+    (False, 'Asking a chatbot', 'No sources. No fact or safety check. Not made to read together.'),
+    (True, 'Goodnight, AI', 'Real AI news, checked against sources, read together, with the parent deciding.'),
+]
+_html = ('\n<!-- 3b. Why us -->\n<section class="dark" id="whyus">\n  ' + wave(9, '#121A33') + '\n  <div class="wrap">\n'
+         '    <p class="eyebrow">Why us</p>\n'
+         '    <h2 class="wu-h">Kids news sites skip AI. Chatbots skip sources.</h2>\n'
+         '    <div class="wu-grid">'
+         + ''.join(f'<div class="reveal wu-card{" ours" if ok else ""}" style="--d:{i*0.1}s">{_mark(ok)}<p class="wu-t">{t}</p><p class="wu-d">{d}</p></div>' for i, (ok, t, d) in enumerate(_cards))
+         + '</div>\n  </div>\n</section>\n')
+s = s.replace('\n<!-- 4. How -->', _html + '\n<!-- 4. How -->', 1)
+assert 'id="whyus"' in s
+s = s.replace('<li><a href="#product">Product</a></li>', '<li><a href="#product">Product</a></li>\n      <li><a href="#whyus">Why us</a></li>', 1)
 s = s.replace('</style>', """
-.whyus { margin: 34px 0 0; display: flex; align-items: baseline; gap: 16px; font-size: 17px; line-height: 1.5; color: var(--cream); border-top: 2px dashed rgba(255,210,63,.35); padding-top: 18px }
-.whyus b { flex: none; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold) }
-@media (max-width: 760px) { .whyus { display: block } .whyus b { display: block; margin-bottom: 4px } }
+#whyus { position: relative; padding-block: clamp(56px, 7vw, 88px) }
+.wu-h { max-width: 24ch; font-size: clamp(28px, 3.6vw, 46px) }
+.wu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 32px }
+.wu-card { background: var(--night2); border: 2px solid var(--night3); border-radius: 22px; padding: 22px 24px }
+.wu-card.ours { background: #FFF8E6; color: #121A33; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,210,63,.18) }
+.wu-mark { width: 34px; height: 34px; display: block; overflow: visible }
+.wu-t { margin: 14px 0 6px; font-family: var(--f-display); font-weight: 600; font-size: 21px }
+.wu-d { margin: 0; font-size: 16px; line-height: 1.5; color: var(--mist) }
+.wu-card.ours .wu-d { color: #3A4256 }
+@media (max-width: 760px) { .wu-grid { grid-template-columns: 1fr } }
 </style>""", 1)
 
 open(P, 'w').write(s)
