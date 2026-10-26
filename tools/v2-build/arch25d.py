@@ -226,7 +226,7 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><a class="brand" href="index.html">Goodnight, <span>AI</span></a><a class="back" href="index.html">← Back to the pitch</a></div>
+  <div class="top"><a class="brand" href="index.html">Goodnight, <span>AI</span></a><a class="back" href="index.html">← Back to home</a></div>
   <div class="head">
     <div><p class="eyebrow">Possible service architecture</p><h1>From tonight’s AI news to a bedtime story, with a parent in charge</h1></div>
     <div class="legend"><span><b>Prototype</b> in today’s demo</span><span><em>Next</em> for the full service</span></div>

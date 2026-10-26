@@ -249,7 +249,7 @@ h1 {{ margin: 0; font-family: var(--f-display); font-weight: 600; font-size: cla
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><a class="brand" href="index.html">Goodnight, <span>AI</span></a><a class="back" href="index.html">← Back to the pitch</a></div>
+  <div class="top"><a class="brand" href="index.html">Goodnight, <span>AI</span></a><a class="back" href="index.html">← Back to home</a></div>
   <div class="head">
     <div><p class="eyebrow">System architecture</p><h1>How the Goodnight, AI service is built</h1></div>
     <div class="legend">
