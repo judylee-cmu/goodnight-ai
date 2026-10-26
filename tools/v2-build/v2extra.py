@@ -342,7 +342,9 @@ edges = {'problem': ('#F7F1E3', 3), 'product': ('#1C2647', 7), 'how': ('#F7F1E3'
 for sid, (col, seed) in edges.items():
     tag = re.search(r'<section class="[^"]*" id="%s">' % sid, s).group(0)
     s = s.replace(tag, tag + '\n  ' + wave(seed, col), 1)
-s = s.replace('<section class="close">', '<section class="close">\n  ' + wave(29, '#141C3B'), 1)
+# future flows down into the ending (the ending has a gradient, so the wave hangs from above)
+s = s.replace('</section>\n\n<!-- 7.', wave(29, '#1C2647').replace('class="edge"', 'class="edge down"') + '\n</section>\n\n<!-- 7.', 1)
+s = s.replace('<footer>', '<footer>\n  ' + wave(31, '#121A33'), 1)
 
 def charm(x, length, kind, delay, color='#FFD23F'):
     if kind == 'star':
@@ -359,6 +361,9 @@ tag = '<section class="cream" id="problem">'
 s = s.replace(tag, tag + '\n  ' + hang, 1)
 s = s.replace('</style>', """
 #problem, #product, #how, #demo, #future, .close { position: relative }
+.edge.down { top: auto; bottom: -46px; transform: scaleY(-1) }
+footer { position: relative; border-top: 0 !important }
+.close { z-index: 0 } #future { z-index: 1 }
 .edge { position: absolute; left: 0; top: -46px; width: 100%; height: 48px; display: block; pointer-events: none; z-index: 2 }
 .charms { position: absolute; left: 0; top: -40px; width: 100%; height: 170px; pointer-events: none; z-index: 3; overflow: visible }
 .charm { animation: sway 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0 }
