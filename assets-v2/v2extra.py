@@ -200,5 +200,33 @@ js = '''<script>
 </body>'''
 s = s.replace('</body>', js, 1)
 s = s.replace('<li><a href="#future">Next</a></li>', '<li><a href="#future">Next</a></li>')
+
+# 11. Product section fits one screen: heading sits above the news card in the left column
+sub("""    <p class="eyebrow">What’s our product</p>
+    <h2>Real AI news, turned into a bedtime story</h2>
+    <p class="lead">For parents and kids 5 to 10, together at bedtime.</p>
+    <div class="reveal hook-row">
+      <div class="card-dark news-card">""", """    <div class="reveal hook-row">
+      <div class="prod-left">
+      <p class="eyebrow">What’s our product</p>
+      <h2>Real AI news, turned into a bedtime story</h2>
+      <p class="lead">For parents and kids 5 to 10, together at bedtime.</p>
+      <div class="card-dark news-card">""")
+sub("""        <p class="src" style="margin-top:14px">Microsoft Security Blog, October 21, 2026</p>
+      </div>""", """        <p class="src" style="margin-top:14px">Microsoft Security Blog, October 21, 2026</p>
+      </div>
+      </div>""")
+s = s.replace('</style>', """
+#product { padding-block: clamp(56px, 6vw, 80px) }
+#product .hook-row { margin-top: 0; align-items: center; grid-template-columns: minmax(0, .95fr) auto minmax(0, 1.25fr) !important; gap: 24px }
+#product .prod-left h2 { font-size: clamp(30px, 3.6vw, 48px) }
+#product .prod-left .lead { margin-top: 12px; font-size: clamp(17px, 1.6vw, 20px) }
+#product .news-card { margin-top: 24px; padding: 24px }
+#product .news-card .headline { font-size: clamp(20px, 2vw, 26px) !important }
+#product .fb-pages { max-height: 56vh; aspect-ratio: 16 / 9 }
+#product .fb-cap { min-height: 1.4em } @media (max-width: 1100px) { #product .fb-cap { min-height: 2.6em } }
+@media (max-width: 860px) { #product .hook-row { grid-template-columns: 1fr !important } }
+</style>""", 1)
+
 open(P, 'w').write(s)
 print('v2extra ok', len(s))
