@@ -250,7 +250,11 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
 .hero .pip { width: min(100%, 380px) }
 @media (max-width: 760px) { .hero .pip { width: 220px } }
 .sleeper { width: 130px }
-.p-arm-r.wave { transform-origin: 0% 100% }
+.p-arm-r.wave { transform-origin: 0% 100%; animation: var(--wave, none) !important }
+.p-bob, .p-shadow, .p-glow { animation: none !important }
+@keyframes wave { 0%, 100% { transform: rotate(0) } 30% { transform: rotate(22deg) } 60% { transform: rotate(-6deg) } 80% { transform: rotate(18deg) } }
+.waving { --wave: wave 1.3s ease-in-out 2 }
+svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 @media (max-width: 860px) { .faces { grid-template-columns: repeat(3, minmax(0, 1fr)) !important } }
 @media (max-width: 520px) { .faces { grid-template-columns: repeat(2, minmax(0, 1fr)) !important } }
 </style>
@@ -300,7 +304,7 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
 
 <!-- 1. Hero -->
 <section class="hero" id="top">
-  <svg class="stars" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="mgr"><stop offset=".55" stop-color="#F2C94C" stop-opacity=".22"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs><circle class="moonglow" cx="1100" cy="100" r="110" fill="url(#mgr)"/><circle cx="1100" cy="100" r="56" fill="#F2C94C"/><circle cx="1123" cy="85" r="51" fill="#1E2851"/><g fill="#F7F1E3" class="tw"><circle cx="120" cy="80" r="3"/><circle cx="420" cy="60" r="2"/><circle cx="660" cy="120" r="3"/><circle cx="820" cy="40" r="2"/><circle cx="1140" cy="320" r="3"/><circle cx="90" cy="600" r="2"/><circle cx="560" cy="640" r="3"/></g><circle cx="760" cy="360" r="3" fill="#F2C94C"/></svg>
+  <svg class="stars" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="mgr"><stop offset=".55" stop-color="#F2C94C" stop-opacity=".22"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs><g fill="#F7F1E3" class="tw"><circle cx="120" cy="80" r="3"/><circle cx="420" cy="60" r="2"/><circle cx="660" cy="120" r="3"/><circle cx="820" cy="40" r="2"/><circle cx="1140" cy="320" r="3"/><circle cx="90" cy="600" r="2"/><circle cx="560" cy="640" r="3"/></g><circle cx="760" cy="360" r="3" fill="#F2C94C"/></svg>
   <div class="wrap" style="position:relative">
     <div>
       <p class="eyebrow">SEM Week 1 · Agentic AI News</p>
@@ -329,7 +333,7 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="129" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="117" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  </g></svg>
   </div>
 </section>
@@ -446,7 +450,7 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="128" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="116" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g><g><line x1="224" y1="92" x2="240" y2="66" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/><circle cx="248" cy="50" r="20" fill="#DCEBF5" opacity=".9" stroke="#F7A23B" stroke-width="6"/><path d="M238 44 q4 -8 12 -9" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="125" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="120" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g><g><line x1="224" y1="92" x2="240" y2="66" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/><circle cx="248" cy="50" r="20" fill="#DCEBF5" opacity=".9" stroke="#F7A23B" stroke-width="6"/><path d="M238 44 q4 -8 12 -9" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></g>
  </g></svg>
  </svg>
         <p>Pip the detective helps doctors find clues.</p>
@@ -529,7 +533,7 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="128" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="116" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="125" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="120" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  </svg>
   <path d="M342 330 C370 344 396 346 414 342 M600 340 C584 352 566 358 552 356" stroke="#E9B394" stroke-width="16" fill="none" stroke-linecap="round" filter="url(#gn-paint)"/>
  </svg>
@@ -576,7 +580,7 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="129" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="117" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  </g></svg><p>Pip reads to the kid</p></div>
     </div>
     <div class="reveal banner"><p>Automate where it’s safe. <span>Let the parent decide where it matters.</span></p></div>
@@ -666,6 +670,16 @@ document.documentElement.classList.add("js");
   var io = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target) } }) }, { threshold: .15 });
   els.forEach(function (e) { io.observe(e) });
 })();
+</script>
+<script>
+/* Pip only blinks on his own. Tap him and he waves. */
+document.addEventListener("click", function (e) {
+  var t = e.target.closest("svg.pip, .card-page svg, svg.mini-pip, g.p-tap, use[href='#pip']");
+  if (!t) return;
+  var host = t.tagName.toLowerCase() === "use" ? t.parentNode : t;
+  host.classList.remove("waving"); void host.getBoundingClientRect(); host.classList.add("waving");
+  clearTimeout(host._wv); host._wv = setTimeout(function () { host.classList.remove("waving") }, 2700);
+});
 </script>
 </body>
 </html>

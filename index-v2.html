@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}
+/* v2 Pip: blink on his own, wave when tapped */
+.p-eyes { animation: pipblink 5.5s infinite; transform-box: fill-box; transform-origin: center }
+@keyframes pipblink { 0%, 93%, 100% { transform: scaleY(1) } 96% { transform: scaleY(.1) } }
+.p-arm-r.wave { transform-box: fill-box; transform-origin: 0% 100%; animation: var(--wave, none) }
+@keyframes pipwave { 0%, 100% { transform: rotate(0) } 30% { transform: rotate(22deg) } 60% { transform: rotate(-6deg) } 80% { transform: rotate(18deg) } }
+.waving { --wave: pipwave 1.3s ease-in-out 2 }
+use[href="#pip"] { cursor: pointer }
+@media (prefers-reduced-motion: reduce) { .p-eyes, .p-arm-r.wave { animation: none !important } }
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -377,7 +386,7 @@ details.grownups summary { cursor: pointer; color: var(--gold); font-weight: 700
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="128" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="116" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="125" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="120" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
  </g></g></g>
 <g id="pip-cop"><g transform="translate(3 10) scale(.42)">
   <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
@@ -397,7 +406,7 @@ details.grownups summary { cursor: pointer; color: var(--gold); font-weight: 700
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="134" r="14" fill="#FFFDF6"/><circle cx="158" cy="122" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="128" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="116" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="107" cy="125" r="5.8" fill="#1A1A2E"/><circle cx="159" cy="120" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g>
  </g></g></g>
       </defs>
       <rect width="1600" height="900" fill="#1F2F6B"/>
@@ -1058,5 +1067,15 @@ details.grownups summary { cursor: pointer; color: var(--gold); font-weight: 700
 })();
 </script>
 
+<script>
+/* Pip only blinks on his own. Tap him and he waves. */
+document.addEventListener("click", function (e) {
+  var t = e.target.closest("svg.pip, .card-page svg, svg.mini-pip, g.p-tap, use[href='#pip']");
+  if (!t) return;
+  var host = t.tagName.toLowerCase() === "use" ? t.parentNode : t;
+  host.classList.remove("waving"); void host.getBoundingClientRect(); host.classList.add("waving");
+  clearTimeout(host._wv); host._wv = setTimeout(function () { host.classList.remove("waving") }, 2700);
+});
+</script>
 </body>
 </html>
