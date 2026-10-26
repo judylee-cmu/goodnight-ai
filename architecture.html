@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goodnight, AI · Service Architecture</title>
+<meta name="description" content="How the full Goodnight, AI service could work: an agent pipeline with a parent in charge.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+:root {
+  --night: #121A33; --night2: #1C2647; --night3: #24305A;
+  --cream: #F7F1E3; --paper: #FFF8E6; --line: #E6DCC4;
+  --gold: #FFD23F; --amber: #B7791F; --blue: #6C8BEF; --green: #4FA65B; --pink: #F48FB1; --orange: #F7A23B; --coral: #F08A6E;
+  --ink: #1A1A2E; --ink2: #4A5568; --mist: #CBD3E8; --mist2: #9AA6C4;
+  --f-display: Fredoka, "Trebuchet MS", Arial, sans-serif;
+  --f-body: "Nunito Sans", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box }
+body { margin: 0; background: radial-gradient(circle at 85% 0%, var(--night3) 0, var(--night) 55%) fixed, var(--night); color: var(--cream); font-family: var(--f-body); font-size: 16px; line-height: 1.5 }
+a { color: inherit }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 26px max(20px, env(safe-area-inset-left, 0px)) 48px }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap }
+.brand { font-family: var(--f-display); font-weight: 600; font-size: 22px; text-decoration: none }
+.brand span { color: var(--gold) }
+.back { font-weight: 700; font-size: 15px; color: var(--mist); text-decoration: none; border: 2px solid var(--night3); border-radius: 999px; padding: 8px 16px }
+.back:hover { color: var(--gold); border-color: var(--gold) }
+.eyebrow { margin: 22px 0 8px; font-weight: 700; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold) }
+h1 { margin: 0; font-family: var(--f-display); font-weight: 600; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1; max-width: 30ch }
+.lead { margin: 12px 0 0; color: var(--mist); font-size: clamp(16px, 1.6vw, 19px); max-width: 60ch }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; font-size: 14px; color: var(--mist) }
+.legend span { display: inline-flex; align-items: center; gap: 8px }
+.tagp, .tagn { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; white-space: nowrap }
+.tagp { background: var(--gold); color: var(--night) }
+.tagn { border: 1.5px dashed var(--mist2); color: var(--mist) }
+
+/* the diagram: five columns, left to right */
+.diagram { margin-top: 22px; display: grid; grid-template-columns: minmax(0, .9fr) 28px minmax(0, 1.5fr) 28px minmax(0, 1fr) 28px minmax(0, 1fr) 28px minmax(0, .9fr); align-items: stretch }
+.col { display: flex; flex-direction: column; gap: 10px; min-width: 0 }
+.col-h { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; font-family: var(--f-display); font-weight: 600; font-size: 17px; color: var(--cream) }
+.num { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: var(--night); font-size: 14px }
+.box { background: var(--night2); border: 1px solid var(--night3); border-radius: 16px; padding: 12px 14px }
+.box b { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 5px; font-size: 14.5px; color: var(--cream) }
+.box p { margin: 4px 0 0; font-size: 13px; color: var(--mist); line-height: 1.45 }
+.box.paper { background: var(--paper); border-color: var(--line) }
+.box.paper b { color: var(--ink) }
+.box.paper .tagn, .box.gate .tagn { border-color: #8A7A5A; color: #6A5A3A } .box.paper p { color: var(--ink2) }
+.box.gate { background: var(--paper); border: 2px solid var(--gold); box-shadow: 0 0 0 4px rgba(255,210,63,.18) }
+.box.gate b { color: var(--ink) } .box.gate p { color: var(--ink2) }
+.agent { background: rgba(108,139,239,.12); border: 2px solid var(--blue); border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 8px }
+.agent .orch { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; color: var(--cream) }
+.agent .orch svg { width: 46px; height: 56px; flex: none; overflow: visible }
+.step { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; align-items: start; background: var(--night); border-radius: 12px; padding: 9px 11px }
+.step i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 12px; color: var(--night) }
+.step b { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 13.5px }
+.step p { margin: 2px 0 0; font-size: 12.5px; color: var(--mist); line-height: 1.4 }
+.tiers { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap }
+.tiers span { font-size: 11.5px; font-weight: 700; border-radius: 999px; padding: 2px 8px; color: var(--ink) }
+.arrow { display: grid; place-items: center; color: var(--gold) }
+.arrow svg { width: 24px; height: 24px }
+.dl { display: flex; flex-direction: column; gap: 10px }
+
+/* bottom bands */
+.bands { margin-top: 22px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px }
+.band { border-radius: 20px; padding: 16px 18px; background: var(--night2); border: 1px solid var(--night3) }
+.band h2 { margin: 0 0 8px; font-family: var(--f-display); font-weight: 600; font-size: 17px; display: flex; align-items: center; gap: 10px }
+.band ul { margin: 0; padding-left: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; font-size: 13.5px; color: var(--mist) }
+.loop { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13.5px; color: var(--mist) }
+.loop span { background: var(--night); border-radius: 999px; padding: 4px 10px; color: var(--cream); font-weight: 600 }
+.loop em { color: var(--gold); font-style: normal; font-weight: 700 }
+.note { margin-top: 18px; font-size: 13.5px; color: var(--mist2); max-width: 90ch }
+
+@media (max-width: 1100px) {
+  .diagram { grid-template-columns: minmax(0, 1fr); gap: 0 }
+  .arrow { height: 36px } .arrow svg { transform: rotate(90deg) }
+  .bands { grid-template-columns: 1fr }
+}
+@media (max-width: 520px) { .band ul { grid-template-columns: 1fr } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html">Goodnight, <span>AI</span></a>
+    <a class="back" href="index.html">← Back to the pitch</a>
+  </div>
+
+  <p class="eyebrow">Possible service architecture</p>
+  <h1>From tonight’s AI news to a bedtime story, with a parent in charge</h1>
+  <p class="lead">How the full service could work. An agent does the research and the writing; the parent is the editor; the kid gets a story they can understand.</p>
+  <div class="legend"><span><span class="tagp">Prototype</span> shown in today’s demo</span><span><span class="tagn">Next</span> planned for the full service</span></div>
+
+  <div class="diagram" role="img" aria-label="Five parts from left to right: news sources, the story agent, family rules, the parent gate, and delivery to the kid. A trust layer and a feedback loop run underneath.">
+
+    <!-- 1 Sources -->
+    <div class="col">
+      <p class="col-h"><span class="num">1</span>News sources</p>
+      <div class="box"><b>Approved AI news feeds</b><p>Trusted newsrooms and tech news.</p></div>
+      <div class="box"><b>Company and lab posts</b><p>Blogs, research papers, launch notes.</p></div>
+      <div class="box"><b>Safety and security alerts</b><p>Official advisories and reports.</p></div>
+      <div class="box"><b>Only an approved list</b><p>No open web scraping. Every item keeps its link and time.</p></div>
+    </div>
+
+    <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12 h15 m-6 -6 l6 6 -6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- 2 Agent -->
+    <div class="col">
+      <p class="col-h"><span class="num">2</span>Story agent</p>
+      <div class="agent">
+        <div class="orch">
+          <svg viewBox="0 -12 120 152" aria-hidden="true"><path d="M60 22 V8" stroke="#FFF1C9" stroke-width="4" stroke-linecap="round"/><path d="M74 6 C62 12 52 4 60 -4 C58 4 64 8 74 6Z" fill="#FFD23F"/><path d="M28 40 C30 24 48 20 62 20 C80 20 92 28 92 44 C92 70 96 96 88 110 C80 124 42 126 32 112 C24 98 26 64 28 40Z" fill="#6C8BEF"/><circle cx="48" cy="54" r="8" fill="#FFFDF6"/><circle cx="72" cy="51" r="8" fill="#FFFDF6"/><circle cx="47" cy="51" r="3.4" fill="#1A1A2E"/><circle cx="71" cy="48" r="3.4" fill="#1A1A2E"/><path d="M50 68 q10 8 20 -1" stroke="#1A1A2E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>Orchestrator: one goal each night, a time and cost limit, a log of every step</span>
+        </div>
+        <div class="step"><i style="background:#6C8BEF">1</i><div><b>Discover <span class="tagp">Prototype</span></b><p>Read tonight’s AI news.</p></div></div>
+        <div class="step"><i style="background:#6C8BEF">2</i><div><b>Pick and skip <span class="tagp">Prototype</span></b><p>Choose what fits a 6 year old. Say why the rest was skipped.</p></div></div>
+        <div class="step"><i style="background:#F7A23B">3</i><div><b>Verify <span class="tagp">Prototype</span></b><p>Check each key fact against its sources. Label company claims.</p></div></div>
+        <div class="step"><i style="background:#F7A23B">4</i><div><b>Rewrite for age <span class="tagp">Prototype</span></b><p>A picture story for the kid, plain facts for the parent.</p></div></div>
+        <div class="step"><i style="background:#4FA65B">5</i><div><b>Self check <span class="tagp">Prototype</span></b><p>Match every line to a fact. Fix what drifted.</p></div></div>
+        <div class="step"><i style="background:#4FA65B">6</i><div><b>Safety and risk <span class="tagp">Prototype</span></b><p>Sort each story by risk.</p>
+          <div class="tiers"><span style="background:#3DBE8B;color:#fff">Green</span><span style="background:#F2C94C">Yellow</span><span style="background:#F08A6E">Red</span></div></div></div>
+        <div class="step"><i style="background:#F48FB1">7</i><div><b>Make the media <span class="tagn">Next</span></b><p>Pictures, animation and Pip’s voice, made fresh each night.</p></div></div>
+      </div>
+    </div>
+
+    <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12 h15 m-6 -6 l6 6 -6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- 3 Family -->
+    <div class="col">
+      <p class="col-h"><span class="num">3</span>Family settings</p>
+      <div class="box paper"><b>Parent rules <span class="tagp">Prototype</span></b><p>Which topics are green, yellow or red for this family.</p></div>
+      <div class="box paper"><b>Kid profile <span class="tagn">Next</span></b><p>Age and reading level. No kid account, no kid data collected.</p></div>
+      <div class="box paper"><b>Family memory <span class="tagn">Next</span></b><p>What we read before, so tonight’s story can link to last week’s.</p></div>
+    </div>
+
+    <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12 h15 m-6 -6 l6 6 -6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- 4 Parent gate -->
+    <div class="col">
+      <p class="col-h"><span class="num">4</span>Parent gate</p>
+      <div class="box gate"><b>Green: shares itself <span class="tagp">Prototype</span></b><p>Low risk stories go straight to the kid’s shelf.</p></div>
+      <div class="box gate"><b>Yellow and red wait <span class="tagp">Prototype</span></b><p>The parent sees the real news, the sources and what Pip is unsure about.</p></div>
+      <div class="box gate"><b>Share, not tonight, or make it simpler <span class="tagp">Prototype</span></b><p>One tap decides. A simpler or gentler version is rewritten on request.</p></div>
+      <div class="box gate"><b>Ready to read alert <span class="tagn">Next</span></b><p>A short message to the parent when tonight’s story is ready.</p></div>
+    </div>
+
+    <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12 h15 m-6 -6 l6 6 -6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- 5 Kid -->
+    <div class="col">
+      <p class="col-h"><span class="num">5</span>Bedtime</p>
+      <div class="box"><b>Story shelf <span class="tagp">Prototype</span></b><p>Only stories the parent shared.</p></div>
+      <div class="box"><b>Pip reads aloud <span class="tagp">Prototype</span></b><p>Animated pictures and a friendly voice.</p></div>
+      <div class="box"><b>Talk about it together <span class="tagp">Prototype</span></b><p>A question for parent and kid after the story.</p></div>
+      <div class="box"><b>Ask Pip <span class="tagn">Next</span></b><p>Kids ask questions. Pip answers only from the story’s sources, or says “let’s ask a grown up.”</p></div>
+    </div>
+  </div>
+
+  <div class="bands">
+    <div class="band">
+      <h2><span class="num">✓</span>Trust layer, under every step</h2>
+      <ul>
+        <li>Every line keeps its source and time</li>
+        <li>Facts and company claims are labeled apart</li>
+        <li>Corrections are shown, not hidden</li>
+        <li>No kid accounts, no kid data</li>
+        <li>No posting, buying or acting for the family</li>
+        <li>Human approval for anything sensitive</li>
+      </ul>
+    </div>
+    <div class="band">
+      <h2><span class="num">↺</span>Feedback loop</h2>
+      <div class="loop"><span>Parent taps</span><em>→</em><span>Kid’s answers</span><em>→</em><span>Skips and rewrites</span><em>→</em><span>Better picks tomorrow</span></div>
+    </div>
+  </div>
+
+  <p class="note">Today’s prototype plays a labeled replay of one real agent run in plain HTML, CSS and JavaScript. In the full service, each agent step becomes a real AI call with its own tools and checks; the flow and the parent gate stay the same.</p>
+</div>
+</body>
+</html>
