@@ -255,6 +255,27 @@ h3.big { font-size: clamp(28px, 3.6vw, 44px); max-width: 22ch }
 @keyframes wave { 0%, 100% { transform: rotate(0) } 30% { transform: rotate(22deg) } 60% { transform: rotate(-6deg) } 80% { transform: rotate(18deg) } }
 .waving { --wave: wave 1.3s ease-in-out 2 }
 svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
+/* bedtime hero */
+.hero::before { content: ""; position: absolute; inset: 0; background: #070B1C; opacity: 0; animation: nightfall 40s ease-in forwards; pointer-events: none }
+@keyframes nightfall { to { opacity: .45 } }
+.hero .wrap { z-index: 1 }
+.hero .pip.reader { width: min(100%, 460px) }
+@media (max-width: 760px) { .hero .pip.reader { width: 280px } }
+.tw circle { animation: twinkle 5s ease-in-out infinite !important }
+.tw circle:nth-child(2n) { animation-delay: 1.7s !important } .tw circle:nth-child(3n) { animation-delay: 3.1s !important }
+@keyframes twinkle { 0%, 100% { opacity: 1 } 50% { opacity: .2 } }
+.book-glow, .lamp-glow { animation: glowbreath 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center }
+.lamp-glow { animation-delay: -2s }
+@keyframes glowbreath { 50% { opacity: .65; transform: scale(.94) } }
+.floaty { opacity: 0; animation: floatup 5s ease-out infinite; transform-box: fill-box; transform-origin: center }
+@keyframes floatup { 0% { opacity: 0; transform: translateY(0) scale(.5) } 20% { opacity: 1 } 100% { opacity: 0; transform: translateY(-120px) scale(1) } }
+.flip-page { transform-box: view-box; transform-origin: 255px 290px }
+.waving .flip-page { animation: pageflip 1.1s ease-in-out }
+@keyframes pageflip { 0% { transform: scaleX(1) } 50% { transform: scaleX(0) } 100% { transform: scaleX(-1) } }
+.lullaby { margin-top: 14px; background: none; border: 2px solid var(--night3); color: var(--mist); font: inherit; font-weight: 700; font-size: 15px; padding: 8px 16px; border-radius: 999px; cursor: pointer; min-height: 40px }
+.lullaby[aria-pressed="true"] { border-color: var(--gold); color: var(--gold) }
+.lullaby:focus-visible { outline: 3px solid var(--green); outline-offset: 3px }
+@media (prefers-reduced-motion: reduce) { .hero::before { animation: none; opacity: .3 } .floaty { display: none } }
 @media (max-width: 860px) { .faces { grid-template-columns: repeat(3, minmax(0, 1fr)) !important } }
 @media (max-width: 520px) { .faces { grid-template-columns: repeat(2, minmax(0, 1fr)) !important } }
 </style>
@@ -304,7 +325,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
 <!-- 1. Hero -->
 <section class="hero" id="top">
-  <svg class="stars" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="mgr"><stop offset=".55" stop-color="#F2C94C" stop-opacity=".22"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs><g fill="#F7F1E3" class="tw"><circle cx="120" cy="80" r="3"/><circle cx="420" cy="60" r="2"/><circle cx="660" cy="120" r="3"/><circle cx="820" cy="40" r="2"/><circle cx="1140" cy="320" r="3"/><circle cx="90" cy="600" r="2"/><circle cx="560" cy="640" r="3"/></g><circle cx="760" cy="360" r="3" fill="#F2C94C"/></svg>
+  <svg class="stars" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="mgr"><stop offset=".55" stop-color="#F2C94C" stop-opacity=".22"/><stop offset="1" stop-color="#F2C94C" stop-opacity="0"/></radialGradient></defs><g fill="#F7F1E3" class="tw"><circle cx="300" cy="200" r="2"/><circle cx="980" cy="90" r="2.5"/><circle cx="1080" cy="260" r="2"/><circle cx="860" cy="560" r="2.5"/><circle cx="240" cy="420" r="2"/><circle cx="120" cy="80" r="3"/><circle cx="420" cy="60" r="2"/><circle cx="660" cy="120" r="3"/><circle cx="820" cy="40" r="2"/><circle cx="1140" cy="320" r="3"/><circle cx="90" cy="600" r="2"/><circle cx="560" cy="640" r="3"/></g><circle cx="760" cy="360" r="3" fill="#F2C94C"/></svg>
   <div class="wrap" style="position:relative">
     <div>
       <p class="eyebrow">SEM Week 1 · Agentic AI News</p>
@@ -314,9 +335,24 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
         <a class="btn" href="index-v2.html">▶ Try the demo</a>
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
+      <button type="button" class="lullaby" id="lullaby" aria-pressed="false">♪ Lullaby: off</button>
     </div>
-    <svg viewBox="0 -24 270 324" class="pip" role="img" aria-label="Pip, a small blue robot with a moon antenna, waving">
-  <ellipse cx="134" cy="286" rx="78" ry="6" fill="#000" opacity=".22"/><g class="p-bob">
+    <svg viewBox="0 0 480 440" class="pip reader" role="img" aria-label="Pip, a small blue robot, sitting on a pillow and reading a glowing storybook next to a night lamp">
+  <defs>
+   <radialGradient id="bookglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE08A" stop-opacity=".75"/><stop offset=".45" stop-color="#FFD23F" stop-opacity=".22"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient>
+   <radialGradient id="lampglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".55"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <circle class="lamp-glow" cx="66" cy="214" r="110" fill="url(#lampglow)"/>
+  <circle class="book-glow" cx="255" cy="270" r="210" fill="url(#bookglow)"/>
+  <g filter="url(#gn-paint)">
+   <ellipse cx="66" cy="384" rx="34" ry="9" fill="#C4864F"/>
+   <path d="M66 380 C64 330 70 290 66 246" stroke="#FFF1C9" stroke-width="7" fill="none" stroke-linecap="round"/>
+   <path d="M30 248 C34 214 46 196 66 194 C86 196 100 214 104 248Z" fill="#FFD23F"/>
+   <path d="M92 404 C96 352 160 330 260 332 C362 334 438 350 446 404 C380 424 160 426 92 404Z" fill="url(#gn-dotPink)"/>
+  </g>
+  <circle cx="66" cy="252" r="9" fill="#FFF8E6"/>
+  <svg x="120" y="30" width="270" height="324" viewBox="0 -24 270 324" overflow="visible">
+  
   <g filter="url(#gn-paint)">
    <path d="M112 232 L102 258 L110 276" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
    <path d="M156 232 L168 254 L160 274" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
@@ -324,7 +360,7 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
 
    <path d="M170 256 L154 256 L154 272 C152 274 136 274 134 282 L134 286 L172 286 Z" fill="#FFD23F"/><path d="M165 262 h7 M165 267 h7" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
 
-   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><g class="p-arm-r wave"><path d="M192 150 C212 140 222 120 222 96" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="222" cy="88" r="8.5" fill="#6C8BEF"/></g>
+   <path d="M78 156 C60 168 52 186 56 206" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="57" cy="212" r="8.5" fill="#6C8BEF"/><path d="M192 160 C210 172 214 190 210 210" stroke="#6C8BEF" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="209" cy="216" r="8.5" fill="#6C8BEF"/>
    <path d="M74 92 C76 64 108 54 140 56 C176 58 198 72 196 104 C194 140 202 178 190 206 C180 232 150 240 126 238 C94 236 70 222 68 190 C66 158 72 122 74 92Z" fill="#6C8BEF"/>
    <circle cx="72" cy="128" r="8" fill="#F7A23B"/><circle cx="198" cy="122" r="7" fill="#F7A23B"/>
    <rect x="112" y="182" width="44" height="28" rx="9" fill="#FFF1C9" transform="rotate(-4 134 196)"/>
@@ -333,8 +369,19 @@ svg.pip, .card-page svg, .who svg.bed { cursor: pointer }
   <g fill="#4B67C9"><circle cx="86" cy="214" r="2"/><circle cx="96" cy="222" r="2"/><circle cx="170" cy="96" r="2"/><circle cx="178" cy="106" r="2"/></g>
   <path d="M72 128 l-3 0 M198 122 l3 0" stroke="#B56A12" stroke-width="2"/>
   <g transform="translate(0 -26)"><circle cx="98" cy="154" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/><circle cx="172" cy="150" r="11" fill="#F7A6C8" opacity=".85" filter="url(#gn-fuzz)"/>
-  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="103" cy="126" r="5.8" fill="#1A1A2E"/><circle cx="155" cy="121" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><circle class="p-glow" cx="150" cy="0" r="30" fill="url(#gn-mglow)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
- </g></svg>
+  <g class="p-eyes"><g filter="url(#gn-ink)"><circle cx="106" cy="131" r="14" fill="#FFFDF6"/><circle cx="158" cy="126" r="14" fill="#FFFDF6"/></g><circle cx="106" cy="135" r="5.8" fill="#1A1A2E"/><circle cx="158" cy="130" r="5.8" fill="#1A1A2E"/></g><path d="M120 152 C124 164 144 164 150 149" stroke="#1A1A2E" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/></g><path d="M140 58 C138 44 146 32 146 18" stroke="#FFF1C9" stroke-width="3.5" fill="none" stroke-linecap="round" filter="url(#gn-ink)"/><g filter="url(#gn-paint)"><path d="M172 14 C146 30 118 10 136 -18 C130 4 148 18 172 14Z" fill="#FFD23F"/></g>
+ </svg>
+  <g filter="url(#gn-paint)">
+   <path d="M255 266 C230 254 198 254 168 262 L162 326 C194 318 228 318 255 330 C282 318 316 318 348 326 L342 262 C312 254 280 254 255 266Z" fill="#E8483A"/>
+   <path  d="M255 262 C232 250 202 250 176 258 L170 318 C196 310 228 310 255 322Z" fill="#FFF8E6"/><path  d="M255 262 C278 250 308 250 334 258 L340 318 C314 310 282 310 255 322Z" fill="#FFF8E6"/>
+  </g>
+  <g stroke="#D9C9A6" stroke-width="3.5" stroke-linecap="round"><path d="M186 274 q30 -8 58 -2 M186 288 q28 -7 56 -1 M188 302 q26 -6 52 0"/><path d="M266 272 q30 -7 58 1 M268 286 q28 -6 56 2 M270 300 q24 -5 50 2"/></g>
+  <path class="flip-page" d="M255 262 C278 250 308 250 334 258 L340 318 C314 310 282 310 255 322Z" fill="#FFF1D6"/>
+  <path d="M255 262 V322" stroke="#D9C9A6" stroke-width="3"/>
+  <circle cx="172" cy="290" r="9" fill="#6C8BEF"/><circle cx="338" cy="290" r="9" fill="#6C8BEF"/>
+  <circle class="face-glow" cx="255" cy="150" r="96" fill="url(#bookglow)" opacity=".45" style="mix-blend-mode:screen"/>
+  <path class="floaty" style="animation-delay:0s" d="M162 250 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFD23F"/><path class="floaty" style="animation-delay:1.4s" d="M352 246 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFF1C9"/><path class="floaty" style="animation-delay:2.6s" d="M180 240 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#F48FB1"/><path class="floaty" style="animation-delay:3.6s" d="M336 252 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#FFD23F"/>
+ </svg>
   </div>
 </section>
 
@@ -680,6 +727,33 @@ document.addEventListener("click", function (e) {
   host.classList.remove("waving"); void host.getBoundingClientRect(); host.classList.add("waving");
   clearTimeout(host._wv); host._wv = setTimeout(function () { host.classList.remove("waving") }, 2700);
 });
+</script><script>
+/* Optional lullaby: a soft music box playing Twinkle Twinkle Little Star (traditional). Off until tapped. */
+(function () {
+  var btn = document.getElementById("lullaby"); if (!btn) return;
+  var ctx = null, timer = null, i = 0, on = false;
+  var N = { C: 523.25, D: 587.33, E: 659.25, F: 698.46, G: 783.99, A: 880 };
+  var song = "C C G G A A G- F F E E D D C- G G F F E E D- G G F F E E D- C C G G A A G- F F E E D D C-".split(" ");
+  function note(f, t, len) {
+    [1, 2].forEach(function (h, k) {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine"; o.frequency.value = f * h;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(k ? 0.025 : 0.09, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.9);
+      o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t + len + 1);
+    });
+  }
+  function step() {
+    var n = song[i % song.length], hold = n.slice(-1) === "-", len = hold ? 0.9 : 0.45;
+    note(N[n[0]], ctx.currentTime + 0.02, len); i++;
+    timer = setTimeout(step, (i % song.length === 0 ? 2.2 : len + 0.05) * 1000);
+  }
+  btn.addEventListener("click", function () {
+    on = !on; btn.setAttribute("aria-pressed", on); btn.textContent = on ? "♪ Lullaby: on" : "♪ Lullaby: off";
+    if (on) { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); ctx.resume(); i = 0; step() }
+    else { clearTimeout(timer) }
+  });
+})();
 </script>
 </body>
 </html>
