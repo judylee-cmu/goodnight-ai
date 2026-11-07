@@ -46,6 +46,13 @@ BEAT = {
 TAG_COLOR = {"true": "#5FD6A0", "maybe": "#FFC266",
              "imagine": "#C3A6FF", "explain": "#8FC2FF"}
 
+# The tags are how the product teaches media literacy, but "true / maybe /
+# imagine / explain" are our words, not a parent's. On a feed card they get
+# spelled out. The slot name (COVER, CHARACTER...) is purely our story
+# structure and never appears.
+TAG_LABEL = {"true": "really happened", "maybe": "not sure yet",
+             "imagine": "story part", "explain": "what it means"}
+
 
 def _sky(tone):
     a, b, c = SKIES.get(tone, SKIES["calm"])
@@ -165,7 +172,7 @@ def card(page, total):
         if len(lines) * size * 1.24 <= BOX_H:
             break
     lh = size * 1.24
-    top = 236 + (BOX_H - len(lines) * lh) / 2
+    top = 188 + (BOX_H - len(lines) * lh) / 2
     band = top + len(lines) * lh - lh * .24 + 26
 
     head = "".join(
@@ -173,16 +180,20 @@ def card(page, total):
         f'font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="{size}" '
         f'font-weight="700" fill="{PAPER}">{_esc(l)}</text>' for i, l in enumerate(lines))
 
-    tags = sorted(set(page.get("tags", [])))
-    chips, cx = [], W // 2 - (len(tags) * 126) // 2
-    for t in tags:
-        c = TAG_COLOR.get(t, SOFT)
-        chips.append(f'<g transform="translate({cx},166)">'
-                     f'<rect x="0" y="-30" width="112" height="46" rx="23" fill="{c}" '
-                     f'opacity=".2"/><text x="56" y="3" text-anchor="middle" '
-                     f'font-family="Verdana,system-ui" font-size="25" font-weight="700" '
-                     f'fill="{c}">{t}</text></g>')
-        cx += 126
+    # Cover carries the title alone: no labels competing with it.
+    tags = [] if page["slot"] == "cover" else sorted(set(page.get("tags", [])))
+    widths = [len(TAG_LABEL.get(x, x)) * 15 + 54 for x in tags]
+    chips, cx = [], W // 2 - (sum(widths) + 16 * max(0, len(tags) - 1)) // 2
+    for x, w in zip(tags, widths):
+        c = TAG_COLOR.get(x, SOFT)
+        chips.append(
+            f'<g transform="translate({cx},{H-128})">'
+            f'<rect x="0" y="-28" width="{w}" height="42" rx="21" fill="{c}" opacity=".22"/>'
+            f'<circle cx="26" cy="-7" r="7" fill="{c}"/>'
+            f'<text x="{w//2 + 13}" y="1" text-anchor="middle" '
+            f'font-family="Verdana,system-ui" font-size="23" font-weight="700" '
+            f'fill="{c}">{TAG_LABEL.get(x, x)}</text></g>')
+        cx += w + 16
 
     return f"""<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">
 <defs>{parts.PAINT_FILTER}{_sky(tone)}
@@ -201,11 +212,8 @@ def card(page, total):
   fill="{GROUND.get(tone, GROUND['calm'])}"/></g>
 {pip(W//2, GROUND_Y + 58, 1.16, tone, pose)}
 
-<text x="{W//2}" y="110" text-anchor="middle" font-family="Verdana,system-ui"
- font-size="26" font-weight="700" letter-spacing="6" fill="{SOFT}">
- {_esc(page["slot"].replace("_", " ").upper())}</text>
-{"".join(chips)}
 {head}
+{"".join(chips)}
 <text x="64" y="{H-58}" font-family="Verdana,system-ui" font-size="26"
  font-weight="700" fill="{PAPER}" opacity=".62">Goodnight, AI</text>
 <text x="{W-64}" y="{H-58}" text-anchor="end" font-family="Verdana,system-ui"
