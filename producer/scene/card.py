@@ -13,8 +13,11 @@ from pip import pip, LOOP, POSES  # noqa: E402
 import parts  # noqa: E402
 
 W, H = 1080, 1350
-# Rounded, hand-drawn feel, still legible at arm's length on a phone.
-FONT = "Fredoka, Comic Neue, Verdana, sans-serif"
+# Shantell Sans: a handwritten face drawn for legibility rather than flourish.
+# BNCE (bounce) is dialled down from its default so letters sit on a steadier
+# baseline; a lively bounce costs reading speed at small sizes.
+FONT = "Shantell Sans, Fredoka, Comic Neue, sans-serif"
+FONT_VAR = "font-variation-settings:'wght' 700,'BNCE' -20,'INFM' 30,'SPAC' 0"
 SHOW_TAGS = False
 GROUND_Y = 1062          # horizon
 PAPER, INK, GLOW, SOFT = "#FFF4DE", "#101A33", "#FFD23F", "#A8B0D6"
@@ -180,8 +183,9 @@ def card(page, total):
 
     head = "".join(
         f'<text x="{W//2}" y="{top + i*lh:.0f}" text-anchor="middle" '
-        f'font-family="{FONT}" font-size="{size}" '
-        f'font-weight="700" fill="{PAPER}">{_esc(l)}</text>' for i, l in enumerate(lines))
+        f'font-family="{FONT}" font-size="{size}" font-weight="700" '
+        f'style="{FONT_VAR}" fill="{PAPER}">{_esc(l)}</text>'
+        for i, l in enumerate(lines))
 
     # Tags are off by default on feed cards. A card can carry both "story part"
     # and "really happened" without saying which sentence is which, so the label
@@ -221,7 +225,7 @@ def card(page, total):
 {head}
 {"".join(chips)}
 <text x="64" y="{H-58}" font-family="{FONT}" font-size="26"
- font-weight="700" fill="{PAPER}" opacity=".62">Goodnight, AI</text>
+ font-weight="700" fill="{PAPER}" opacity=".62">Lullabyte</text>
 <text x="{W-64}" y="{H-58}" text-anchor="end" font-family="{FONT}"
  font-size="26" font-weight="700" fill="{PAPER}" opacity=".62">{page["page"]} / {total}</text>
 </svg>"""
