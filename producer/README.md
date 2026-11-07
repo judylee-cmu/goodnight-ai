@@ -17,3 +17,29 @@ and a packaged story file.
 - `voice/` — text to speech test (P3, P4)
 - `package/` — packaging and sync test (P5, P6, P7)
 - `results/` — logs, scores, cost and timing
+
+## Status
+
+| Test | What it needs | State |
+| :-- | :-- | :-- |
+| P1, P2 images | `OPENAI_API_KEY` / `GEMINI_API_KEY` | script ready, not run |
+| P3, P4 voice | `OPENAI_API_KEY` / `ELEVENLABS_API_KEY` / `GEMINI_API_KEY` | script ready, not run |
+| P5, P6, P7 packaging | nothing | **run, passes with placeholders** |
+
+## How to run
+
+```bash
+pip install openai google-genai elevenlabs
+export OPENAI_API_KEY=...  ELEVENLABS_API_KEY=...  GEMINI_API_KEY=...
+
+python images/generate.py   --script input/pip_helper_school.json --age 5to7
+python voice/synthesize.py  --script input/pip_helper_school.json --age 5to7 --per-page
+python package/build_story.py --script input/pip_helper_school.json --age 5to7
+```
+
+Then open `results/contact_sheet.html` (P1, P2), `results/voice_scoring.html`
+(P3, P4) and `results/story_5to7.html` on a phone (P5, P6, P7).
+
+The packaging step runs with no keys at all: missing images become a placeholder
+and missing audio falls back to tap to advance, so the sync and interaction
+logic can be checked before any API is wired up.
