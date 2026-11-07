@@ -182,3 +182,24 @@ sentence was which, so the label told the reader nothing. Per-sentence tagging
 is an in-app feature where each line can be marked. The carousel makes the same
 point better with a closing "what was real" card. `SHOW_TAGS` in
 `scene/card.py` turns them back on.
+
+## One story a day
+
+Lullabyte ships a story a day, built from that day's news, so **the date is the
+primary key** — not the story title. A title belongs to a day; the folder does
+not.
+
+```
+input/2026-11-07.json                 one day's script, both age versions
+results/2026-11-07/
+  index.html                          the day's landing page
+  5to7.html  8to10.html               swipeable carousels
+  5to7/lullabyte-2026-11-07-5to7-01.png  … one card per page
+```
+
+`--date` defaults to today, so the daily run is just:
+
+```bash
+python package/build_carousel.py --age 5to7
+python package/build_carousel.py --age 8to10
+```

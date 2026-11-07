@@ -7,7 +7,7 @@ animating, and the whole book is a few hundred KB instead of tens of MB.
 Pip is the same scene/parts.pip() component on every page. Only his position,
 scale and mood change, which is what makes P2 hold by construction.
 
-    python package/build_book.py --script input/pip_helper_school.json --age 5to7
+    python package/build_book.py --date 2026-11-07 --age 5to7
 """
 import argparse, base64, json, pathlib, sys
 

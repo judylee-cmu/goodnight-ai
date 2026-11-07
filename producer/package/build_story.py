@@ -8,7 +8,7 @@ Runs with or without real assets: pages with no image get a placeholder, pages
 with no audio fall back to tap-to-advance. That lets the packaging and sync
 logic be tested before the API keys are in place.
 
-    python package/build_story.py --script input/pip_helper_school.json --age 5to7
+    python package/build_story.py --date 2026-11-07 --age 5to7
 """
 import argparse, base64, json, mimetypes, pathlib
 

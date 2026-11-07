@@ -7,7 +7,7 @@ Runs with no API keys: pages with no image get a placeholder card, pages with
 no audio get a fixed duration based on word count. That makes the video
 pipeline testable before images and narration exist.
 
-    python package/build_reel.py --script input/pip_helper_school.json --age 5to7
+    python package/build_reel.py --date 2026-11-07 --age 5to7
 """
 import argparse, json, pathlib, shutil, subprocess, sys, textwrap, tempfile
 

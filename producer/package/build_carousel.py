@@ -1,11 +1,15 @@
 """Carousel of story cards for Threads and Instagram.
 
+Lullabyte ships one story a day, built from that day's news, so the date is the
+primary key: everything is written under results/<date>/ and every file carries
+the date in its name. The story title is a property of the day, not the folder.
+
 Writes one 1080x1350 PNG per page, plus a swipeable HTML preview so the set can
 be checked on a phone before anything is posted.
 
-    python package/build_carousel.py --script input/pip_helper_school.json --age 5to7
+    python package/build_carousel.py --date 2026-11-07 --age 5to7
 """
-import argparse, json, pathlib, sys
+import argparse, datetime as dt, json, pathlib, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scene"))
@@ -17,13 +21,22 @@ RES = ROOT / "results"
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--script", required=True)
+    ap.add_argument("--date", help="story date, YYYY-MM-DD. Default: today")
+    ap.add_argument("--script", help="override the input path")
     ap.add_argument("--age", default="5to7", choices=["5to7", "8to10"])
     a = ap.parse_args()
 
-    script = json.loads((ROOT / a.script).read_text())
+    date = a.date or dt.date.today().isoformat()
+    src = pathlib.Path(a.script) if a.script else ROOT / "input" / f"{date}.json"
+    if not src.is_absolute():
+        src = ROOT / src
+    if not src.exists():
+        raise SystemExit(f"no story for {date}: {src.relative_to(ROOT)} not found")
+
+    script = json.loads(src.read_text())
+    date = script.get("date", date)
     pages = script[f"script_{a.age}"]
-    out = RES / f"cards_{a.age}"
+    out = RES / date / a.age
 
     svgs = [C.card(p, len(pages)) for p in pages]
 
@@ -33,15 +46,19 @@ def main():
             if w.replace("'", "’") not in svg:
                 print(f"  WARNING page {p['page']}: {w!r} not on card")
 
-    render([(f"c{p['page']:02d}", s) for p, s in zip(pages, svgs)],
+    render([(f"lullabyte-{date}-{a.age}-{p['page']:02d}", s)
+            for p, s in zip(pages, svgs)],
            out, size=(C.W, C.H), at_seconds=0.6)
 
-    html = HTML.replace("__TITLE__", script["title"]).replace(
-        "__CARDS__", "\n".join(f'<section>{s}</section>' for s in svgs))
-    prev = RES / f"carousel_{a.age}.html"
+    html = (HTML.replace("__TITLE__", script["title"])
+                .replace("__DATE__", date)
+                .replace("__CARDS__", "\n".join(f"<section>{s}</section>" for s in svgs)))
+    prev = RES / date / f"{a.age}.html"
+    prev.parent.mkdir(parents=True, exist_ok=True)
     prev.write_text(html)
 
     tot = sum(f.stat().st_size for f in out.glob("*.png")) / 1024 / 1024
+    print(f"Lullabyte {date} \u00b7 {script['title']} \u00b7 ages {a.age}")
     print(f"{len(pages)} cards -> {out.relative_to(ROOT)}  ({tot:.1f} MB PNG)")
     print(f"preview -> {prev.relative_to(ROOT)}  ({prev.stat().st_size//1024} KB)")
     print(f"  {C.W}x{C.H} (4:5), the tallest a feed shows uncropped")
@@ -67,7 +84,7 @@ section svg{display:block;width:100%;height:100%}
   transition:opacity .25s}
 #dots i.on{opacity:1}
 </style></head><body>
-<h1>__TITLE__ &middot; swipe &rarr;</h1>
+<h1>Lullabyte &middot; __DATE__ &middot; __TITLE__ &middot; swipe &rarr;</h1>
 <div id="strip">__CARDS__</div>
 <div id="dots"></div>
 <script>
