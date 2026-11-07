@@ -116,10 +116,25 @@ out, nothing else competing for attention.
 - Headline size is picked by fitting, not by guessing. The builder tries 78px
   down to 40px and takes the largest that fits the box whole, then asserts every
   word of the page reached the card. A cut-off sentence is worse than a small one.
-- `scene/pip.py` is Pip as one posable component: 8 poses (stand, point, wave,
-  cheer, think, peek, read, sleep) x 5 moods (eye glow, antenna tilt, eye
-  squash). A page picks a pose by its slot. The body, beak, eyes and antenna
-  come from the same code every time.
+- `scene/pip.py` is Pip as one posable component: 9 poses x 5 moods. The head,
+  body shell, beak and antenna are drawn by the same code every time. What a
+  pose changes is the wing *geometry* (not a rotation), the body transform,
+  where the eyes look, and any prop.
+
+  A first attempt only rotated one wing path by a few degrees per pose. On a
+  phone that reads as no change at all. Each pose now has its own wing path,
+  and several carry a prop drawn either behind or in front of the body:
+
+  | pose | what reads | prop |
+  | :-- | :-- | :-- |
+  | wave | wing stretched above the head, swinging | |
+  | point | wing extended straight out, long | glowing tip |
+  | cheer | both wings in a V, whole body hops | sparkles |
+  | think | wing bent to the chin, head tilted | thought dots |
+  | peek | leaning out from behind an edge, eyes sideways | edge |
+  | read | both wings forward holding a book, head down | open book |
+  | sleep | slumped, wings tucked, eyes closed to arcs | Zzz |
+  | lost | wings hanging, body sunken, eyes narrow | question mark |
 
 | | reference feed comics | these cards |
 | :-- | :-- | :-- |

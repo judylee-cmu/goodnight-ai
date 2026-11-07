@@ -7,7 +7,7 @@ format: a big headline, the character acting it out, nothing else competing.
 """
 import pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from pip import pip, LOOP  # noqa: E402
+from pip import pip, LOOP, POSES  # noqa: E402
 import parts  # noqa: E402
 
 W, H = 1080, 1350
@@ -16,9 +16,9 @@ PAPER, INK, BLUE, GLOW, SOFT = "#FFF4DE", "#141E3C", "#4A6FE8", "#FFD23F", "#8C9
 # Which pose fits each beat of the story.
 SLOT_POSE = {
     "cover": "wave", "character": "read", "news_discovery": "point",
-    "exploration": "peek", "challenge": "think", "turning_point": "stand",
+    "exploration": "peek", "challenge": "lost", "turning_point": "stand",
     "resolution": "cheer", "reflection": "sleep", "real_world_facts": "point",
-    "quiz": "cheer",
+    "quiz": "think",
 }
 
 TAG_COLOR = {"true": "#2E9E6B", "maybe": "#E0922B",
@@ -93,7 +93,7 @@ def card(page, total, title=""):
  {_esc(page["slot"].replace("_", " ").upper())}</text>
 {halo}
 {head}
-{pip(W//2, 1152, 1.44, mood, pose, blink=(pose != "sleep"))}
+{pip(W//2, 1152, 1.40, mood, pose)}
 {"".join(chips)}
 {brand}
 </svg>"""
