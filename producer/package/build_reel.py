@@ -9,7 +9,9 @@ pipeline testable before images and narration exist.
 
     python package/build_reel.py --script input/pip_helper_school.json --age 5to7
 """
-import argparse, json, pathlib, shutil, subprocess, textwrap, tempfile
+import argparse, json, pathlib, shutil, subprocess, sys, textwrap, tempfile
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "scene"))
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 RES = ROOT / "results"
@@ -22,6 +24,20 @@ BG, INK, GLOW, BLUE, CREAM = "#1A1A2E", "#FFF8E6", "#FFD23F", "#6C8BEF", "#FFF1C
 
 def have(cmd):
     return shutil.which(cmd) is not None
+
+
+def animated_clip(page, secs, tmp, i):
+    """Render one animation cycle of the SVG scene and loop it to fill the page.
+
+    This is the quality path: the same flat vector language as the prototype,
+    with Pip breathing and blinking, so the character never drifts.
+    """
+    import parts
+    from frames import cycle, FPS
+    d = tmp / f"fr{i:02d}"
+    svg = parts.vscene(page["tone"], page["text"], page["slot"])
+    cycle(svg, d, "f", (W, H))
+    return d, FPS
 
 
 def placeholder_card(path, page):
@@ -91,6 +107,8 @@ def main():
     ap.add_argument("--voice-provider", default="elevenlabs")
     ap.add_argument("--max-seconds", type=float, default=90,
                     help="Trim pages from the end to fit a feed limit")
+    ap.add_argument("--static", action="store_true",
+                    help="Flat placeholder cards instead of animated SVG scenes")
     a = ap.parse_args()
 
     if not have("ffmpeg"):
@@ -101,7 +119,7 @@ def main():
     tmp = pathlib.Path(tempfile.mkdtemp())
     RES.mkdir(parents=True, exist_ok=True)
 
-    cards, total, used_ph, used_silence = [], 0.0, 0, 0
+    cards, total, used_ph, used_anim, used_silence = [], 0.0, 0, 0, 0
     for p in pages:
         img = find("img", a.age, p["page"], a.image_provider, a.image_version)
         aud = find("aud", a.age, p["page"], a.voice_provider)
@@ -113,25 +131,34 @@ def main():
                 ["ffmpeg", "-y", "-loglevel", "error", "-i", str(img),
                  "-vf", f"scale={W}:-1,pad={W}:{H}:0:{(H-W)//3}:color={BG}",
                  str(card)], check=True)
-        else:
+        elif a.static:
             placeholder_card(card, p)
             used_ph += 1
+        else:
+            card = None          # animated SVG scene
+            used_anim += 1
 
         if not aud:
             used_silence += 1
         secs = duration(p, aud)
         if total + secs > a.max_seconds:
             break
-        cards.append((card, aud, secs))
+        cards.append((card, aud, secs, p))
         total += secs
 
     # Build each page as its own clip, then concatenate.
     clips = []
-    for i, (card, aud, secs) in enumerate(cards):
+    for i, (card, aud, secs, page) in enumerate(cards):
         clip = tmp / f"clip_{i:02d}.mp4"
-        cmd = ["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-i", str(card)]
+        cmd = ["ffmpeg", "-y", "-loglevel", "error"]
+        if card is None:
+            d, fps = animated_clip(page, secs, tmp, i)
+            cmd += ["-stream_loop", "-1", "-framerate", str(fps),
+                    "-i", str(d / "f_%03d.png")]
+        else:
+            cmd += ["-loop", "1", "-i", str(card)]
         if aud:
-            cmd += ["-i", str(aud), "-c:a", "aac", "-b:a", "128k", "-shortest"]
+            cmd += ["-i", str(aud), "-c:a", "aac", "-b:a", "128k"]
         else:
             cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
                     "-c:a", "aac", "-b:a", "64k"]
@@ -149,8 +176,10 @@ def main():
     mb = out.stat().st_size / 1024 / 1024
     print(f"built {out.relative_to(ROOT)}")
     print(f"  {len(cards)}/{len(pages)} pages, {total:.1f}s, {W}x{H}, {mb:.1f} MB")
+    if used_anim:
+        print(f"  {used_anim} animated SVG scenes (prototype visual language)")
     if used_ph:
-        print(f"  {used_ph} placeholder cards (no generated image yet)")
+        print(f"  {used_ph} flat placeholder cards")
     if used_silence:
         print(f"  {used_silence} silent pages (no narration yet), timed by word count")
     print(f"\n  Threads and IG Reels accept 9:16 MP4 H.264 + AAC. "

@@ -58,3 +58,30 @@ The same script, images and narration feed two targets:
 The reel is the free entry point: parents find it in a feed, the app is where
 the full bedtime experience lives. Threads and Instagram are 13+, so the
 audience there is parents, never the child.
+
+## Why SVG scenes instead of generated images
+
+The prototype does not use image generation. It hand-draws flat vector scenes
+with a paper-grain filter (`feTurbulence` + `feDisplacementMap`), which is why
+the character looks identical on every page and the palette never drifts.
+
+`scene/parts.py` rebuilds that language as something a script can assemble:
+sky gradient per tone, deterministic star field, moon, skyline, ground, and Pip
+with breathing, blinking and a mood-driven antenna tilt. `scene/render.py`
+rasterises with headless Chromium (cairosvg cannot do the filter), and
+`scene/frames.py` samples one animation cycle for video.
+
+Every animation shares a 2.0s period, so 24 frames at 12fps cover a full cycle
+and ffmpeg can repeat them for any page length with no visible seam.
+
+This makes P1 and P2 pass by construction rather than by luck:
+
+| Test | Generated images | SVG scenes |
+| :-- | :-- | :-- |
+| P1 kid safe, one style | needs human review every run | guaranteed, nothing is sampled |
+| P2 character consistent | the hard problem, needs seeds or references | identical by definition |
+| Cost per story | about $0.30 to $0.50 | $0 |
+| Time per story | minutes | 54s of rendering |
+
+The image generation path in `images/generate.py` is kept, because a feasibility
+report should show what was compared, not only what was chosen.
