@@ -147,3 +147,27 @@ empty; a feed card has to carry a place, not just a character.
 | Character | drawn per panel by hand | one component, posed |
 | Consistency | the artist's skill | structural |
 | New page | hours | seconds |
+
+### Fonts
+
+The container ships no handwriting face, so candidates were pulled from the
+Google Fonts repo (GitHub is reachable; `fonts.gstatic.com` is not) and compared
+on a real card rather than on a specimen line:
+
+| | reads as | on a dark card |
+| :-- | :-- | :-- |
+| **Fredoka** | rounded, hand-drawn weight | clearest, chosen |
+| Comic Neue | hand-drawn | too light, recedes |
+| Patrick Hand | most handwritten | mid weight, less legible small |
+| Baloo 2 | | variable font did not load in Chromium |
+
+Fredoka is the headline face. Legibility wins over how handwritten a face looks:
+these are read at arm's length, at night, by a parent holding a phone.
+
+### Why the tags came off
+
+A card could carry both "story part" and "really happened" without saying which
+sentence was which, so the label told the reader nothing. Per-sentence tagging
+is an in-app feature where each line can be marked. The carousel makes the same
+point better with a closing "what was real" card. `SHOW_TAGS` in
+`scene/card.py` turns them back on.

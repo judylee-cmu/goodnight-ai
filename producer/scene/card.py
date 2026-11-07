@@ -13,6 +13,9 @@ from pip import pip, LOOP, POSES  # noqa: E402
 import parts  # noqa: E402
 
 W, H = 1080, 1350
+# Rounded, hand-drawn feel, still legible at arm's length on a phone.
+FONT = "Fredoka, Comic Neue, Verdana, sans-serif"
+SHOW_TAGS = False
 GROUND_Y = 1062          # horizon
 PAPER, INK, GLOW, SOFT = "#FFF4DE", "#101A33", "#FFD23F", "#A8B0D6"
 
@@ -177,11 +180,14 @@ def card(page, total):
 
     head = "".join(
         f'<text x="{W//2}" y="{top + i*lh:.0f}" text-anchor="middle" '
-        f'font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="{size}" '
+        f'font-family="{FONT}" font-size="{size}" '
         f'font-weight="700" fill="{PAPER}">{_esc(l)}</text>' for i, l in enumerate(lines))
 
-    # Cover carries the title alone: no labels competing with it.
-    tags = [] if page["slot"] == "cover" else sorted(set(page.get("tags", [])))
+    # Tags are off by default on feed cards. A card can carry both "story part"
+    # and "really happened" without saying which sentence is which, so the label
+    # tells the reader nothing. Per-sentence tagging belongs in the app; the
+    # carousel makes the point with a closing "what was real" card instead.
+    tags = sorted(set(page.get("tags", []))) if SHOW_TAGS else []
     widths = [len(TAG_LABEL.get(x, x)) * 15 + 54 for x in tags]
     chips, cx = [], W // 2 - (sum(widths) + 16 * max(0, len(tags) - 1)) // 2
     for x, w in zip(tags, widths):
@@ -191,7 +197,7 @@ def card(page, total):
             f'<rect x="0" y="-28" width="{w}" height="42" rx="21" fill="{c}" opacity=".22"/>'
             f'<circle cx="26" cy="-7" r="7" fill="{c}"/>'
             f'<text x="{w//2 + 13}" y="1" text-anchor="middle" '
-            f'font-family="Verdana,system-ui" font-size="23" font-weight="700" '
+            f'font-family="{FONT}" font-size="23" font-weight="700" '
             f'fill="{c}">{TAG_LABEL.get(x, x)}</text></g>')
         cx += w + 16
 
@@ -214,8 +220,8 @@ def card(page, total):
 
 {head}
 {"".join(chips)}
-<text x="64" y="{H-58}" font-family="Verdana,system-ui" font-size="26"
+<text x="64" y="{H-58}" font-family="{FONT}" font-size="26"
  font-weight="700" fill="{PAPER}" opacity=".62">Goodnight, AI</text>
-<text x="{W-64}" y="{H-58}" text-anchor="end" font-family="Verdana,system-ui"
+<text x="{W-64}" y="{H-58}" text-anchor="end" font-family="{FONT}"
  font-size="26" font-weight="700" fill="{PAPER}" opacity=".62">{page["page"]} / {total}</text>
 </svg>"""
