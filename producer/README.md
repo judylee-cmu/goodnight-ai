@@ -110,8 +110,14 @@ property of the build, not a test result.
 `package/build_carousel.py` writes one 1080x1350 card per page, plus a
 swipeable HTML preview. 4:5 is the tallest ratio a feed shows without cropping.
 
-Format follows what works on Threads: a big headline, the character acting it
-out, nothing else competing for attention.
+Each card is a full scene, matching the prototype's story pages: gradient sky
+per tone, stars, crescent moon, silhouetted houses, ground, plus a prop set
+chosen by the story beat (lit towers, a window, a tool panel, a bedroom, a
+rooftop). The caption sits on a gradient band that fades out before the scene,
+so text stays readable without dimming the picture.
+
+An earlier version put Pip on a plain halo on cream paper. It was clean but
+empty; a feed card has to carry a place, not just a character.
 
 - Headline size is picked by fitting, not by guessing. The builder tries 78px
   down to 40px and takes the largest that fits the box whole, then asserts every

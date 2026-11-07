@@ -1,9 +1,11 @@
-"""Story cards for a Threads / Instagram carousel.
+"""Story cards: a full scene per page, caption burned in at the top.
 
-One page, one square-ish card, read at arm's length on a phone. The reference
-format: a big headline, the character acting it out, nothing else competing.
+Earlier versions put Pip on a plain halo. That read as clean but empty. The
+prototype's story pages are scenes, so each card is now a scene too: gradient
+sky, stars, moon, skyline, ground, plus a prop set chosen by the story beat.
 
-4:5 (1080x1350) is the tallest a feed shows without cropping.
+The caption sits on a darkened band so it stays readable over any sky.
+4:5 (1080x1350) is the tallest ratio a feed shows uncropped.
 """
 import pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
@@ -11,24 +13,132 @@ from pip import pip, LOOP, POSES  # noqa: E402
 import parts  # noqa: E402
 
 W, H = 1080, 1350
-PAPER, INK, BLUE, GLOW, SOFT = "#FFF4DE", "#141E3C", "#4A6FE8", "#FFD23F", "#8C93B8"
+GROUND_Y = 1062          # horizon
+PAPER, INK, GLOW, SOFT = "#FFF4DE", "#101A33", "#FFD23F", "#A8B0D6"
 
-# Which pose fits each beat of the story.
-SLOT_POSE = {
-    "cover": "wave", "character": "read", "news_discovery": "point",
-    "exploration": "peek", "challenge": "lost", "turning_point": "stand",
-    "resolution": "cheer", "reflection": "sleep", "real_world_facts": "point",
-    "quiz": "think",
+SKIES = {
+    "warm":    ("#241C4A", "#6A3E6E", "#C9705E"),
+    "calm":    ("#141230", "#241C4A", "#3C2F63"),
+    "curious": ("#17173A", "#2E2A62", "#4F4385"),
+    "quiet":   ("#0C0A1E", "#17152C", "#231C42"),
+    "excited": ("#2A1F52", "#6A3E6E", "#E0894B"),
+}
+GROUND = {"warm": "#5A3560", "calm": "#1E1944", "curious": "#2A2458",
+          "quiet": "#13102A", "excited": "#653F60"}
+# silhouettes sit well below the sky so they read as shapes, not haze
+SIL = {"warm": "#2E1C40", "calm": "#0E0B22", "curious": "#15123A",
+       "quiet": "#08061A", "excited": "#2A1838"}
+
+# story beat -> (pose, prop set)
+BEAT = {
+    "cover":            ("wave",  "town"),
+    "character":        ("read",  "roof"),
+    "news_discovery":   ("point", "lit_towers"),
+    "exploration":      ("peek",  "window"),
+    "challenge":        ("lost",  "tools"),
+    "turning_point":    ("stand", "town"),
+    "resolution":       ("cheer", "town"),
+    "reflection":       ("sleep", "bedroom"),
+    "real_world_facts": ("point", "plain"),
+    "quiz":             ("think", "town"),
 }
 
-TAG_COLOR = {"true": "#2E9E6B", "maybe": "#E0922B",
-             "imagine": "#7B5EC7", "explain": "#3A7BD5"}
+TAG_COLOR = {"true": "#5FD6A0", "maybe": "#FFC266",
+             "imagine": "#C3A6FF", "explain": "#8FC2FF"}
 
 
-def _wrap(text, per_line):
+def _sky(tone):
+    a, b, c = SKIES.get(tone, SKIES["calm"])
+    return (f'<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="{a}"/>'
+            f'<stop offset=".62" stop-color="{b}"/>'
+            f'<stop offset="1" stop-color="{c}"/></linearGradient>')
+
+
+def _stars(n=40, seed=11):
+    out, s = [], seed
+    for _ in range(n):
+        s = (s * 1103515245 + 12345) % 2147483648; x = 24 + s % 1032
+        s = (s * 1103515245 + 12345) % 2147483648; y = 600 + s % 420
+        s = (s * 1103515245 + 12345) % 2147483648; r = 1.8 + (s % 26) / 10
+        s = (s * 1103515245 + 12345) % 2147483648; off = (s % 20) / 10 * LOOP / 2
+        out.append(f'<circle cx="{x}" cy="{y}" r="{r:.1f}" fill="#FFF8E6" opacity=".5">'
+                   f'<animate attributeName="opacity" values=".15;.8;.15" dur="{LOOP}s" '
+                   f'begin="-{off:.2f}s" repeatCount="indefinite"/></circle>')
+    return "".join(out)
+
+
+def _moon(tone, x=906, y=726, r=74):
+    dark = SKIES.get(tone, SKIES["calm"])[0]
+    return (f'<mask id="mn"><circle cx="{x}" cy="{y}" r="{r}" fill="#fff"/>'
+            f'<circle cx="{x-r*.42:.0f}" cy="{y-r*.20:.0f}" r="{r*.88:.0f}" fill="#000"/>'
+            f'</mask><g filter="url(#paint)">'
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="{GLOW}" mask="url(#mn)"/></g>')
+
+
+def _house(x, w, h, fill, lit=()):
+    """A simple gabled house. `lit` is a tuple of (dx, dy) window positions."""
+    y = GROUND_Y - h
+    p = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="9" fill="{fill}"/>',
+         f'<polygon points="{x-14},{y} {x+w//2},{y-54} {x+w+14},{y}" fill="{fill}"/>']
+    for dx, dy in lit:
+        p.append(f'<rect x="{x+dx}" y="{y+dy}" width="40" height="50" rx="7" '
+                 f'fill="{GLOW}" opacity=".66"/>')
+    return "".join(p)
+
+
+def _props(kind, tone):
+    dk = SIL.get(tone, SIL["calm"])
+    md = GROUND.get(tone, GROUND["calm"])
+    if kind == "town":
+        return (f'<g filter="url(#paint)">'
+                f'{_house(-30, 170, 210, dk)}{_house(150, 120, 148, md)}'
+                f'{_house(830, 150, 190, md)}{_house(990, 160, 240, dk)}</g>')
+    if kind == "lit_towers":
+        return (f'<g filter="url(#paint)">'
+                f'{_house(-30, 150, 170, dk)}'
+                f'{_house(700, 180, 290, md, lit=((34, 52), (104, 52), (34, 140)))}'
+                f'{_house(910, 200, 350, dk, lit=((44, 60), (120, 60), (44, 160), (120, 160)))}'
+                f'</g>')
+    if kind == "roof":
+        return (f'<g filter="url(#paint)">'
+                f'<polygon points="-40,{GROUND_Y} 540,{GROUND_Y-150} 1120,{GROUND_Y}" '
+                f'fill="{dk}"/>'
+                f'<rect x="-40" y="{GROUND_Y}" width="1160" height="60" fill="{dk}"/></g>')
+    if kind == "window":
+        return (f'<g filter="url(#paint)">'
+                f'<rect x="-20" y="{GROUND_Y-360}" width="330" height="360" rx="16" fill="{md}"/>'
+                f'<rect x="24" y="{GROUND_Y-318}" width="242" height="276" rx="10" '
+                f'fill="{GLOW}" opacity=".6"/>'
+                f'<line x1="145" y1="{GROUND_Y-318}" x2="145" y2="{GROUND_Y-42}" '
+                f'stroke="{md}" stroke-width="14"/>'
+                f'<line x1="24" y1="{GROUND_Y-180}" x2="266" y2="{GROUND_Y-180}" '
+                f'stroke="{md}" stroke-width="14"/>'
+                f'{_house(880, 200, 260, dk)}</g>')
+    if kind == "tools":
+        return (f'<g filter="url(#paint)">'
+                f'<rect x="700" y="{GROUND_Y-280}" width="400" height="280" rx="20" fill="{md}"/>'
+                f'<circle cx="790" cy="{GROUND_Y-212}" r="26" fill="#6C8BEF" opacity=".85"/>'
+                f'<circle cx="876" cy="{GROUND_Y-212}" r="26" fill="#F48FB1" opacity=".85"/>'
+                f'<circle cx="962" cy="{GROUND_Y-212}" r="26" fill="{GLOW}" opacity=".85"/>'
+                f'<rect x="760" y="{GROUND_Y-146}" width="300" height="17" rx="9" fill="{dk}"/>'
+                f'<rect x="760" y="{GROUND_Y-108}" width="210" height="17" rx="9" fill="{dk}"/>'
+                f'<rect x="760" y="{GROUND_Y-70}" width="260" height="17" rx="9" fill="{dk}"/></g>')
+    if kind == "bedroom":
+        return (f'<g filter="url(#paint)">'
+                f'<rect x="200" y="{GROUND_Y-120}" width="680" height="120" rx="26" fill="{md}"/>'
+                f'<rect x="200" y="{GROUND_Y-168}" width="220" height="54" rx="22" fill="{PAPER}"/>'
+                f'<rect x="420" y="{GROUND_Y-140}" width="460" height="40" rx="19" '
+                f'fill="#F48FB1" opacity=".75"/>'
+                f'<rect x="60" y="{GROUND_Y-260}" width="26" height="260" fill="{dk}"/>'
+                f'<circle cx="73" cy="{GROUND_Y-286}" r="42" fill="{GLOW}" opacity=".55"/></g>')
+    return ""
+
+
+def _wrap(text, per):
     words, lines, cur = text.split(), [], ""
     for w in words:
-        if len(cur) + len(w) + 1 > per_line and cur:
+        if len(cur) + len(w) + 1 > per and cur:
             lines.append(cur); cur = w
         else:
             cur = f"{cur} {w}".strip()
@@ -42,58 +152,62 @@ def _esc(s):
              .replace('"', "&quot;").replace("'", "’"))
 
 
-def card(page, total, title=""):
+def card(page, total):
+    tone = page["tone"]
+    pose, prop = BEAT.get(page["slot"], ("stand", "town"))
     text = page["text"]
-    pose = SLOT_POSE.get(page["slot"], "stand")
-    mood = page["tone"]
 
-    # Pick the largest size that still fits the headline box whole. Nothing is
-    # ever truncated: a cut-off sentence is worse than a smaller one.
-    BOX_H, MIN_SIZE = 400, 40
-    for size in range(78, MIN_SIZE - 1, -2):
-        per = max(12, int(1180 / size * 1.08))     # chars per line at this size
+    # Largest size whose wrapped lines fit the caption box whole.
+    BOX_H = 392
+    for size in range(76, 39, -2):
+        per = max(12, int(1150 / size * 1.06))
         lines = _wrap(text, per)
         if len(lines) * size * 1.24 <= BOX_H:
             break
     lh = size * 1.24
-    top = 268 + (BOX_H - len(lines) * lh) / 2
+    top = 236 + (BOX_H - len(lines) * lh) / 2
+    band = top + len(lines) * lh - lh * .24 + 26
 
     head = "".join(
         f'<text x="{W//2}" y="{top + i*lh:.0f}" text-anchor="middle" '
         f'font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="{size}" '
-        f'font-weight="700" fill="{INK}">{_esc(l)}</text>'
-        for i, l in enumerate(lines))
+        f'font-weight="700" fill="{PAPER}">{_esc(l)}</text>' for i, l in enumerate(lines))
 
     tags = sorted(set(page.get("tags", [])))
     chips, cx = [], W // 2 - (len(tags) * 126) // 2
     for t in tags:
         c = TAG_COLOR.get(t, SOFT)
-        chips.append(
-            f'<g transform="translate({cx},158)">'
-            f'<rect x="0" y="-30" width="112" height="46" rx="23" fill="{c}" opacity=".15"/>'
-            f'<text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" '
-            f'font-size="25" font-weight="700" fill="{c}">{t}</text></g>')
+        chips.append(f'<g transform="translate({cx},166)">'
+                     f'<rect x="0" y="-30" width="112" height="46" rx="23" fill="{c}" '
+                     f'opacity=".2"/><text x="56" y="3" text-anchor="middle" '
+                     f'font-family="Verdana,system-ui" font-size="25" font-weight="700" '
+                     f'fill="{c}">{t}</text></g>')
         cx += 126
 
-    brand = (f'<text x="64" y="{H-64}" font-family="Verdana,system-ui" font-size="26" '
-             f'font-weight="700" fill="{SOFT}">Goodnight, AI</text>'
-             f'<text x="{W-64}" y="{H-64}" text-anchor="end" '
-             f'font-family="Verdana,system-ui" font-size="26" font-weight="700" '
-             f'fill="{SOFT}">{page["page"]} / {total}</text>')
-
-    # A soft disc behind Pip lifts him off the paper without adding clutter.
-    halo = (f'<circle cx="{W//2}" cy="965" r="272" fill="{GLOW}" opacity=".26"/>'
-            f'<circle cx="{W//2}" cy="965" r="272" fill="{BLUE}" opacity=".07"/>')
-
     return f"""<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">
-<defs>{parts.PAINT_FILTER}</defs>
-<rect width="{W}" height="{H}" fill="{PAPER}"/>
-<text x="{W//2}" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+<defs>{parts.PAINT_FILTER}{_sky(tone)}
+ <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#05040E" stop-opacity=".88"/>
+  <stop offset=".72" stop-color="#05040E" stop-opacity=".66"/>
+  <stop offset="1" stop-color="#05040E" stop-opacity="0"/>
+ </linearGradient></defs>
+
+<rect width="{W}" height="{H}" fill="url(#sky)"/>
+{_stars()}
+{_moon(tone)}
+{_props(prop, tone)}
+<rect x="0" y="0" width="{W}" height="{band:.0f}" fill="url(#band)"/>
+<g filter="url(#paint)"><rect x="0" y="{GROUND_Y}" width="{W}" height="{H-GROUND_Y}"
+  fill="{GROUND.get(tone, GROUND['calm'])}"/></g>
+{pip(W//2, GROUND_Y + 58, 1.16, tone, pose)}
+
+<text x="{W//2}" y="110" text-anchor="middle" font-family="Verdana,system-ui"
  font-size="26" font-weight="700" letter-spacing="6" fill="{SOFT}">
  {_esc(page["slot"].replace("_", " ").upper())}</text>
-{halo}
-{head}
-{pip(W//2, 1152, 1.40, mood, pose)}
 {"".join(chips)}
-{brand}
+{head}
+<text x="64" y="{H-58}" font-family="Verdana,system-ui" font-size="26"
+ font-weight="700" fill="{PAPER}" opacity=".62">Goodnight, AI</text>
+<text x="{W-64}" y="{H-58}" text-anchor="end" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" fill="{PAPER}" opacity=".62">{page["page"]} / {total}</text>
 </svg>"""

@@ -70,11 +70,9 @@ def _pose(name):
                   back=_dots())
 
     if name == "peek":
-        # leaning out from behind an edge, eyes to the side
-        edge = (f'<rect x="-320" y="-300" width="190" height="340" rx="16" '
-                f'fill="{INK}" opacity=".16"/>')
+        # leaning hard to one side, eyes cut to the edge of the frame
         return _P(_wing(rest), _wing(rest, flip=True),
-                  ' transform="translate(44,0) rotate(-11)"', (-20, 2), back=edge)
+                  ' transform="translate(40,0) rotate(-13)"', (-22, 2))
 
     if name == "read":
         # both wings forward holding a book, head down
