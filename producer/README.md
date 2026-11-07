@@ -104,3 +104,25 @@ the slow part on a phone. The whole book is 94 KB.
 Pip is one `parts.pip()` component across all ten pages. Only x, scale and mood
 change. There is no per-page redraw, so the character cannot drift: P2 is a
 property of the build, not a test result.
+
+## Carousel cards (Threads / Instagram)
+
+`package/build_carousel.py` writes one 1080x1350 card per page, plus a
+swipeable HTML preview. 4:5 is the tallest ratio a feed shows without cropping.
+
+Format follows what works on Threads: a big headline, the character acting it
+out, nothing else competing for attention.
+
+- Headline size is picked by fitting, not by guessing. The builder tries 78px
+  down to 40px and takes the largest that fits the box whole, then asserts every
+  word of the page reached the card. A cut-off sentence is worse than a small one.
+- `scene/pip.py` is Pip as one posable component: 8 poses (stand, point, wave,
+  cheer, think, peek, read, sleep) x 5 moods (eye glow, antenna tilt, eye
+  squash). A page picks a pose by its slot. The body, beak, eyes and antenna
+  come from the same code every time.
+
+| | reference feed comics | these cards |
+| :-- | :-- | :-- |
+| Character | drawn per panel by hand | one component, posed |
+| Consistency | the artist's skill | structural |
+| New page | hours | seconds |

@@ -1,0 +1,803 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pip and the Helper School</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#141E3C;font:15px system-ui,sans-serif;color:#FFF4DE;
+  height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+h1{font-size:15px;font-weight:600;padding:12px 16px;opacity:.75;flex:none}
+#strip{flex:1;display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;padding:0 16px 10px;align-items:center;
+  -webkit-overflow-scrolling:touch}
+section{flex:none;scroll-snap-align:center;width:min(84vw,calc((100dvh - 90px)*.8));
+  aspect-ratio:4/5;border-radius:20px;overflow:hidden;box-shadow:0 10px 36px #0008}
+section svg{display:block;width:100%;height:100%}
+#dots{flex:none;display:flex;gap:6px;justify-content:center;padding:8px 0 16px}
+#dots i{width:6px;height:6px;border-radius:50%;background:#FFF4DE;opacity:.25;
+  transition:opacity .25s}
+#dots i.on{opacity:1}
+</style></head><body>
+<h1>Pip and the Helper School &middot; swipe &rarr;</h1>
+<div id="strip"><section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ COVER</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="371" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">Pip and the</text><text x="540" y="468" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">Helper School.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(-4)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,0)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-74 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(14 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="42" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="42" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="26" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="26" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(-8 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="1.0">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(477,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#7B5EC7" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#7B5EC7">imagine</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">1 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ CHARACTER</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="275" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">Pip is a little</text><text x="540" y="371" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">robot owl. Pip</text><text x="540" y="468" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">reads the news</text><text x="540" y="565" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">at night.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(8)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,4)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-46 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(46 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="46" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="46" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="29" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="29" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(0 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="0.92">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(477,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#7B5EC7" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#7B5EC7">imagine</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">2 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ NEWS DISCOVERY</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="270" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">A school and a</text><text x="540" y="349" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">company made a</text><text x="540" y="428" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">plan. They help new</text><text x="540" y="508" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">workers learn to</text><text x="540" y="587" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">use AI tools.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(4)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,0)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-10 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(-72 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="50" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="50" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="31" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="31" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(-18 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="1.0">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(477,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#2E9E6B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#2E9E6B">true</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">3 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ EXPLORATION</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="294" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">New workers learn</text><text x="540" y="381" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">from older</text><text x="540" y="468" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">workers. Pip peeks</text><text x="540" y="555" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">in the window.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(-8)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,0)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-16 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(10 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="50" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="50" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="31" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="31" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(-18 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="1.0">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(414,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#7B5EC7" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#7B5EC7">imagine</text></g><g transform="translate(540,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#2E9E6B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#2E9E6B">true</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">4 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ CHALLENGE</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="270" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">One new worker</text><text x="540" y="349" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">learned little</text><text x="540" y="428" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">about AI in school.</text><text x="540" y="508" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">Pip feels lost with</text><text x="540" y="587" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="64" font-weight="700" fill="#141E3C">new tools too.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(6)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,0)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-8 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(-40 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="36" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="36" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="22" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="22" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(6 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="0.7">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(414,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#7B5EC7" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#7B5EC7">imagine</text></g><g transform="translate(540,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#2E9E6B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#2E9E6B">true</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">5 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ TURNING POINT</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="323" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">A leader said</text><text x="540" y="420" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">new workers are</text><text x="540" y="516" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">still needed.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(0)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,0)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-12 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(12 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="42" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="42" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="26" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="26" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(-8 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="1.0">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(477,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#2E9E6B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#2E9E6B">true</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">6 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ RESOLUTION</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="275" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">Now they take</text><text x="540" y="371" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">classes and get</text><text x="540" y="468" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">a helper. Pip</text><text x="540" y="565" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">claps her wings.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(0)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,-6)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-62 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(62 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="52" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="52" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="32" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="32" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(12 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="1.0">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(414,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#7B5EC7" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#7B5EC7">imagine</text></g><g transform="translate(540,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#2E9E6B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#2E9E6B">true</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">7 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ REFLECTION</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="294" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">Learning is for</text><text x="540" y="381" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">everyone. Maybe</text><text x="540" y="468" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">you will learn AI</text><text x="540" y="555" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="70" font-weight="700" fill="#141E3C">tools one day too.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(12)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,8)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-6 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(6 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="46" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="46" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="29" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="29" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite" style="display:none"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(0 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="0.92">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(414,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#3A7BD5" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#3A7BD5">explain</text></g><g transform="translate(540,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#E0922B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#E0922B">maybe</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">8 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ REAL WORLD FACTS</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="282" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="60" font-weight="700" fill="#141E3C">Carnegie Mellon and</text><text x="540" y="356" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="60" font-weight="700" fill="#141E3C">Microsoft made a</text><text x="540" y="431" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="60" font-weight="700" fill="#141E3C">program. New workers</text><text x="540" y="505" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="60" font-weight="700" fill="#141E3C">get help from workers</text><text x="540" y="580" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="60" font-weight="700" fill="#141E3C">who know more.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(4)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,0)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-10 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(-72 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="46" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="46" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="29" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="29" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(0 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="0.92">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(477,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#2E9E6B" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#2E9E6B">true</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">9 / 10</text>
+</svg></section>
+<section><svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="paint" x="-8%" y="-8%" width="116%" height="116%">
+  <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="w"/>
+  <feDisplacementMap in="SourceGraphic" in2="w" scale="3.5"
+      xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="g"/>
+  <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.9 .62" result="ga"/>
+  <feComposite in="ga" in2="d" operator="in" result="gi"/>
+  <feMerge><feMergeNode in="d"/><feMergeNode in="gi"/></feMerge>
+</filter></defs>
+<rect width="1080" height="1350" fill="#FFF4DE"/>
+<text x="540" y="104" text-anchor="middle" font-family="Verdana,system-ui"
+ font-size="26" font-weight="700" letter-spacing="6" fill="#8C93B8">
+ QUIZ</text>
+<circle cx="540" cy="965" r="272" fill="#FFD23F" opacity=".26"/><circle cx="540" cy="965" r="272" fill="#4A6FE8" opacity=".07"/>
+<text x="540" y="323" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">Quiz time! Let’s</text><text x="540" y="420" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">see what you</text><text x="540" y="516" text-anchor="middle" font-family="Verdana,DejaVu Sans,system-ui,sans-serif" font-size="78" font-weight="700" fill="#141E3C">remember.</text>
+<g transform="translate(540,1152) scale(1.44)">
+ <g transform="rotate(0)">
+  <g filter="url(#paint)">
+   <animateTransform attributeName="transform" type="translate"
+     values="0,0; 0,-10; 0,0" dur="2.0s" repeatCount="indefinite" additive="sum"/>
+
+   <ellipse cx="0" cy="14" rx="118" ry="20" fill="#101A33" opacity=".20"/>
+
+   <!-- legs -->
+   <g transform="translate(0,-6)">
+     <path d="M-44 -18 l0 26 q0 10 -14 12 l-16 2 q-8 1 -8 -6 q0 -6 8 -8 l14 -4 l0 -22z"
+           fill="#F7A23B"/>
+     <path d="M44 -18 l0 26 q0 10 14 12 l16 2 q8 1 8 -6 q0 -6 -8 -8 l-14 -4 l0 -22z"
+           fill="#F7A23B"/>
+   </g>
+
+   <!-- body -->
+   <path d="M-112 -56 C-112 -236 112 -236 112 -56 C112 -14 62 -6 0 -6
+            C-62 -6 -112 -14 -112 -56Z" fill="#4A6FE8"/>
+   <ellipse cx="0" cy="-62" rx="66" ry="54" fill="#FFF8E6"/>
+
+   <!-- wings, one group each so a pose just rotates them -->
+   <g transform="rotate(-62 -96 -120)">
+     <path d="M-96 -140 C-142 -150 -150 -88 -118 -58 C-104 -46 -96 -58 -96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+   <g transform="rotate(62 96 -120)">
+     <path d="M96 -140 C142 -150 150 -88 118 -58 C104 -46 96 -58 96 -74Z"
+           fill="#3A57BE"/>
+   </g>
+
+   <!-- eyes -->
+   <g>
+     <ellipse cx="-44" cy="-148" rx="42" ry="52" fill="#FFF8E6"/>
+     <ellipse cx="44" cy="-148" rx="42" ry="52" fill="#FFF8E6"/>
+     <ellipse cx="-44" cy="-148" rx="27" ry="32" fill="#101A33"/>
+     <ellipse cx="44" cy="-148" rx="27" ry="32" fill="#101A33"/>
+     <circle cx="-34" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <circle cx="54" cy="-160" r="9" fill="#FFF8E6" opacity=".9"/>
+     <animateTransform attributeName="transform" type="scale" values="1 1;1 .08;1 1"
+       dur="2.0s" keyTimes="0;.9;.95" repeatCount="indefinite"/>
+   </g>
+
+   <polygon points="-18,-116 0,-92 18,-116" fill="#F7A23B"/>
+
+   <!-- antenna -->
+   <g transform="rotate(12 0 -214)">
+     <line x1="0" y1="-198" x2="0" y2="-256" stroke="#3A57BE" stroke-width="12"
+           stroke-linecap="round"/>
+     <circle cx="0" cy="-266" r="15" fill="#FFD23F" opacity="1.0">
+       <animate attributeName="r" values="15;18;15" dur="2.0s" repeatCount="indefinite"/>
+     </circle>
+   </g>
+  </g>
+ </g>
+</g>
+<g transform="translate(477,158)"><rect x="0" y="-30" width="112" height="46" rx="23" fill="#7B5EC7" opacity=".15"/><text x="56" y="3" text-anchor="middle" font-family="Verdana,system-ui" font-size="25" font-weight="700" fill="#7B5EC7">imagine</text></g>
+<text x="64" y="1286" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">Goodnight, AI</text><text x="1016" y="1286" text-anchor="end" font-family="Verdana,system-ui" font-size="26" font-weight="700" fill="#8C93B8">10 / 10</text>
+</svg></section></div>
+<div id="dots"></div>
+<script>
+const strip = document.getElementById('strip'), dots = document.getElementById('dots');
+const cards = [...strip.children];
+cards.forEach(() => dots.insertAdjacentHTML('beforeend', '<i></i>'));
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) {
+    const k = cards.indexOf(e.target);
+    [...dots.children].forEach((d, j) => d.classList.toggle('on', j === k));
+  }
+}), {root: strip, threshold: .6});
+cards.forEach(c => io.observe(c));
+</script></body></html>
