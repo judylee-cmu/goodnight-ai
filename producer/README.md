@@ -85,3 +85,22 @@ This makes P1 and P2 pass by construction rather than by luck:
 
 The image generation path in `images/generate.py` is kept, because a feasibility
 report should show what was compared, not only what was chosen.
+
+## Landscape flipbook
+
+`package/build_book.py` is the phone reading experience: hold the phone
+sideways, swipe left and right to turn pages. Portrait shows a rotate prompt.
+
+Scenes are **inline SVG, not images**. All ten are mounted once at load and
+cross-faded, so turning a page never re-runs the paper-grain filter, which is
+the slow part on a phone. The whole book is 94 KB.
+
+| | PNG per page | inline SVG |
+| :-- | :-- | :-- |
+| File size, 10 pages | 16 MB | 94 KB |
+| Sharpness | fixed raster | vector, any screen |
+| Still animating while reading | no | yes |
+
+Pip is one `parts.pip()` component across all ten pages. Only x, scale and mood
+change. There is no per-page redraw, so the character cannot drift: P2 is a
+property of the build, not a test result.

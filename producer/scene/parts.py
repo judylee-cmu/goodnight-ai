@@ -223,3 +223,121 @@ def _wrap(text, width):
 def _esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
              .replace('"', "&quot;").replace("'", "&#8217;"))
+
+
+# --- per page composition ---------------------------------------------------
+#
+# Pip is always the same pip() call. Only his position, scale and mood change,
+# plus which background parts are present. That is what keeps the character
+# identical across pages: there is nothing to drift.
+
+SLOT_LAYOUT = {
+    # slot:            (pip_x, pip_scale, skyline, moon, extra)
+    "cover":           (800, 1.50, True,  True,  "title"),
+    "character":       (800, 1.35, False, True,  "window"),
+    "news_discovery":  (520, 1.00, True,  False, "two_buildings"),
+    "exploration":     (1080, 1.05, True, False, "window"),
+    "challenge":       (420, 0.90, False, False, "tools"),
+    "turning_point":   (800, 1.15, True,  True,  None),
+    "resolution":      (760, 1.25, True,  True,  "sparkle"),
+    "reflection":      (820, 1.10, False, True,  "bed"),
+    "real_world_facts": (1280, 0.75, False, False, "panel"),
+    "quiz":            (800, 1.30, False, True,  "questions"),
+}
+
+
+def _two_buildings(gy=640):
+    return (f'<g filter="url(#paint)">'
+            f'<rect x="880" y="{gy-230}" width="210" height="230" rx="12" fill="#3A2F66"/>'
+            f'<polygon points="868,{gy-230} 985,{gy-292} 1102,{gy-230}" fill="#3A2F66"/>'
+            f'<rect x="1160" y="{gy-280}" width="240" height="280" rx="12" fill="#2E2655"/>'
+            f'<rect x="1210" y="{gy-230}" width="46" height="56" rx="6" fill="#FFD23F" opacity=".75"/>'
+            f'<rect x="1300" y="{gy-230}" width="46" height="56" rx="6" fill="#FFD23F" opacity=".5"/>'
+            f'<rect x="1210" y="{gy-140}" width="46" height="56" rx="6" fill="#FFD23F" opacity=".6"/>'
+            f'</g>')
+
+
+def _window(gy=640):
+    return (f'<g filter="url(#paint)">'
+            f'<rect x="150" y="{gy-360}" width="300" height="330" rx="16" fill="#2E2655"/>'
+            f'<rect x="186" y="{gy-324}" width="228" height="258" rx="10" fill="#FFD23F" opacity=".62"/>'
+            f'<line x1="300" y1="{gy-324}" x2="300" y2="{gy-66}" stroke="#2E2655" stroke-width="12"/>'
+            f'<line x1="186" y1="{gy-195}" x2="414" y2="{gy-195}" stroke="#2E2655" stroke-width="12"/>'
+            f'</g>')
+
+
+def _tools(gy=640):
+    return (f'<g filter="url(#paint)" opacity=".9">'
+            f'<rect x="980" y="{gy-300}" width="420" height="300" rx="18" fill="#2A2250"/>'
+            f'<circle cx="1070" cy="{gy-230}" r="26" fill="#6C8BEF" opacity=".8"/>'
+            f'<circle cx="1160" cy="{gy-230}" r="26" fill="#F48FB1" opacity=".8"/>'
+            f'<circle cx="1250" cy="{gy-230}" r="26" fill="#FFD23F" opacity=".8"/>'
+            f'<rect x="1040" y="{gy-160}" width="320" height="18" rx="9" fill="#4A3F7A"/>'
+            f'<rect x="1040" y="{gy-120}" width="230" height="18" rx="9" fill="#4A3F7A"/>'
+            f'<rect x="1040" y="{gy-80}" width="280" height="18" rx="9" fill="#4A3F7A"/></g>')
+
+
+def _sparkle():
+    out = []
+    for i, (x, y, r) in enumerate([(480, 300, 16), (1180, 250, 13), (620, 430, 10),
+                                   (1080, 420, 15), (380, 500, 11)]):
+        out.append(
+            f'<g transform="translate({x},{y})"><path d="M0,-{r} L{r*.3:.0f},-{r*.3:.0f} '
+            f'L{r},0 L{r*.3:.0f},{r*.3:.0f} L0,{r} L-{r*.3:.0f},{r*.3:.0f} L-{r},0 '
+            f'L-{r*.3:.0f},-{r*.3:.0f} Z" fill="#FFD23F">'
+            f'<animate attributeName="opacity" values=".3;1;.3" dur="{LOOP}s" '
+            f'begin="-{i*0.3:.1f}s" repeatCount="indefinite"/></path></g>')
+    return "".join(out)
+
+
+def _bed(gy=640):
+    return (f'<g filter="url(#paint)">'
+            f'<rect x="520" y="{gy-110}" width="560" height="110" rx="22" fill="#3A2F66"/>'
+            f'<rect x="520" y="{gy-150}" width="180" height="46" rx="18" fill="#FFF1C9"/>'
+            f'<rect x="700" y="{gy-124}" width="380" height="34" rx="16" fill="#F48FB1" opacity=".8"/>'
+            f'</g>')
+
+
+def _panel(gy=640):
+    return (f'<g filter="url(#paint)">'
+            f'<rect x="150" y="{gy-380}" width="860" height="360" rx="24" fill="#FFF8E6" opacity=".12"/>'
+            f'<rect x="200" y="{gy-320}" width="520" height="22" rx="11" fill="#FFF8E6" opacity=".45"/>'
+            f'<rect x="200" y="{gy-262}" width="700" height="22" rx="11" fill="#FFF8E6" opacity=".35"/>'
+            f'<rect x="200" y="{gy-204}" width="600" height="22" rx="11" fill="#FFF8E6" opacity=".35"/>'
+            f'<rect x="200" y="{gy-146}" width="420" height="22" rx="11" fill="#FFF8E6" opacity=".25"/>'
+            f'</g>')
+
+
+def _questions():
+    out = []
+    for i, (x, y, s) in enumerate([(420, 330, 1.0), (800, 250, 1.25), (1180, 330, 1.0)]):
+        out.append(
+            f'<g transform="translate({x},{y}) scale({s})">'
+            f'<text x="0" y="0" font-family="system-ui,sans-serif" font-size="96" '
+            f'font-weight="700" fill="#FFD23F" text-anchor="middle" opacity=".85">?'
+            f'<animate attributeName="opacity" values=".35;.95;.35" dur="{LOOP}s" '
+            f'begin="-{i*0.5:.1f}s" repeatCount="indefinite"/></text></g>')
+    return "".join(out)
+
+
+EXTRAS = {"two_buildings": _two_buildings, "window": _window, "tools": _tools,
+          "sparkle": _sparkle, "bed": _bed, "panel": _panel, "questions": _questions}
+
+
+def page_scene(page, w=1600, h=900):
+    """Landscape scene for one script page. Pip is the same component every time."""
+    slot, tone = page["slot"], page["tone"]
+    px, ps, has_sky, has_moon, extra = SLOT_LAYOUT.get(
+        slot, (800, 1.1, True, True, None))
+    fn = EXTRAS.get(extra)
+    return f"""<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg"
+     preserveAspectRatio="xMidYMid slice">
+<defs>{PAINT_FILTER}{sky(tone)}</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+{stars()}
+{moon(1380, 170, 78, tone) if has_moon else ""}
+{skyline() if has_sky else ""}
+{ground(tone)}
+{fn() if fn else ""}
+{pip(px, 650, ps, tone)}
+</svg>"""
